@@ -18,20 +18,30 @@
 #include "struct.h"
 
 
-t_sdl	*ft_new_sdl(void);
-void	ft_del_sdl(t_sdl *sdl);
+t_sdl		*ft_new_sdl(void);
+void		ft_del_sdl(t_sdl *sdl);
 
-int8_t	ft_init_sdl(t_sdl *sdl);
+int8_t		ft_init_sdl(t_sdl *sdl);
 
 //----------------------sphere()
 
-t_obj*	ft_new_sphere(t_v3d centr, t_rgb color, double_t radius);
-void	ft_del_sphere(t_obj **obj);
+t_obj*		ft_new_sphere(t_v3d centr, t_rgb color, double_t radius);
+void		ft_del_sphere(t_obj **obj);
 
-t_rgb	ft_get_sphere_color(const void* data);
+t_rgb		ft_get_sphere_color(const void* data);
 
 //------------------------------
 
-void	obj_info(const t_obj* obj);
+void		obj_info(const t_obj* obj);
+
+//------------------------matrix
+
+double_t**	get_new_matrix(uint8_t n);
+void		destroy_matrix(double_t **data, uint8_t n);
+void		fill_vertical_matrix(double_t **matrix, int32_t n);
+void		print_matrix(double_t **matrix, int32_t n);
+
+//------------------------------
+
 
 #endif

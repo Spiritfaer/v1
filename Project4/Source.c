@@ -76,8 +76,16 @@ int main(int argc, char ** argv)
 	ft_temp_fill(&centr, &color, &radius, sdl->screen_size);
 	obj = ft_new_sphere(centr, color, radius);
 	obj_info(obj);
-	
-	// ft_render(sdl, obj);
+
+	int32_t matrix_size = 14;
+	double_t **test_matrix = get_new_matrix(matrix_size);
+
+	print_matrix(test_matrix, matrix_size);
+	fill_vertical_matrix(test_matrix, matrix_size);
+	print_matrix(test_matrix, matrix_size);
+	destroy_matrix(test_matrix, matrix_size);
+
+	ft_render(sdl, obj);
 
 	if (obj)
 		ft_del_sphere(&obj);

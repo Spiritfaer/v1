@@ -149,6 +149,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="info.c" />
+    <ClCompile Include="matrix.c" />
     <ClCompile Include="sf_sdl.c" />
     <ClCompile Include="Source.c">
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Level2</WarningLevel>
