@@ -85,6 +85,7 @@ int main(int argc, char ** argv)
 	print_matrix(test_matrix, matrix_size);
 	destroy_matrix(test_matrix, matrix_size);
 
+
 	ft_render(sdl, obj);
 
 	if (obj)

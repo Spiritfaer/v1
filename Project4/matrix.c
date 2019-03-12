@@ -69,3 +69,16 @@ void	print_matrix(double_t **matrix, int32_t n)
 	}
 	printf("\n");
 }
+
+double_t**		invert_matrix(double_t **matrix, int32_t n)
+{
+	double_t**	inv_mat;
+	double_t**	unit_mat;
+
+	inv_mat = NULL;
+	unit_mat = get_new_matrix(n);
+	fill_vertical_matrix(unit_mat, n);
+
+
+	return (inv_mat);
+}
