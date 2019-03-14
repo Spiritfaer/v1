@@ -37,9 +37,12 @@ void		obj_info(const t_obj* obj);
 //------------------------matrix
 
 double_t**	get_new_matrix(uint8_t n);
-void		destroy_matrix(double_t **data, uint8_t n);
+void		destroy_matrix(double_t **data, int32_t n);
 void		fill_vertical_matrix(double_t **matrix, int32_t n);
 void		print_matrix(double_t **matrix, int32_t n);
+void		fill_random_matrix(double_t **matrix, int32_t n);
+//double_t**	invert_matrix(double_t **matrix, int32_t n);
+double_t		get_discriminant(double_t **matrix, int32_t n);
 
 //------------------------------
 

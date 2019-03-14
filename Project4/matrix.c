@@ -51,6 +51,7 @@ void	fill_vertical_matrix(double_t **matrix, int32_t n)
 		i++;
 	}
 }
+
 void	print_matrix(double_t **matrix, int32_t n)
 {
 	t_v2i i;
@@ -70,15 +71,74 @@ void	print_matrix(double_t **matrix, int32_t n)
 	printf("\n");
 }
 
+void	fill_2(double_t **matrix, int32_t n)
+{
+	matrix[0][0] = 2.0;
+	matrix[0][1] = 5.0;
+	matrix[1][0] = 6.0;
+	matrix[1][1] = -3.0;
+}
+void	fill_3(double_t **matrix, int32_t n)
+{
+	matrix[0][0] = 22.0;
+	matrix[0][1] = 5.0;
+	matrix[0][2] = 7.0;
+	matrix[1][0] = 6.0;
+	matrix[1][1] = -33.0;
+	matrix[1][2] = 4.0;
+	matrix[2][0] = 5.0;
+	matrix[2][1] = -21.0;
+	matrix[2][2] = -3.0;
+}
+void	fill_4(double_t **matrix, int32_t n)
+{
+	printf("ERROR! you foget about fill_4 function!\n");
+}
+
+void	fill_random_matrix(double_t **matrix, int32_t n)
+{
+
+	if (!matrix || !n)
+		return;
+	if (n == 2)
+		fill_2(matrix, n);
+	else if (n == 3)
+		fill_3(matrix, n);
+	else if (n == 4)
+		fill_4(matrix, n);
+	else
+		printf("ERROR! fill_random_matrix have wrong matrix size!\n");
+}
+
+double_t	get_dis(double_t a, double_t b, double_t c, double_t d)
+{
+	return (a * d - c * b);
+}
+
+double_t		get_discriminant(double_t **matrix, int32_t n)
+{
+	double_t	dis;
+
+	if (n == 2)
+		dis = get_dis(matrix[0][0], matrix[0][1], matrix[1][0], matrix[1][1]);
+	else if (n == 3)
+	{
+		dis = get_dis(matrix[1][1], matrix[1][2], matrix[2][1], matrix[2][2]) * matrix[0][0];
+		dis -= get_dis(matrix[1][0], matrix[1][2], matrix[2][0], matrix[2][2]) * matrix[0][1];
+		dis += get_dis(matrix[1][0], matrix[1][1], matrix[2][0], matrix[2][1]) * matrix[0][2];
+	}
+	return (dis);
+}
+/*
 double_t**		invert_matrix(double_t **matrix, int32_t n)
 {
 	double_t**	inv_mat;
-	double_t**	unit_mat;
+	double_t**	minor_mat;
+	double_t**	tran_mat;
+	double_t	dis;
 
-	inv_mat = NULL;
-	unit_mat = get_new_matrix(n);
-	fill_vertical_matrix(unit_mat, n);
-
+	dis = 0.0;
 
 	return (inv_mat);
 }
+*/

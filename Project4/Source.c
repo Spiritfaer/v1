@@ -77,12 +77,15 @@ int main(int argc, char ** argv)
 	obj = ft_new_sphere(centr, color, radius);
 	obj_info(obj);
 
-	int32_t matrix_size = 14;
+	int32_t matrix_size = 3;
 	double_t **test_matrix = get_new_matrix(matrix_size);
 
+	//fill_vertical_matrix(test_matrix, matrix_size);
+	fill_random_matrix(test_matrix, matrix_size);
 	print_matrix(test_matrix, matrix_size);
-	fill_vertical_matrix(test_matrix, matrix_size);
-	print_matrix(test_matrix, matrix_size);
+	double_t dis = get_discriminant(test_matrix, matrix_size);
+	printf("dis = %6.2f\n", dis);
+	//invert_matrix(test_matrix, matrix_size);
 	destroy_matrix(test_matrix, matrix_size);
 
 
