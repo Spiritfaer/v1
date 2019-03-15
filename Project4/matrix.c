@@ -36,7 +36,7 @@ void			destroy_matrix(double_t **data, int32_t n)
 	free(data);
 	data = NULL;
 }
-void		fill_vertical_matrix(double_t **matrix, int32_t n)
+void			fill_vertical_matrix(double_t **matrix, int32_t n)
 {
 	int32_t	i;
 
@@ -49,119 +49,8 @@ void		fill_vertical_matrix(double_t **matrix, int32_t n)
 		i++;
 	}
 }
-void		print_matrix(double_t **matrix, int32_t n)
-{
-	t_v2i i;
 
-	i.x = 0;
-	while (i.x < n)
-	{
-		i.y = 0;
-		while (i.y < n)
-		{
-			printf("%6.2f ", matrix[i.x][i.y]);
-			i.y++;
-		}
-		printf("\n");
-		i.x++;
-	}
-	printf("\n");
-}
-void		fill_2(double_t **matrix, int32_t n)
-{
-	matrix[0][0] = 2.0;
-	matrix[0][1] = 5.0;
-	matrix[1][0] = 6.0;
-	matrix[1][1] = -3.0;
-}
-void		fill_3(double_t **matrix, int32_t n)
-{
-	matrix[0][0] = 22.0;
-	matrix[0][1] = 5.0;
-	matrix[0][2] = 7.0;
-	matrix[1][0] = 6.0;
-	matrix[1][1] = -33.0;
-	matrix[1][2] = 4.0;
-	matrix[2][0] = 5.0;
-	matrix[2][1] = -21.0;
-	matrix[2][2] = -3.0;
-}
-void		fill_4(double_t **matrix, int32_t n)
-{
-	matrix[0][0] = 22.0;
-	matrix[0][1] = 5.0;
-	matrix[0][2] = 7.0;
-	matrix[0][3] = 0.0;
-	matrix[1][0] = 6.0;
-	matrix[1][1] = -33.0;
-	matrix[1][2] = 4.0;
-	matrix[1][3] = 0.0;
-	matrix[2][0] = 5.0;
-	matrix[2][1] = -21.0;
-	matrix[2][2] = -3.0;
-	matrix[2][3] = 0.0;
-	matrix[3][0] = 25.0;
-	matrix[3][1] = -25.0;
-	matrix[3][2] = -5.0;
-	matrix[3][3] = 1.0;
-}
-void		fill_random_matrix(double_t **matrix, int32_t n)
-{
-
-	if (!matrix || !n)
-		return;
-	if (n == 2)
-		fill_2(matrix, n);
-	else if (n == 3)
-		fill_3(matrix, n);
-	else if (n == 4)
-		fill_4(matrix, n);
-	else
-		printf("ERROR! fill_random_matrix have wrong matrix size!\n");
-}
-
-void		minus_matrix_columns(double_t **src, int32_t size, int32_t x, int32_t step)
-{
-	int32_t i = 0;
-	while (i < size)
-	{
-		src[i][x] -= src[i][step];
-		i++;
-	}
-}
-void		minus_matrix_rows(double_t **src, int32_t size, int32_t y, int32_t step)
-{
-	int32_t i = 0;
-	while (i < size)
-	{
-		src[y][i] -= src[step][i];
-		i++;
-	}
-}
-
-void		mult_matrix_columns(double_t **src, double_t mult, int32_t size, int32_t x)
-{
-	int32_t i = 0;
-
-	while (i < size)
-	{
-		src[i][x] *= mult;
-		i++;
-	}
-}
-
-void		mult_matrix_rows(double_t **src, double_t mult, int32_t size, int32_t y)
-{
-	int32_t i = 0;
-
-	while (i < size)
-	{
-		src[y][i] *= mult;
-		i++;
-	}
-}
-
-void		set_buffer(double_t **src, int32_t size, double_t *buffer, int32_t y, double_t mult)
+void			set_buffer(double_t **src, int32_t size, double_t *buffer, int32_t y, double_t mult)
 {
 	int32_t	i = 0;
 
@@ -183,23 +72,7 @@ void		minus_matrix_buffer(double_t *src, double_t *dst, int32_t size)
 	}
 }
 
-void		swap_double(double_t *src, double_t *dst, int32_t size)
-{
-	int32_t i = 0;
-	double_t tmp;
-	while (i < size)
-	{
-		tmp = *(src + i);
-		*(src + i) = *(dst + i);
-		*(dst + i) = tmp;
-		i++;
-	}
-}
 
-double_t	get_dis(double_t a, double_t b, double_t c, double_t d)
-{
-	return (a * d - c * b);
-}
 
 double_t		get_discriminant(double_t **matrix, int32_t n)
 {
