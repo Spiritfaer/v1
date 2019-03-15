@@ -80,14 +80,14 @@ void		fill_2(double_t **matrix, int32_t n)
 }
 void		fill_3(double_t **matrix, int32_t n)
 {
-	matrix[0][0] = 22.0;
+	matrix[0][0] = 2.0;
 	matrix[0][1] = 5.0;
 	matrix[0][2] = 7.0;
 	matrix[1][0] = 6.0;
-	matrix[1][1] = -33.0;
+	matrix[1][1] = 3.0;
 	matrix[1][2] = 4.0;
 	matrix[2][0] = 5.0;
-	matrix[2][1] = -21.0;
+	matrix[2][1] = -2.0;
 	matrix[2][2] = -3.0;
 }
 void		fill_4(double_t **matrix, int32_t n)
