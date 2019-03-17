@@ -2,8 +2,8 @@
 
 void	ft_temp_fill(t_v3d *center, t_rgb *color, double_t *radius, t_v2i win_size)
 {
-	center->x = 2;
-	center->y = -1;
+	center->x = 0;
+	center->y = 0;
 	center->z = -5;
 
 	color->r = 255;
@@ -18,22 +18,22 @@ void	ft_temp_fill(t_v3d *center, t_rgb *color, double_t *radius, t_v2i win_size)
 	*color = { 255,0,0,0 };
 	*radius = 25.0;
 	*/
-	t_v2d center_proj;
-	t_v2d center_remap;
-	t_v2d center_pixel;
+	//t_v2d center_proj;
+	//t_v2d center_remap;
+	//t_v2d center_pixel;
 
 
-	center_proj.x = center->x / -center->z;
-	center_proj.y = center->y / -center->z;
+	//center_proj.x = center->x / -center->z;
+	//center_proj.y = center->y / -center->z;
 
-	center_remap.x = (1 + center_proj.x) / 2;
-	center_remap.y = (1 + center_proj.y) / 2;
+	//center_remap.x = (1 + center_proj.x) / 2;
+	//center_remap.y = (1 + center_proj.y) / 2;
 
-	center_pixel.x = center_remap.x * win_size.x;
-	center_pixel.y = center_remap.y * win_size.y;
+	//center_pixel.x = center_remap.x * win_size.x;
+	//center_pixel.y = center_remap.y * win_size.y;
 
-	center->x = center_pixel.x;
-	center->y = center_pixel.y;
+	//center->x = center_pixel.x;
+	//center->y = center_pixel.y;
 }
 
 void	color_move(int *color, int up)

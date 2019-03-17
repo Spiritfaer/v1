@@ -14,7 +14,7 @@ void	ft_print_sphere(const void *data)
 	const t_sphere* temp;
 	temp = data;
 	printf("\n---SPHERE INFO---\n");
-	ft_print_pos(&temp->centr);
+	ft_print_pos(&temp->world_centr);
 	ft_print_color(&temp->color);
 	printf("Radius = %6.2f;\n", temp->radius);
 	printf("------------------\n");

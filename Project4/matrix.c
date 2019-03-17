@@ -416,6 +416,6 @@ void			invert_matrix(t_matrix *m)
 	minor_mat = get_minors_matrix(m);
 	set_inv_matrix(m, minor_mat->matrix, dis);
 
-	print_matrix(m->invert_matrix, m->size);
+	//print_matrix(m->invert_matrix, m->size);
 	destroy_matrix(&minor_mat);
 }
