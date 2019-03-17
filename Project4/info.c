@@ -2,13 +2,12 @@
 
 void	ft_print_pos(const t_v3d *pos)
 {
-	printf("x = %6.2f; y = %6.2f; z = %6.2f;\n", pos->x, pos->y, pos->z);
+	printf("x = %10.4f; y = %10.4f; z = %10.4f;\n", pos->x, pos->y, pos->z);
 }
 void	ft_print_color(const t_rgb* color)
 {
-	printf("Red = %4d; Green = %4d; Blue = %4d;\nINT COLOR = %9d;\n", color->r, color->g, color->b, color->color);
+	printf("Red = %5d; Green = %5d; Blue = %5d;\nINT COLOR = %9d;\n", color->r, color->g, color->b, color->color);
 }
-
 void	ft_print_plane(const void *data) {}
 void	ft_print_sphere(const void *data)
 {
@@ -20,10 +19,8 @@ void	ft_print_sphere(const void *data)
 	printf("Radius = %6.2f;\n", temp->radius);
 	printf("------------------\n");
 }
-
 void	ft_print_cube(const void *data) {}
 void	ft_print_cone(const void *data) {}
-
 void	obj_info(const t_obj* obj)
 {
 	if (obj->flag == plane)

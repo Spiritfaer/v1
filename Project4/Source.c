@@ -36,7 +36,7 @@ t_matrix*	make_camera(void)
 
 	camera = NULL;
 	camera = get_new_matrix(4);
-	fill_random_matrix(camera->matrix, 4);
+	fill_random_matrix(camera->matrix, camera->size);
 
 	return (camera);
 }
@@ -50,14 +50,11 @@ void	ft_render(t_sdl *sdl, t_obj *obj)
 	t_matrix*	camera = NULL;
 
 	camera = make_camera();
-	//test_matrix = get_new_matrix(matrix_size);
 	//sdl->renderer;
 	while (sdl->loop)
 	{
 		//------------------------------------------
 		invert_matrix(camera);
-		//print_matrix(inv_mat, 4);
-
 		//------------------------------------------
 		//memset(canvas->pixels, 0, sdl->screen_size.x * sdl->screen_size.y);
 		SDL_PollEvent(&sdl->event);
@@ -76,7 +73,7 @@ void	ft_render(t_sdl *sdl, t_obj *obj)
 		SDL_RenderClear(sdl->renderer);
 		SDL_DestroyTexture(screen);
 	}
-	destroy_matrix(camera);
+	destroy_matrix(&camera);
 	SDL_FreeSurface(canvas);
 }
 

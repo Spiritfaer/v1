@@ -21,14 +21,13 @@ double_t**		get_new_m(uint8_t n)
 					n_m = NULL;
 					return (NULL);
 				}
-				memset(n_m, 0, n);
+				memset(*(n_m + i), 0, sizeof(double_t) * n);
 				i++;
 			}
 		}
 	}
 	return (n_m);
 }
-
 t_matrix*		get_new_matrix(uint8_t n)
 {
 	t_matrix*	m_new;
@@ -37,14 +36,12 @@ t_matrix*		get_new_matrix(uint8_t n)
 	if ((m_new = (t_matrix*)malloc(sizeof(t_matrix))) == NULL)
 		return (NULL);
 	memset(m_new, 0, sizeof(t_matrix));
-
 	if (n > 1)
 	{
 		m_new->invert_matrix = NULL;
 		m_new->size = n;
 		m_new->matrix = get_new_m(m_new->size);
 	}
-
 	if (m_new->matrix == NULL)
 	{
 		m_new->size = 0;
@@ -52,8 +49,7 @@ t_matrix*		get_new_matrix(uint8_t n)
 	}
 	return (m_new);
 }
-
-/*
+/*              ------------- old function -------------
 t_matrix*		get_new_matrix(uint8_t n)
 {
 	t_matrix*	m_new;
@@ -87,8 +83,6 @@ t_matrix*		get_new_matrix(uint8_t n)
 	return (m_new);
 }
 */
-
-
 t_matrix*		get_copy_matryx(t_matrix *m)
 {
 	t_matrix*	copy;
@@ -105,11 +99,10 @@ t_matrix*		get_copy_matryx(t_matrix *m)
 		}
 		i.y++;
 	}
-	copy->invert_matrix = m->invert_matrix;
+	copy->invert_matrix = NULL;
 	copy->size = m->size;
 	return (copy);
 }
-
 void			free_mat(double_t **data, int32_t size)
 {
 	if (!data)
@@ -122,19 +115,26 @@ void			free_mat(double_t **data, int32_t size)
 			*(data + size) = NULL;
 		}
 	}
-	free(data);
-	data = NULL;
 }
-
-void			destroy_matrix(t_matrix *m)
+void			destroy_matrix(t_matrix **m)
 {
-	if (!m)
+	if (!(*m))
 		return ;
-	free_mat(m->matrix, m->size);
-	free_mat(m->invert_matrix, m->size);
-	m->size = 0;
+	if ((*m)->matrix != NULL)
+	{
+		free_mat((*m)->matrix, (*m)->size);
+		free((*m)->matrix);
+		(*m)->matrix = NULL;
+	}
+	if ((*m)->invert_matrix != NULL)
+	{
+		free_mat((*m)->invert_matrix, (*m)->size);
+		free((*m)->invert_matrix);
+		(*m)->invert_matrix = NULL;
+	}
+	free(*m);
+	*m = NULL;
 }
-
 void			fill_vertical_matrix(double_t **matrix, int32_t size)
 {
 	int32_t	i;
@@ -148,7 +148,6 @@ void			fill_vertical_matrix(double_t **matrix, int32_t size)
 		i++;
 	}
 }
-
 void			set_rows_buffer(double_t *src, int32_t size, double_t *buffer, double_t mult)
 {
 	int32_t	i = 0;
@@ -159,19 +158,6 @@ void			set_rows_buffer(double_t *src, int32_t size, double_t *buffer, double_t m
 		i++;
 	}
 }
-/*
-void			get_colums(double_t **src, int32_t size, int32_t x, double_t *buffer)
-{
-	int32_t	i = 0;
-
-	while (i < size)
-	{
-		buffer[i] = src[i][x];
-		i++;
-	}
-}
-*/
-
 void			get_colums(t_matrix *m, int32_t x, double_t *buffer)
 {
 	int32_t	i = 0;
@@ -182,7 +168,6 @@ void			get_colums(t_matrix *m, int32_t x, double_t *buffer)
 		i++;
 	}
 }
-
 void			get_rows(t_matrix *m, int32_t y, double_t *buffer)
 {
 	int32_t	i = 0;
@@ -193,7 +178,6 @@ void			get_rows(t_matrix *m, int32_t y, double_t *buffer)
 		i++;
 	}
 }
-
 double_t		mult_for_double_buffer(double_t *src, double_t *dst, int32_t size)
 {
 	double_t	sum = 0;
@@ -208,7 +192,6 @@ double_t		mult_for_double_buffer(double_t *src, double_t *dst, int32_t size)
 	}
 	return (sum);
 }
-
 void			minus_matrix_buffer(double_t *src, double_t *dst, int32_t size)
 {
 	int32_t i = 0;
@@ -219,7 +202,6 @@ void			minus_matrix_buffer(double_t *src, double_t *dst, int32_t size)
 		i++;
 	}
 }
-
 double_t		get_discriminant(t_matrix *m)
 {
 	t_matrix	*t_mat;
@@ -244,19 +226,23 @@ double_t		get_discriminant(t_matrix *m)
 			{
 				if (t_mat->matrix[i.y][i.x] != 0)
 				{
+			
+
+
 					mult = t_mat->matrix[i.y][i.x] / t_mat->matrix[i.x][i.x];
 					set_rows_buffer(t_mat->matrix[i.x], t_mat->size, buffer, mult);
 					minus_matrix_buffer(t_mat->matrix[i.y], buffer, t_mat->size);
+
 				}
 			}
 			i.x++;
 			dis *= t_mat->matrix[i.x - 1][i.x - 1];
 		}
 	}
-	destroy_matrix(t_mat);
+	destroy_matrix(&t_mat);
 	return (dis);
 }
-/*
+/*              ------------- old function -------------
 double_t		get_minor(double_t **src, t_v2i i, int32_t size)
 {
 	double_t	**temp = NULL;
@@ -289,7 +275,6 @@ double_t		get_minor(double_t **src, t_v2i i, int32_t size)
 	return (result);
 }
 */
-
 double_t		get_minor(t_matrix *m, t_v2i i)
 {
 	t_matrix	*temp = NULL;
@@ -318,10 +303,9 @@ double_t		get_minor(t_matrix *m, t_v2i i)
 		ij.y++;
 	}
 	result = get_discriminant(temp);
-	destroy_matrix(temp);
+	destroy_matrix(&temp);
 	return (result);
 }
-
 void			change_symbol(t_matrix *m)
 {
 	t_v2i		i = { 0,0 };
@@ -346,7 +330,6 @@ void			change_symbol(t_matrix *m)
 		i.y++;
 	}
 }
-
 t_matrix*		transposed_matrix(t_matrix *m)
 {
 	t_v2i	i = { 0,0 };
@@ -363,10 +346,9 @@ t_matrix*		transposed_matrix(t_matrix *m)
 		}
 		i.y++;
 	}
-	destroy_matrix(m);
+	destroy_matrix(&m);
 	return (temp);
 }
-
 t_matrix*		get_minors_matrix(t_matrix *m)
 {
 	t_v2i	i = { 0,0 };
@@ -386,7 +368,6 @@ t_matrix*		get_minors_matrix(t_matrix *m)
 	minors = transposed_matrix(minors);
 	return (minors);
 }
-
 t_matrix*		mult_m_to_m(t_matrix *one, t_matrix *two)
 {
 	//I think it shoud works only cube matrix! Test it!!!
@@ -410,7 +391,6 @@ t_matrix*		mult_m_to_m(t_matrix *one, t_matrix *two)
 	}
 	return (mult_m);
 }
-
 void			set_inv_matrix(t_matrix *m, double_t** minor_mat, double_t dis)
 {
 	t_v2i	i = { 0,0 };
@@ -426,8 +406,7 @@ void			set_inv_matrix(t_matrix *m, double_t** minor_mat, double_t dis)
 		i.y++;
 	}
 }
-
-void		invert_matrix(t_matrix *m)
+void			invert_matrix(t_matrix *m)
 {
 	t_matrix*	minor_mat;
 	double_t	dis;
@@ -439,5 +418,5 @@ void		invert_matrix(t_matrix *m)
 	dis = get_discriminant(m);
 	minor_mat = get_minors_matrix(m);
 	set_inv_matrix(m, minor_mat->matrix, dis);
-	destroy_matrix(minor_mat);
+	destroy_matrix(&minor_mat);
 }
