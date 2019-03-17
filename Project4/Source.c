@@ -30,13 +30,13 @@ void	ft_draw(const t_sdl *sdl, SDL_Surface *canvas, const t_obj *obj)
 	}
 }
 
-double_t**	make_camera(void)
+t_matrix*	make_camera(void)
 {
-	double_t **camera;
+	t_matrix *camera;
 
 	camera = NULL;
 	camera = get_new_matrix(4);
-	fill_random_matrix(camera, 4);
+	fill_random_matrix(camera->matrix, 4);
 
 	return (camera);
 }
@@ -47,8 +47,7 @@ void	ft_render(t_sdl *sdl, t_obj *obj)
 	SDL_Texture *screen = NULL;
 	canvas = new_canvas(sdl->screen_size.x, sdl->screen_size.y);
 
-	double_t**	camera = NULL;
-	double_t**	inv_mat = NULL;
+	t_matrix*	camera = NULL;
 
 	camera = make_camera();
 	//test_matrix = get_new_matrix(matrix_size);
@@ -56,9 +55,9 @@ void	ft_render(t_sdl *sdl, t_obj *obj)
 	while (sdl->loop)
 	{
 		//------------------------------------------
-		inv_mat = invert_matrix(camera, 4);
-		print_matrix(inv_mat, 4);
-		destroy_matrix(inv_mat, 4);
+		invert_matrix(camera);
+		//print_matrix(inv_mat, 4);
+
 		//------------------------------------------
 		//memset(canvas->pixels, 0, sdl->screen_size.x * sdl->screen_size.y);
 		SDL_PollEvent(&sdl->event);
@@ -77,7 +76,7 @@ void	ft_render(t_sdl *sdl, t_obj *obj)
 		SDL_RenderClear(sdl->renderer);
 		SDL_DestroyTexture(screen);
 	}
-	destroy_matrix(camera, 4);
+	destroy_matrix(camera);
 	SDL_FreeSurface(canvas);
 }
 
