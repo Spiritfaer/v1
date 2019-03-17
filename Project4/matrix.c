@@ -47,7 +47,7 @@ double_t**		get_copy_matryx(double_t **src, int32_t size)
 void			destroy_matrix(double_t **data, int32_t n)
 {
 	if (!data)
-		return (NULL);
+		return ;
 	while (--n >= 0)
 	{
 		if (*(data + n) != NULL)
@@ -280,7 +280,6 @@ double_t**		mult_m_to_m(double_t **one, double_t **two, int32_t size)
 	}
 	return (mult_matrix);
 }
-
 void			set_inv_matrix(double_t** inv_mat, double_t** minor_mat, double_t dis, int32_t size)
 {
 	t_v2i	i = { 0,0 };
@@ -296,7 +295,6 @@ void			set_inv_matrix(double_t** inv_mat, double_t** minor_mat, double_t dis, in
 		i.y++;
 	}
 }
-
 double_t**		invert_matrix(double_t **matrix, int32_t n)
 {
 	double_t**	inv_mat = NULL;

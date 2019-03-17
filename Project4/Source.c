@@ -7,7 +7,6 @@ SDL_Surface *new_canvas(uint32_t width, uint32_t height)
 		0, 0, 0, 0);
 	return (new_surf);
 }
-
 void	ft_draw(const t_sdl *sdl, SDL_Surface *canvas, const t_obj *obj)
 {
 	int x;
@@ -31,17 +30,36 @@ void	ft_draw(const t_sdl *sdl, SDL_Surface *canvas, const t_obj *obj)
 	}
 }
 
+double_t**	make_camera(void)
+{
+	double_t **camera;
+
+	camera = NULL;
+	camera = get_new_matrix(4);
+	fill_random_matrix(camera, 4);
+
+	return (camera);
+}
+
 void	ft_render(t_sdl *sdl, t_obj *obj)
 {
 	SDL_Surface *canvas = NULL;
 	SDL_Texture *screen = NULL;
 	canvas = new_canvas(sdl->screen_size.x, sdl->screen_size.y);
 
+	double_t**	camera = NULL;
+	double_t**	inv_mat = NULL;
+
+	camera = make_camera();
+	//test_matrix = get_new_matrix(matrix_size);
 	//sdl->renderer;
 	while (sdl->loop)
 	{
-
-
+		//------------------------------------------
+		inv_mat = invert_matrix(camera, 4);
+		print_matrix(inv_mat, 4);
+		destroy_matrix(inv_mat, 4);
+		//------------------------------------------
 		//memset(canvas->pixels, 0, sdl->screen_size.x * sdl->screen_size.y);
 		SDL_PollEvent(&sdl->event);
 		sdl->cur_key = SDL_GetKeyboardState(NULL);
@@ -59,6 +77,7 @@ void	ft_render(t_sdl *sdl, t_obj *obj)
 		SDL_RenderClear(sdl->renderer);
 		SDL_DestroyTexture(screen);
 	}
+	destroy_matrix(camera, 4);
 	SDL_FreeSurface(canvas);
 }
 
@@ -84,20 +103,19 @@ int main(int argc, char ** argv)
 	obj = ft_new_sphere(centr, color, radius);
 	obj_info(obj);
 
-
-	int32_t matrix_size = 3;
-	double_t**	test_matrix = NULL; 
-	double_t**	inv_mat = NULL;
-
 	_CrtMemState tmp;
 	_CrtMemCheckpoint(&tmp);
 
-	test_matrix = get_new_matrix(matrix_size);
-	fill_random_matrix(test_matrix, matrix_size);
-	inv_mat = invert_matrix(test_matrix, matrix_size);
-	
-	destroy_matrix(test_matrix, matrix_size);
-	destroy_matrix(inv_mat, matrix_size);
+	//int32_t matrix_size = 3;
+	//double_t**	test_matrix = NULL; 
+	//double_t**	inv_mat = NULL;
+
+	//test_matrix = get_new_matrix(matrix_size);
+	//fill_random_matrix(test_matrix, matrix_size);
+	//inv_mat = invert_matrix(test_matrix, matrix_size);
+	//
+	//destroy_matrix(test_matrix, matrix_size);
+	//destroy_matrix(inv_mat, matrix_size);
 	
 
 	ft_render(sdl, obj);

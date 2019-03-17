@@ -47,6 +47,13 @@ typedef struct	s_v2i
 	int			y;
 }				t_v2i;
 
+typedef struct s_matrix
+{
+	double		**matrix;
+	double		**invert_matrix;
+	int			size;
+}				t_matrix;
+
 t_v3d			vec_1up(void);
 t_v3d			vec_1back(void);
 t_v3d			vec_1right(void);
@@ -82,5 +89,6 @@ void			vec_3drot(t_v3d *v, int axle, double f);
 void			vec_3drotate(t_v3d *v, t_v3d rot);
 t_v3d			vec_3dscale(t_v3d v, double scale);
 t_v3d			vec_3dreflect(t_v3d v, t_v3d norm);
+
 
 #endif
