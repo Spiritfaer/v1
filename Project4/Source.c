@@ -30,14 +30,20 @@ void	ft_draw(const t_sdl *sdl, SDL_Surface *canvas, const t_obj *obj)
 	}
 }
 
-t_matrix*	make_camera(void)
+t_matrix*	make_camera(int32_t size)
 {
 	t_matrix *camera;
 
 	camera = NULL;
-	camera = get_new_matrix(4);
-	fill_random_matrix(camera->matrix, camera->size);
-
+	if (size == 0)
+	{
+		camera = get_new_matrix(4);
+		fill_vertical_matrix(camera);
+		camera->matrix[3][2] = 50;
+	}
+	else
+		fill_random_matrix(camera->matrix, camera->size);
+	
 	return (camera);
 }
 
@@ -49,13 +55,15 @@ void	ft_render(t_sdl *sdl, t_obj *obj)
 
 	t_matrix*	camera = NULL;
 
-	camera = make_camera();
+	camera = make_camera(0);
+	invert_matrix(camera);
+	//print_matrix(camera->matrix, camera->size);
+	//print_matrix(camera->invert_matrix, camera->size);
 	//sdl->renderer;
 	while (sdl->loop)
 	{
-		//------------------------------------------
-		invert_matrix(camera);
-		//------------------------------------------
+
+
 		//memset(canvas->pixels, 0, sdl->screen_size.x * sdl->screen_size.y);
 		SDL_PollEvent(&sdl->event);
 		sdl->cur_key = SDL_GetKeyboardState(NULL);
@@ -101,18 +109,6 @@ int main(int argc, char ** argv)
 
 	_CrtMemState tmp;
 	_CrtMemCheckpoint(&tmp);
-
-	//int32_t matrix_size = 3;
-	//double_t**	test_matrix = NULL; 
-	//double_t**	inv_mat = NULL;
-
-	//test_matrix = get_new_matrix(matrix_size);
-	//fill_random_matrix(test_matrix, matrix_size);
-	//inv_mat = invert_matrix(test_matrix, matrix_size);
-	//
-	//destroy_matrix(test_matrix, matrix_size);
-	//destroy_matrix(inv_mat, matrix_size);
-	
 
 	ft_render(sdl, obj);
 

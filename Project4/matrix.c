@@ -135,16 +135,16 @@ void			destroy_matrix(t_matrix **m)
 	free(*m);
 	*m = NULL;
 }
-void			fill_vertical_matrix(double_t **matrix, int32_t size)
+void			fill_vertical_matrix(t_matrix *m)
 {
 	int32_t	i;
 
 	i = 0;
-	if (!matrix || !size)
+	if (!m || !m->matrix)
 		return ;
-	while (i < size)
+	while (i < m->size)
 	{
-		matrix[i][i] = 1.0;
+		m->matrix[i][i] = 1.0;
 		i++;
 	}
 }
@@ -217,7 +217,7 @@ double_t		get_discriminant(t_matrix *m)
 	else if (m->size > 2)
 	{
 		dis = 1;
-		while (i.x < m->size)
+		while (i.x < m->size && dis != 0)
 		{
 			if (t_mat->matrix[i.y][i.x] == 0)
 				/*сделать свап с другим столбом или строкой*/;
@@ -226,17 +226,14 @@ double_t		get_discriminant(t_matrix *m)
 			{
 				if (t_mat->matrix[i.y][i.x] != 0)
 				{
-			
-
-
 					mult = t_mat->matrix[i.y][i.x] / t_mat->matrix[i.x][i.x];
 					set_rows_buffer(t_mat->matrix[i.x], t_mat->size, buffer, mult);
 					minus_matrix_buffer(t_mat->matrix[i.y], buffer, t_mat->size);
-
 				}
 			}
 			i.x++;
-			dis *= t_mat->matrix[i.x - 1][i.x - 1];
+			if (dis != 0)
+				dis *= t_mat->matrix[i.x - 1][i.x - 1];
 		}
 	}
 	destroy_matrix(&t_mat);
@@ -317,12 +314,12 @@ void			change_symbol(t_matrix *m)
 		{
 			if (i.y == 0 || (i.y % 2) == 0)
 			{
-				if (i.x % 2)
+				if (m->matrix[i.y][i.x] != 0 && i.x % 2)
 					m->matrix[i.y][i.x] *= (-1);
 			}
 			else
 			{
-				if ((i.x % 2) == 0)
+				if (m->matrix[i.y][i.x] != 0 && (i.x % 2) == 0)
 					m->matrix[i.y][i.x] *= (-1);
 			}
 			i.x++;
@@ -418,5 +415,7 @@ void			invert_matrix(t_matrix *m)
 	dis = get_discriminant(m);
 	minor_mat = get_minors_matrix(m);
 	set_inv_matrix(m, minor_mat->matrix, dis);
+
+	print_matrix(m->invert_matrix, m->size);
 	destroy_matrix(&minor_mat);
 }
