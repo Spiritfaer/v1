@@ -202,6 +202,23 @@ void			minus_matrix_buffer(double_t *src, double_t *dst, int32_t size)
 		i++;
 	}
 }
+void			swap_for_rows(t_matrix *m, t_v2i i)
+{
+	double_t	*tmp;
+	int32_t		p = i.y;
+	tmp = m->matrix[i.y];
+	while (p < m->size)
+	{
+		if (m->matrix[p][i.x] != 0)
+		{
+			m->matrix[i.y] = m->matrix[p];
+			m->matrix[p] = tmp;
+			p = m->size;
+		}
+		p++;
+	}
+}
+
 double_t		get_discriminant(t_matrix *m)
 {
 	t_matrix	*t_mat;
@@ -212,6 +229,7 @@ double_t		get_discriminant(t_matrix *m)
 	
 	t_mat = get_copy_matryx(m);
 	memset(&i, 0, sizeof(t_v2i));
+	//print_matrix(t_mat->matrix, t_mat->size);
 	if (m->size == 2)
 		dis = get_dis(m->matrix[0][0], m->matrix[0][1], m->matrix[1][0], m->matrix[1][1]);
 	else if (m->size > 2)
@@ -219,9 +237,13 @@ double_t		get_discriminant(t_matrix *m)
 		dis = 1;
 		while (i.x < m->size && dis != 0)
 		{
-			if (t_mat->matrix[i.y][i.x] == 0)
-				/*сделать свап с другим столбом или строкой*/;
+
 			i.y = 0 + i.x;
+			if (t_mat->matrix[i.y][i.x] == 0)
+			{
+				/*сделать свап с другим столбом или строкой*/;
+				swap_for_rows(t_mat, i);
+			}
 			while (++i.y < m->size)
 			{
 				if (t_mat->matrix[i.y][i.x] != 0)
@@ -236,6 +258,7 @@ double_t		get_discriminant(t_matrix *m)
 				dis *= t_mat->matrix[i.x - 1][i.x - 1];
 		}
 	}
+	//printf("\n===========%10.4f===========\n", dis);
 	destroy_matrix(&t_mat);
 	return (dis);
 }
@@ -300,6 +323,8 @@ double_t		get_minor(t_matrix *m, t_v2i i)
 		ij.y++;
 	}
 	result = get_discriminant(temp);
+	//print_matrix(temp->matrix, temp->size);
+	//printf("\n%10.5f\n", result);
 	destroy_matrix(&temp);
 	return (result);
 }
@@ -415,7 +440,7 @@ void			invert_matrix(t_matrix *m)
 	dis = get_discriminant(m);
 	minor_mat = get_minors_matrix(m);
 	set_inv_matrix(m, minor_mat->matrix, dis);
-
+	//printf("\n-----------------dis %10.4f--------------------\n", dis);
 	//print_matrix(m->invert_matrix, m->size);
 	destroy_matrix(&minor_mat);
 }
