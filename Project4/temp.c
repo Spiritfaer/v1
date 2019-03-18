@@ -166,11 +166,6 @@ void			mult_matrix_rows(double_t **src, double_t mult, int32_t size, int32_t y)
 	}
 }
 
-double_t	get_dis(double_t a, double_t b, double_t c, double_t d)
-{
-	return (a * d - c * b);
-}
-
 void			print_matrix(double_t **matrix, int32_t n)
 {
 	t_v2i i;

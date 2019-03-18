@@ -150,6 +150,22 @@
   <ItemGroup>
     <ClCompile Include="info.c" />
     <ClCompile Include="matrix.c" />
+    <ClCompile Include="mat_change_symbol.c" />
+    <ClCompile Include="mat_discriminant.c" />
+    <ClCompile Include="mat_fill_vertical_matrix.c" />
+    <ClCompile Include="mat_free.c" />
+    <ClCompile Include="mat_get_colums_rows.c" />
+    <ClCompile Include="mat_get_copy.c" />
+    <ClCompile Include="mat_get_minor.c" />
+    <ClCompile Include="mat_get_new.c" />
+    <ClCompile Include="mat_get_rows.c" />
+    <ClCompile Include="mat_invert_matrix.c" />
+    <ClCompile Include="mat_minors_matrix.c" />
+    <ClCompile Include="mat_minus_matrix_buffer.c" />
+    <ClCompile Include="mat_mult_for_double_buffer.c" />
+    <ClCompile Include="mat_mult_m_to_m.c" />
+    <ClCompile Include="mat_swap_for_rows.c" />
+    <ClCompile Include="mat_transposed_matrix.c" />
     <ClCompile Include="sf_sdl.c" />
     <ClCompile Include="Source.c">
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Level2</WarningLevel>

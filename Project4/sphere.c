@@ -26,8 +26,8 @@ uint8_t	ft_sphere_intersect(const t_v2i i, const t_sphere* my_sphere)
 	p_ndc.x = (p_screen.x + canvasWidth * 0.5) / canvasWidth;
 	p_ndc.y = (p_screen.y + canvasHeight * 0.5) / canvasHeight;
 
-	p_raster.x = p_ndc.x * 640;
-	p_raster.y = (1 - p_ndc.y) * 480;
+	p_raster.x = (int)(p_ndc.x * 640);
+	p_raster.y = (int)((1 - p_ndc.y) * 480);
 
 	//center_remap.x = (1 + center_proj.x) / 2;
 	//center_remap.y = (1 + center_proj.y) / 2;

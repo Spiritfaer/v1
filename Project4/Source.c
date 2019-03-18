@@ -88,13 +88,13 @@ void		move_camera(uint8_t *cur_key, t_matrix *camera, t_time *time)
 {
 	if (cur_key[SDL_SCANCODE_W])
 	{
-		camera->matrix[3][1] += time->speed;
+		camera->matrix[3][1] -= time->speed;
 		print_matrix(camera->matrix, camera->size);
 		print_matrix(camera->invert_matrix, camera->size);
 	}
 	if (cur_key[SDL_SCANCODE_S])
 	{
-		camera->matrix[3][1] -= time->speed;
+		camera->matrix[3][1] += time->speed;
 		print_matrix(camera->matrix, camera->size);
 		print_matrix(camera->invert_matrix, camera->size);
 	}
