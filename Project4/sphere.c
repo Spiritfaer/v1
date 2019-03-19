@@ -17,8 +17,6 @@ uint8_t	ft_sphere_intersect(const t_v2i i, const t_sphere* my_sphere)
 
 	double_t canvasWidth = 2;
 	double_t canvasHeight = 2;
-	//t_v2d center_pixel;
-
 
 	p_screen.x = my_sphere->cam_centr.x / -my_sphere->cam_centr.z;
 	p_screen.y = my_sphere->cam_centr.y / -my_sphere->cam_centr.z;
@@ -29,16 +27,7 @@ uint8_t	ft_sphere_intersect(const t_v2i i, const t_sphere* my_sphere)
 	p_raster.x = (int)(p_ndc.x * 640);
 	p_raster.y = (int)((1 - p_ndc.y) * 480);
 
-	//center_remap.x = (1 + center_proj.x) / 2;
-	//center_remap.y = (1 + center_proj.y) / 2;
 
-	//center_pixel.x = center_remap.x * 640;
-	//center_pixel.y = center_remap.y * 480;
-
-	//if (((x - center_pixel.x) * (x - center_pixel.x))
-	//	+ ((y - center_pixel.y) * (y - center_pixel.y))
-	//	< (my_sphere->radius * my_sphere->radius))
-	//	return (1);
 	if (((i.x - p_raster.x) * (i.x - p_raster.x))
 		+ ((i.y - p_raster.y) * (i.y - p_raster.y))
 		< (my_sphere->radius * my_sphere->radius))
