@@ -50,17 +50,14 @@ t_v3d	mult_vect_matrix(t_v3d world_centr, double_t **invert_matrix)
 	double_t a, b, c, w;
 	t_v3d point = { 0, 0, 0 };
 
-	print_matrix(invert_matrix, 4);
 	a = world_centr.x * invert_matrix[0][0] + world_centr.y * invert_matrix[1][0] + world_centr.z * invert_matrix[2][0] + invert_matrix[3][0];
 	b = world_centr.x * invert_matrix[0][1] + world_centr.y * invert_matrix[1][1] + world_centr.z * invert_matrix[2][1] + invert_matrix[3][1];
 	c = world_centr.x * invert_matrix[0][2] + world_centr.y * invert_matrix[1][2] + world_centr.z * invert_matrix[2][2] + invert_matrix[3][2];
 	w = world_centr.x * invert_matrix[0][3] + world_centr.y * invert_matrix[1][3] + world_centr.z * invert_matrix[2][3] + invert_matrix[3][3];
 
-	printf("\n%f, %f, %f\n", a, b, c);
 	point.x = (a + 1) / w;
 	point.y = (b + 1) / w;
 	point.z = (c + 1) / w;
-	printf("\n%f, %f, %f\n", point.x, point.y, point.z);
 	return (point);
 }
 
@@ -137,12 +134,7 @@ void		ft_render(t_sdl *sdl, t_obj *obj)
 	camera = make_camera(0);
 	//invert_matrix(camera);
 	//refresh_obj(camera, obj);
-	//print_matrix(camera->matrix, camera->size);
-	//print_matrix(camera->invert_matrix, camera->size);
-	//sdl->renderer;
-	
-	//invert_matrix(camera);
-	//refresh_obj(camera, obj);
+
 
 	while (sdl->loop)
 	{

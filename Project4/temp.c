@@ -18,22 +18,7 @@ void	ft_temp_fill(t_v3d *center, t_rgb *color, double_t *radius, t_v2i win_size)
 	*color = { 255,0,0,0 };
 	*radius = 25.0;
 	*/
-	//t_v2d center_proj;
-	//t_v2d center_remap;
-	//t_v2d center_pixel;
 
-
-	//center_proj.x = center->x / -center->z;
-	//center_proj.y = center->y / -center->z;
-
-	//center_remap.x = (1 + center_proj.x) / 2;
-	//center_remap.y = (1 + center_proj.y) / 2;
-
-	//center_pixel.x = center_remap.x * win_size.x;
-	//center_pixel.y = center_remap.y * win_size.y;
-
-	//center->x = center_pixel.x;
-	//center->y = center_pixel.y;
 }
 
 void	color_move(int *color, int up)
@@ -109,7 +94,6 @@ void		fill_4(double_t **matrix, int32_t n)
 	matrix[3][2] = -5.0;
 	matrix[3][3] = 1.0;
 }
-
 void		fill_random_matrix(double_t **matrix, int32_t n)
 {
 
@@ -125,46 +109,46 @@ void		fill_random_matrix(double_t **matrix, int32_t n)
 		printf("ERROR! fill_random_matrix have wrong matrix size!\n");
 }
 
-void			minus_matrix_columns(double_t **src, int32_t size, int32_t x, int32_t step)
-{
-	int32_t i = 0;
-	while (i < size)
-	{
-		src[i][x] -= src[i][step];
-		i++;
-	}
-}
-void			minus_matrix_rows(double_t **src, int32_t size, int32_t y, int32_t step)
-{
-	int32_t i = 0;
-	while (i < size)
-	{
-		src[y][i] -= src[step][i];
-		i++;
-	}
-}
-
-void			mult_matrix_columns(double_t **src, double_t mult, int32_t size, int32_t x)
-{
-	int32_t i = 0;
-
-	while (i < size)
-	{
-		src[i][x] *= mult;
-		i++;
-	}
-}
-
-void			mult_matrix_rows(double_t **src, double_t mult, int32_t size, int32_t y)
-{
-	int32_t i = 0;
-
-	while (i < size)
-	{
-		src[y][i] *= mult;
-		i++;
-	}
-}
+//void			minus_matrix_columns(double_t **src, int32_t size, int32_t x, int32_t step)
+//{
+//	int32_t i = 0;
+//	while (i < size)
+//	{
+//		src[i][x] -= src[i][step];
+//		i++;
+//	}
+//}
+//void			minus_matrix_rows(double_t **src, int32_t size, int32_t y, int32_t step)
+//{
+//	int32_t i = 0;
+//	while (i < size)
+//	{
+//		src[y][i] -= src[step][i];
+//		i++;
+//	}
+//}
+//
+//void			mult_matrix_columns(double_t **src, double_t mult, int32_t size, int32_t x)
+//{
+//	int32_t i = 0;
+//
+//	while (i < size)
+//	{
+//		src[i][x] *= mult;
+//		i++;
+//	}
+//}
+//
+//void			mult_matrix_rows(double_t **src, double_t mult, int32_t size, int32_t y)
+//{
+//	int32_t i = 0;
+//
+//	while (i < size)
+//	{
+//		src[y][i] *= mult;
+//		i++;
+//	}
+//}
 
 void			print_matrix(double_t **matrix, int32_t n)
 {

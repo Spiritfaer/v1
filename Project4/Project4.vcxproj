@@ -149,7 +149,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="info.c" />
-    <ClCompile Include="matrix.c" />
     <ClCompile Include="mat_change_symbol.c" />
     <ClCompile Include="mat_discriminant.c" />
     <ClCompile Include="mat_fill_vertical_matrix.c" />

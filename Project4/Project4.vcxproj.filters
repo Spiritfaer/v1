@@ -126,9 +126,6 @@
     <ClCompile Include="info.c">
       <Filter>Файлы ресурсов</Filter>
     </ClCompile>
-    <ClCompile Include="matrix.c">
-      <Filter>Файлы ресурсов</Filter>
-    </ClCompile>
     <ClCompile Include="mat_get_new.c">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
