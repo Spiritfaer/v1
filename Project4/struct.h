@@ -3,6 +3,8 @@
 
 #include "vmth.h"
 
+#define _INF (DBL_MAX*2)
+
 enum e_type_flag	{plane, sphere, cube, cone};
 
 typedef struct		s_rgb
@@ -26,12 +28,32 @@ typedef struct 		s_obj
 	void			*data;
 	//int8_t(*intersect)(const void* data, const t_v3d ray_start_point, 
 	//					const t_v3d ray, t_v3d* const intersect_point);
-	int8_t(*intersect)(const t_v2i i, const t_sphere* my_sphere);
+	int8_t(*intersect)(const t_v3i* origin, const t_v3d* dir,
+						const void* data, double_t* t);
+	//int8_t(*intersect)(const t_v3i orig, const t_sphere* my_sphere);
 	//t_rgb(*get_color)(const void* data, const t_v3d* intersect_point);
 	t_rgb(*get_color)(const void* data);
 	uint8_t			flag;
 	struct s_obj	*next;
 }					t_obj;
+
+typedef struct		s_time
+{
+	double_t		old_time;
+	double_t		time;
+	double_t		frame_time;
+	double_t		speed;
+}					t_time;
+
+typedef struct		s_camera
+{
+	t_matrix		*cam;
+	t_v3i			oryg;
+	t_v3d			dir;
+	double_t		t;
+	double_t		max_t;
+	double_t		min_t;
+}					t_camera;
 
 typedef struct		s_sdl
 {
@@ -42,15 +64,9 @@ typedef struct		s_sdl
 	const uint8_t	*cur_key;
 	char			*win_name;
 	t_v2i			screen_size;
+	double_t		iar;	//image Aspect Ratio  
 	int8_t			loop;
 }					t_sdl;
 
-typedef struct		s_time
-{
-	double_t		old_time;
-	double_t		time;
-	double_t		frame_time;
-	double_t		speed;
-}					t_time;
 
 #endif

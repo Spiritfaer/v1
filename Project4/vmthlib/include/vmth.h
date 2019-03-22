@@ -14,6 +14,7 @@
 # define VMTH_H
 
 # include <math.h>
+# include <float.h>
 # include <stdlib.h>
 # include <string.h>
 # include <stdint.h>

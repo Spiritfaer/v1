@@ -8,9 +8,9 @@ void	ft_del_sphere(t_obj **obj)
 	(*obj) = NULL;
 }
 
-uint8_t	ft_sphere_intersect(const t_v2i i, const t_sphere* my_sphere)
+uint8_t	ft_sphere_intersect(const t_v3i* origin, const t_v3d* dir, const void* data, double_t* t)
 {
-
+	t_sphere *my_sphere = (t_sphere*)data;
 	t_v2d	p_screen;
 	t_v2d	p_ndc;
 	t_v2i	p_raster;
@@ -24,15 +24,21 @@ uint8_t	ft_sphere_intersect(const t_v2i i, const t_sphere* my_sphere)
 	p_ndc.x = (p_screen.x + canvasWidth * 0.5) / canvasWidth;
 	p_ndc.y = (p_screen.y + canvasHeight * 0.5) / canvasHeight;
 
-	p_raster.x = (int)(p_ndc.x * 640);
-	p_raster.y = (int)((1 - p_ndc.y) * 480);
+	p_raster.x = (int32_t)(p_ndc.x * 640);
+	p_raster.y = (int32_t)((1 - p_ndc.y) * 480);
 
 
-	if (((i.x - p_raster.x) * (i.x - p_raster.x))
-		+ ((i.y - p_raster.y) * (i.y - p_raster.y))
+	if (((origin->x - p_raster.x) * (origin->x - p_raster.x))
+		+ ((origin->y - p_raster.y) * (origin->y - p_raster.y))
 		< (my_sphere->radius * my_sphere->radius))
 		return (1);
 	return (0);
+
+	//if (((i.x - p_raster.x) * (i.x - p_raster.x))
+	//	+ ((i.y - p_raster.y) * (i.y - p_raster.y))
+	//	< (my_sphere->radius * my_sphere->radius))
+	//	return (1);
+	//return (0);
 }
 
 t_rgb	ft_get_sphere_color(const void* data)

@@ -7,42 +7,54 @@ SDL_Surface *new_canvas(uint32_t width, uint32_t height)
 		0, 0, 0, 0);
 	return (new_surf);
 }
-void	ft_draw(const t_sdl *sdl, SDL_Surface *canvas, const t_obj *obj)
+void	ft_draw(const t_sdl *sdl, SDL_Surface *canvas, const t_obj *obj, t_camera *camera)
 {
-	t_v2i i = { 0, 0 };
-	uint32_t *tmp = (uint32_t*)canvas->pixels;
+	t_v3i		orig	= { 0, 0, 0 };
+	t_v3d		dir = /*camera->matrix*/ { 0, 0, -1 };
+	double_t	t		= _INF;
+	uint32_t	*tmp	= (uint32_t*)canvas->pixels;
 
-	while (i.x < sdl->screen_size.x)
+	while (orig.x < sdl->screen_size.x)
 	{
-		i.y = 0;
-		while (i.y < sdl->screen_size.y)
+		orig.y = 0;
+		while (orig.y < sdl->screen_size.y)
 		{
-			if (obj->intersect(i, (t_sphere*)obj->data))
-				tmp[i.x + i.y * sdl->screen_size.x] = ((t_sphere*)obj->data)->color.color;
+			if (obj->intersect(&orig, &dir, (t_sphere*)obj->data, &t) && t > 0)
+				tmp[orig.x + orig.y * sdl->screen_size.x] = ((t_sphere*)obj->data)->color.color;
 				//((uint32_t*)canvas->pixels)[x + y * sdl->screen_size.x] = 0xFFFFFF;
-
-			i.y++;
+			//Vec3f hitPoint = orig + dir * t;
+			orig.y++;
 		}
-		i.x++;
+		orig.x++;
 	}
 }
 
-t_matrix*	make_camera(int32_t size)
+t_camera*	make_camera(int32_t size)
 {
-	t_matrix *camera;
+	t_camera *camera;
 
-	camera = NULL;
+	if ((camera = (t_camera*)malloc(sizeof(t_camera))) == NULL)
+		return (NULL);
+	memset(camera, 0, sizeof(t_camera));
+
 	if (size == 0)
 	{
-		camera = get_new_matrix(4);
-		fill_vertical_matrix(camera);
-		camera->matrix[3][2] = 50;
-		camera->matrix[3][0] = 25;
+		camera->cam = get_new_matrix(4);
+		fill_vertical_matrix(camera->cam);
+		camera->cam->matrix[3][2] = 50;
+		camera->cam->matrix[3][0] = 25;
 	}
 	else
-		fill_random_matrix(camera->matrix, camera->size);
+		fill_random_matrix(camera->cam->matrix, camera->cam->size);
 	
 	return (camera);
+}
+
+void	destroy_camera(t_camera **camera)
+{
+	destroy_matrix(&((*camera)->cam));
+	free(*camera);
+	camera = NULL;
 }
 
 t_v3d	mult_vect_matrix(t_v3d world_centr, double_t **invert_matrix)
@@ -131,7 +143,7 @@ void		ft_render(t_sdl *sdl, t_obj *obj)
 	memset(&time, 0, sizeof(t_time));
 	canvas = new_canvas(sdl->screen_size.x, sdl->screen_size.y);
 
-	t_matrix*	camera = NULL;
+	t_camera*	camera = NULL;
 
 	camera = make_camera(0);
 	//invert_matrix(camera);
@@ -140,8 +152,8 @@ void		ft_render(t_sdl *sdl, t_obj *obj)
 
 	while (sdl->loop)
 	{
-		invert_matrix(camera);
-		refresh_obj(camera, obj);
+		invert_matrix(camera->cam);
+		refresh_obj(camera->cam, obj);
 
 		//memset(canvas->pixels, 0, sdl->screen_size.x * sdl->screen_size.y);
 		SDL_PollEvent(&sdl->event);
@@ -151,9 +163,9 @@ void		ft_render(t_sdl *sdl, t_obj *obj)
 		if (sdl->cur_key[SDL_SCANCODE_ESCAPE])
 			sdl->loop = 0;
 		time_tick(&time);
-		move_camera(sdl->cur_key, camera, &time);
+		move_camera(sdl->cur_key, camera->cam, &time);
 
-		ft_draw(sdl, canvas, obj);
+		ft_draw(sdl, canvas, obj, camera);
 		screen = SDL_CreateTextureFromSurface(sdl->renderer, canvas);
 		memset(canvas->pixels, 0, sizeof(uint32_t) * 640 * 480);
 		SDL_RenderCopy(sdl->renderer, screen, 0, 0);
@@ -162,7 +174,8 @@ void		ft_render(t_sdl *sdl, t_obj *obj)
 		SDL_RenderClear(sdl->renderer);
 		SDL_DestroyTexture(screen);
 	}
-	destroy_matrix(&camera);
+	destroy_camera(&camera);
+	//destroy_matrix(&camera);
 	SDL_FreeSurface(canvas);
 }
 

@@ -61,6 +61,7 @@ t_sdl	*ft_new_sdl(void)
 		sdl->win_name = "RT_V1";
 		sdl->screen_size.x = 640;
 		sdl->screen_size.y = 480;
+		sdl->iar = ((double_t)sdl->screen_size.x) / ((double_t)sdl->screen_size.y);
 		sdl->loop = 1;
 		if (ft_init_sdl(sdl) < 0)
 		{
