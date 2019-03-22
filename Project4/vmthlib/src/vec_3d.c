@@ -12,7 +12,7 @@
 
 #include "vmth.h"
 
-t_v3d	vec_3d(double x, double y, double z)
+t_v3d	vec_3d(double_t x, double_t y, double_t z)
 {
 	t_v3d	new;
 

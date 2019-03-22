@@ -12,7 +12,7 @@
 
 #include "vmth.h"
 
-void		vec_3drot(t_v3d *v, int axle, double f)
+void		vec_3drot(t_v3d *v, int32_t axle, double_t f)
 {
 	t_v3d	temp;
 

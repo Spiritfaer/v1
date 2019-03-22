@@ -12,9 +12,9 @@
 
 #include "vmth.h"
 
-t_v2d		vec_2norm(t_v2d v)
+t_v2d			vec_2norm(t_v2d v)
 {
-	double	m;
+	double_t	m;
 
 	m = vec_2magnitude(v);
 	return ((t_v2d){v.x / m, v.y / m});

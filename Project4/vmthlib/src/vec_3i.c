@@ -16,6 +16,6 @@ t_v3i		vec_3i(t_v3d vec)
 {
 	t_v3i	new;
 
-	new = (t_v3i){(int)vec.x, (int)vec.y, (int)vec.z};
+	new = (t_v3i){(int32_t)vec.x, (int32_t)vec.y, (int32_t)vec.z};
 	return (new);
 }

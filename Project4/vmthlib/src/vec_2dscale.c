@@ -12,7 +12,7 @@
 
 #include "vmth.h"
 
-t_v2d		vec_2dscale(t_v2d v, double scale)
+t_v2d		vec_2dscale(t_v2d v, double_t scale)
 {
 	vec_2normalize(&v);
 	v.x *= scale;

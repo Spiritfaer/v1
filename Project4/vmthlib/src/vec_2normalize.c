@@ -12,9 +12,9 @@
 
 #include "vmth.h"
 
-void		vec_2normalize(t_v2d *v)
+void			vec_2normalize(t_v2d *v)
 {
-	double	m;
+	double_t	m;
 
 	m = vec_2magnitude(*v);
 	v->x /= m;

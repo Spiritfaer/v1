@@ -5,8 +5,8 @@ t_matrix*		mult_m_to_m(t_matrix *one, t_matrix *two)
 	//I think it shoud works only cube matrix! Test it!!!
 	t_v2i i = { 0,0 };
 	t_matrix *mult_m = NULL;
-	double buffer_src[32];
-	double buffer_dst[32];
+	double_t buffer_src[32];
+	double_t buffer_dst[32];
 
 	mult_m = get_new_matrix(one->size);
 	while (i.y < one->size)

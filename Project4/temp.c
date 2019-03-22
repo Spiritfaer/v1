@@ -3,7 +3,7 @@
 void	ft_temp_fill(t_v3d *center, t_rgb *color, double_t *radius, t_v2i win_size)
 {
 	center->x = 0;
-	center->y = 0;
+	center->y = 5;
 	center->z = -5;
 
 	color->r = 255;

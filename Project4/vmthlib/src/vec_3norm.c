@@ -12,9 +12,9 @@
 
 #include "vmth.h"
 
-t_v3d		vec_3norm(t_v3d v)
+t_v3d			vec_3norm(t_v3d v)
 {
-	double	m;
+	double_t	m;
 
 	m = vec_3magnitude(v);
 	return ((t_v3d){v.x / m, v.y / m, v.z / m});

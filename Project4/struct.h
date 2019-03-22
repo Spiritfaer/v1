@@ -1,7 +1,6 @@
 #ifndef STRUCT_H
 #define STRUCT_H
 
-#include "SDL.h"
 #include "vmth.h"
 
 enum e_type_flag	{plane, sphere, cube, cone};

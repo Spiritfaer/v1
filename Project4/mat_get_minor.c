@@ -3,7 +3,7 @@
 double		get_minor(t_matrix *m, t_v2i i)
 {
 	t_matrix	*temp = NULL;
-	double		result;
+	double_t	result;
 	t_v2i		ij = { 0,0 };
 	t_v2i		ii = { 0,0 };
 

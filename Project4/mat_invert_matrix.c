@@ -1,6 +1,6 @@
 #include "vmth.h"
 
-static void			set_inv_matrix(t_matrix *m, double** minor_mat, double dis)
+static void			set_inv_matrix(t_matrix *m, double_t** minor_mat, double_t dis)
 {
 	t_v2i	i = { 0,0 };
 
@@ -19,7 +19,7 @@ static void			set_inv_matrix(t_matrix *m, double** minor_mat, double dis)
 void			invert_matrix(t_matrix *m)
 {
 	t_matrix*	minor_mat;
-	double	dis;
+	double_t	dis;
 
 	minor_mat = NULL;
 	dis = 0;

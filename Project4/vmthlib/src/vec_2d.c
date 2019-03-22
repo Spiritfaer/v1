@@ -12,7 +12,7 @@
 
 #include "vmth.h"
 
-t_v2d	vec_2d(double x, double y)
+t_v2d	vec_2d(double_t x, double_t y)
 {
 	t_v2d	new;
 

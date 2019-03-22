@@ -1,8 +1,8 @@
 #include "vmth.h"
 
-void			get_rows(t_matrix *m, int y, double *buffer)
+void			get_rows(t_matrix *m, int32_t y, double_t *buffer)
 {
-	int	i;
+	int32_t		i;
 	
 	i = 0;
 	while (i < m->size)

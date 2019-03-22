@@ -1,6 +1,6 @@
 #include "vmth.h"
 
-void			free_mat(double **data, int size)
+void			free_mat(double_t **data, int32_t size)
 {
 	if (!data)
 		return;

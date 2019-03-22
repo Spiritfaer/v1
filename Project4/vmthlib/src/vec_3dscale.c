@@ -12,7 +12,7 @@
 
 #include "vmth.h"
 
-t_v3d		vec_3dscale(t_v3d v, double scale)
+t_v3d		vec_3dscale(t_v3d v, double_t scale)
 {
 	vec_3normalize(&v);
 	v.x *= scale;

@@ -1,8 +1,8 @@
 #include "vmth.h"
 
-void			set_rows_buffer(double *src, int size, double *buffer, double mult)
+void			set_rows_buffer(double_t *src, int32_t size, double_t *buffer, double_t mult)
 {
-	int	i;
+	int32_t	i;
 	
 	i = 0;
 	while (i < size)
@@ -12,9 +12,9 @@ void			set_rows_buffer(double *src, int size, double *buffer, double mult)
 	}
 }
 
-void			get_colums(t_matrix *m, int x, double *buffer)
+void			get_colums(t_matrix *m, int32_t x, double_t *buffer)
 {
-	int	i;
+	int32_t	i;
 	
 	i = 0;
 	while (i < m->size)

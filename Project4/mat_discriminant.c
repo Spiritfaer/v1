@@ -1,16 +1,16 @@
 #include "vmth.h"
 
-static double	get_dis(double a, double b, double c, double d)
+static double_t	get_dis(double_t a, double_t b, double_t c, double_t d)
 {
 	return (a * d - c * b);
 }
 
-double		get_discriminant(t_matrix *m)
+double_t		get_discriminant(t_matrix *m)
 {
 	t_matrix	*t_mat;
-	double	dis;
-	double	buffer[10];
-	double	mult;
+	double_t	dis;
+	double_t	buffer[10];
+	double_t	mult;
 	t_v2i		i;
 
 	t_mat = get_copy_matryx(m);

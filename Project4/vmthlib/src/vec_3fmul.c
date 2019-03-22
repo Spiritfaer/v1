@@ -12,7 +12,7 @@
 
 #include "vmth.h"
 
-t_v3d		vec_3fmul(t_v3d v, double m)
+t_v3d		vec_3fmul(t_v3d v, double_t m)
 {
 	return ((t_v3d){v.x * m, v.y * m, v.z * m});
 }

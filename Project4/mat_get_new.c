@@ -1,17 +1,17 @@
 #include "vmth.h"
 
-double**		get_new_m(unsigned char n)
+double**		get_new_m(uint8_t n)
 {
-	double	**n_m = NULL;
-	signed int	i = 0;
+	double_t	**n_m = NULL;
+	int32_t		i = 0;
 
 	if (n > 1)
 	{
-		if ((n_m = (double**)malloc(sizeof(double*) * n)) != NULL)
+		if ((n_m = (double_t**)malloc(sizeof(double_t*) * n)) != NULL)
 		{
 			while (i < n)
 			{
-				if ((*(n_m + i) = (double*)malloc(sizeof(double) * n)) == NULL)
+				if ((*(n_m + i) = (double_t*)malloc(sizeof(double_t) * n)) == NULL)
 				{
 					while (--i >= 0)
 					{
@@ -21,14 +21,14 @@ double**		get_new_m(unsigned char n)
 					n_m = NULL;
 					return (NULL);
 				}
-				memset(*(n_m + i), 0, sizeof(double) * n);
+				memset(*(n_m + i), 0, sizeof(double_t) * n);
 				i++;
 			}
 		}
 	}
 	return (n_m);
 }
-t_matrix*		get_new_matrix(unsigned char n)
+t_matrix*		get_new_matrix(uint8_t n)
 {
 	t_matrix*	m_new;
 

@@ -12,7 +12,7 @@
 
 #include "vmth.h"
 
-t_v2d		vec_2fmul(t_v2d v, double m)
+t_v2d		vec_2fmul(t_v2d v, double_t m)
 {
 	return ((t_v2d){v.x * m, v.y * m});
 }

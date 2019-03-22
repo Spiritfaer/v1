@@ -12,9 +12,9 @@
 
 #include "vmth.h"
 
-void		vec_3normalize(t_v3d *v)
+void			vec_3normalize(t_v3d *v)
 {
-	double	m;
+	double_t	m;
 
 	m = vec_3magnitude(*v);
 	v->x /= m;

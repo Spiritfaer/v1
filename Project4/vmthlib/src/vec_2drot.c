@@ -12,7 +12,7 @@
 
 #include "vmth.h"
 
-void		vec_2drot(t_v2d *v, double f)
+void		vec_2drot(t_v2d *v, double_t f)
 {
 	t_v2d tmp;
 

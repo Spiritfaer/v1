@@ -2,7 +2,7 @@
 
 void			fill_vertical_matrix(t_matrix *m)
 {
-	int	i;
+	int32_t		i;
 
 	i = 0;
 	if (!m || !m->matrix)
