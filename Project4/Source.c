@@ -11,7 +11,7 @@ void	ft_draw(const t_sdl *sdl, SDL_Surface *canvas, const t_obj *obj, t_camera *
 {
 	t_v3i		orig	= { 0, 0, 0 };
 	t_v3d		dir = /*camera->matrix*/ { 0, 0, -1 };
-	double_t	t		= _INF;
+	double_t	t		= DBL_MAX;
 	uint32_t	*tmp	= (uint32_t*)canvas->pixels;
 
 	while (orig.x < sdl->screen_size.x)
@@ -20,7 +20,9 @@ void	ft_draw(const t_sdl *sdl, SDL_Surface *canvas, const t_obj *obj, t_camera *
 		while (orig.y < sdl->screen_size.y)
 		{
 			if (obj->intersect(&orig, &dir, (t_sphere*)obj->data, &t) && t > 0)
+			{
 				tmp[orig.x + orig.y * sdl->screen_size.x] = ((t_sphere*)obj->data)->color.color;
+			}
 				//((uint32_t*)canvas->pixels)[x + y * sdl->screen_size.x] = 0xFFFFFF;
 			//Vec3f hitPoint = orig + dir * t;
 			orig.y++;

@@ -48,6 +48,7 @@ typedef struct		s_time
 typedef struct		s_camera
 {
 	t_matrix		*cam;
+
 	t_v3i			oryg;
 	t_v3d			dir;
 	double_t		t;
