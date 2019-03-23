@@ -58,6 +58,7 @@ t_obj*	ft_new_sphere(t_v3d centr, t_rgb color, double_t radius)
 
 	obj->flag = sphere;
 	new_sphere->radius = radius;
+	new_sphere->rad2 = radius * radius;
 	new_sphere->world_centr = centr;
 	new_sphere->color = color;
 

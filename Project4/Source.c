@@ -1,5 +1,49 @@
 #include "main.h"
 
+t_v3d	mult_vect_matrix_dir(t_v3d world_centr, double_t **invert_matrix)
+{
+	t_v3d point = { 0, 0, 0 };
+
+	point.x = world_centr.x * invert_matrix[0][0] + world_centr.y * invert_matrix[1][0] + world_centr.z * invert_matrix[2][0];
+	point.y = world_centr.x * invert_matrix[0][1] + world_centr.y * invert_matrix[1][1] + world_centr.z * invert_matrix[2][1];
+	point.z = world_centr.x * invert_matrix[0][2] + world_centr.y * invert_matrix[1][2] + world_centr.z * invert_matrix[2][2];
+
+	return (point);
+}
+
+int8_t	solve_quadratic(const double_t *a, const double_t *b, const double_t *c,
+	double_t *x0, double_t *x1)
+{
+	double_t discr = (*b) * (*b) - 4 * (*a) * (*c);
+	double_t q;
+	double_t tmp;
+	if (discr < 0)
+		return (0);
+	else if (discr == 0)
+		(*x0) = (*x1) = -0.5 * (*b) / (*a);
+	else {
+		q = ((*b) > 0) ?
+			-0.5 * ((*b) + sqrt(discr)) :
+			-0.5 * ((*b) - sqrt(discr));
+		(*x0) = q / (*a);
+		(*x1) = (*c) / q;
+	}
+	if (x0 > x1)
+	{
+		//I should use swap... but I forget where it defined
+		fs_swap(x0, x1);
+	}
+	return (1);
+}
+
+
+t_v3d	mult_vect_matrix(t_v3d world_centr, double_t **invert_matrix);
+
+double_t	deg_to_rad(const double_t deg)
+{
+	return (deg * DEG_TO_RAD);
+}
+
 SDL_Surface *new_canvas(uint32_t width, uint32_t height)
 {
 	SDL_Surface *new_surf;
@@ -7,27 +51,68 @@ SDL_Surface *new_canvas(uint32_t width, uint32_t height)
 		0, 0, 0, 0);
 	return (new_surf);
 }
+
+t_v3d	vec_3i_to_3d(t_v3i *origin)
+{
+	return ((t_v3d) {origin->x, origin->y, origin->z});
+}
+
+int8_t demo_intersect(t_v3d *orig, t_v3d *dir, t_sphere *sphere, double_t *t)
+{
+	double_t t0, t1; // solutions for t if the ray intersects 
+	t_v3d L = vec_3sub(*orig, sphere->world_centr);
+	double_t a = vec_3magnitude(*dir);
+	double_t b = 2 * vec_3dot(*dir, L);
+	double_t c = vec_3dot(L,L) - sphere->rad2;
+	if (solve_quadratic(&a, &b, &c, &t0, &t1) == 0)
+		return (0);
+	if (t0 > t1)
+		fs_swap(&t0, &t1);
+	if (t0 < 0) {
+		t0 = t1; // if t0 is negative, let's use t1 instead 
+		if (t0 < 0)
+			return (0); // both t0 and t1 are negative 
+	}
+	*t = t0;
+	return (1);
+}
+
 void	ft_draw(const t_sdl *sdl, SDL_Surface *canvas, const t_obj *obj, t_camera *camera)
 {
-	t_v3i		orig	= { 0, 0, 0 };
-	t_v3d		dir = /*camera->matrix*/ { 0, 0, -1 };
+	t_v3d		orig	= { 0, 0, 0 };
+	t_v3d		dir = /*camera->matrix*/ { 0, 0, 0 };
+	t_v3d		ray = { 0,0,-1 };
 	double_t	t		= DBL_MAX;
 	uint32_t	*tmp	= (uint32_t*)canvas->pixels;
+	int32_t count = 0;
+	double_t imageAspectRatio = (double_t)(sdl->screen_size.x) / (double_t)(sdl->screen_size.y);
+	double_t scale = tan(deg_to_rad(camera->fov * 0.5));
 
-	while (orig.x < sdl->screen_size.x)
+	t_v2i i = { 0,0 };
+
+	orig = mult_vect_matrix((t_v3d){0,0,0}, camera->cam->matrix);
+	while (i.x < sdl->screen_size.x)
 	{
-		orig.y = 0;
-		while (orig.y < sdl->screen_size.y)
+		i.y = 0;
+		while (i.y < sdl->screen_size.y)
 		{
-			if (obj->intersect(&orig, &dir, (t_sphere*)obj->data, &t) && t > 0)
-			{
-				tmp[orig.x + orig.y * sdl->screen_size.x] = ((t_sphere*)obj->data)->color.color;
-			}
+			ray.x = (2 * (i.x + 0.5) / (double_t)(sdl->screen_size.x) - 1) * imageAspectRatio * scale;
+			ray.y = (1 - 2 * (i.y + 0.5) / (double_t)(sdl->screen_size.y)) * scale;
+			dir = mult_vect_matrix_dir(ray, (camera->cam->invert_matrix));
+			vec_3normalize(&dir);
+			//if (obj->intersect(&orig, &dir, (t_sphere*)obj->data, &t) && t > 0)
+			//{
+			//	tmp[orig.x + orig.y * sdl->screen_size.x] = ((t_sphere*)obj->data)->color.color;
+			//}
+			if (demo_intersect(&orig, &dir, (t_sphere*)obj->data, &t) != 0 && t > 0)
+					tmp[i.x + i.y * sdl->screen_size.x] = ((t_sphere*)obj->data)->color.color;
 				//((uint32_t*)canvas->pixels)[x + y * sdl->screen_size.x] = 0xFFFFFF;
 			//Vec3f hitPoint = orig + dir * t;
-			orig.y++;
+			else
+				tmp[i.x + i.y * sdl->screen_size.x] = 0x3914AF;
+			i.y++;
 		}
-		orig.x++;
+		i.x++;
 	}
 }
 
@@ -38,13 +123,13 @@ t_camera*	make_camera(int32_t size)
 	if ((camera = (t_camera*)malloc(sizeof(t_camera))) == NULL)
 		return (NULL);
 	memset(camera, 0, sizeof(t_camera));
-
+	camera->fov = 90;
 	if (size == 0)
 	{
 		camera->cam = get_new_matrix(4);
 		fill_vertical_matrix(camera->cam);
-		camera->cam->matrix[3][2] = 50;
-		camera->cam->matrix[3][0] = 25;
+		camera->cam->matrix[3][2] = 25;
+		camera->cam->matrix[3][0] = 0;
 	}
 	else
 		fill_random_matrix(camera->cam->matrix, camera->cam->size);
@@ -58,6 +143,8 @@ void	destroy_camera(t_camera **camera)
 	free(*camera);
 	camera = NULL;
 }
+
+
 
 t_v3d	mult_vect_matrix(t_v3d world_centr, double_t **invert_matrix)
 {
@@ -96,8 +183,7 @@ void	time_tick(t_time *t)
 	t->frame_time = (t->time - t->old_time) / 1000.0;
 	t->speed = t->frame_time * 30.0;
 }
-
-void		move_camera(uint8_t *cur_key, t_matrix *camera, t_time *time)
+void	move_camera(uint8_t *cur_key, t_matrix *camera, t_time *time)
 {
 	if (cur_key[SDL_SCANCODE_W])
 	{
@@ -180,6 +266,8 @@ void		ft_render(t_sdl *sdl, t_obj *obj)
 	//destroy_matrix(&camera);
 	SDL_FreeSurface(canvas);
 }
+
+
 
 int main(int argc, char ** argv)
 {

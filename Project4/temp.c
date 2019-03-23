@@ -2,16 +2,16 @@
 
 void	ft_temp_fill(t_v3d *center, t_rgb *color, double_t *radius, t_v2i win_size)
 {
-	center->x = 0;
-	center->y = 5;
-	center->z = -5;
+	center->x = 5;
+	center->y = -5;
+	center->z = -1;
 
 	color->r = 255;
 	color->g = 117;
 	color->b = 20;
 	color->color = (color->r << 16 | color->g << 8 | color->b);
 
-	*radius = 50.0;
+	*radius = 0.9;
 
 	/*
 	*centr = { 0,0,50 };	
@@ -167,4 +167,13 @@ void			print_matrix(double_t **matrix, int32_t n)
 		i.x++;
 	}
 	printf("\n");
+}
+
+void		fs_swap(double_t *s, double_t *d)
+{
+	double_t t;
+
+	t = *s;
+	*s = *d;
+	*d = t;
 }

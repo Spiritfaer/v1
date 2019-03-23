@@ -21,6 +21,7 @@ typedef struct		s_sphere
 	t_v3d			cam_centr;
 	t_rgb			color;
 	double_t		radius;
+	double_t		rad2;
 }					t_sphere;
 
 typedef struct 		s_obj
@@ -54,6 +55,7 @@ typedef struct		s_camera
 	double_t		t;
 	double_t		max_t;
 	double_t		min_t;
+	double_t		fov;
 }					t_camera;
 
 typedef struct		s_sdl
