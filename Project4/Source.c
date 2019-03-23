@@ -180,7 +180,7 @@ void	time_tick(t_time *t)
 {
 	t->old_time = t->time;
 	t->time = SDL_GetTicks();
-	t->frame_time = (t->time - t->old_time) / 1000.0;
+	t->frame_time = (t->time - t->old_time) / 10000.0;
 	t->speed = t->frame_time * 30.0;
 }
 void	move_camera(uint8_t *cur_key, t_matrix *camera, t_time *time)
