@@ -20,6 +20,37 @@ void	ft_temp_fill(t_v3d *center, t_rgb *color, double_t *radius, t_v2i win_size)
 	*/
 
 }
+void	set_color(t_rgb *color, uint8_t r, uint8_t g, uint8_t b)
+{
+	color->r = r;
+	color->g = g;
+	color->b = b;
+	color->color = (color->r << 16 | color->g << 8 | color->b);
+}
+
+void	push_back_obj(t_obj *src, t_obj *des)
+{
+	t_obj *tmp;
+
+	if (!src || !des)
+		return ;
+	if (des->next == NULL)
+	{
+		des->next = src;
+		return ;
+	}
+	tmp = des;
+	while (tmp->next != NULL)
+	{
+		tmp = tmp->next;
+		if (tmp->next == NULL)
+		{
+			tmp->next = src;
+			return;
+		}
+	}
+}
+
 
 void	color_move(int *color, int up)
 {

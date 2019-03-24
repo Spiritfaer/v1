@@ -87,11 +87,11 @@ uint8_t	trash_sphere_intersect(const t_v3i* origin, const t_v3d* dir, const void
 	//return (0);
 }
 
-t_rgb	ft_get_sphere_color(const void* data)
+uint32_t	ft_get_sphere_color(const void* data)
 {
 	const t_sphere *temp;
 	temp = data;
-	return(temp->color);
+	return(temp->color.color);
 }
 
 t_obj*	ft_new_sphere(t_v3d centr, t_rgb color, double_t radius)
@@ -110,7 +110,8 @@ t_obj*	ft_new_sphere(t_v3d centr, t_rgb color, double_t radius)
 
 	obj->data = new_sphere;
 	obj->get_color = ft_get_sphere_color;
-	obj->intersect = trash_sphere_intersect;
+	obj->intersect = sphere_intersect;
+	obj->next = NULL;
 
 	return (obj);
 }

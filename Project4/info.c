@@ -23,14 +23,18 @@ void	ft_print_cube(const void *data) {}
 void	ft_print_cone(const void *data) {}
 void	obj_info(const t_obj* obj)
 {
-	if (obj->flag == plane)
-		ft_print_plane(obj->data);
-	else if (obj->flag == sphere)
-		ft_print_sphere(obj->data);
-	else if (obj->flag == cube)
-		ft_print_cube(obj->data);
-	else if (obj->flag == cone)
-		ft_print_cone(obj->data);
-	else
-		printf("ERROR PRINT INFO! UNEXPECTABLE FLAG!\nFLAG CODE = %d\n", obj->flag);
+	while (obj)
+	{
+		if (obj->flag == plane)
+			ft_print_plane(obj->data);
+		else if (obj->flag == sphere)
+			ft_print_sphere(obj->data);
+		else if (obj->flag == cube)
+			ft_print_cube(obj->data);
+		else if (obj->flag == cone)
+			ft_print_cone(obj->data);
+		else
+			printf("ERROR PRINT INFO! UNEXPECTABLE FLAG!\nFLAG CODE = %d\n", obj->flag);
+		obj = obj->next;
+	}
 }

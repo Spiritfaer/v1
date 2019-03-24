@@ -15,11 +15,11 @@ void	ft_draw(const t_sdl *sdl, SDL_Surface *canvas, const t_obj *obj, t_camera *
 	t_v3d		ray = { 0,0,-1 };
 	double_t	t		= DBL_MAX;
 	uint32_t	*tmp	= (uint32_t*)canvas->pixels;
-	int32_t count = 0;
-	double_t imageAspectRatio = (double_t)(sdl->screen_size.x) / (double_t)(sdl->screen_size.y);
-	double_t scale = tan(deg_to_rad(camera->fov * 0.5));
-
-	t_v2i i = { 0,0 };
+	double_t	imageAspectRatio = (double_t)(sdl->screen_size.x) / (double_t)(sdl->screen_size.y);
+	double_t	scale = tan(deg_to_rad(camera->fov * 0.5));
+	const t_obj *tmp_obj;
+	t_v2i		i = { 0,0 };
+	double_t	tNear = DBL_MAX;
 
 	orig = mult_vect_matrix_4_4((t_v3d){0,0,0}, camera->cam->matrix);
 	while (i.x < sdl->screen_size.x)
@@ -31,15 +31,24 @@ void	ft_draw(const t_sdl *sdl, SDL_Surface *canvas, const t_obj *obj, t_camera *
 			ray.y = (1 - 2 * (i.y + 0.5) / (double_t)(sdl->screen_size.y)) * scale;
 			dir = mult_vect_matrix_3_3(ray, (camera->cam->invert_matrix));
 			vec_3normalize(&dir);
-			//if (obj->intersect(&orig, &dir, (t_sphere*)obj->data, &t) && t > 0)
-			//{
-			//	tmp[orig.x + orig.y * sdl->screen_size.x] = ((t_sphere*)obj->data)->color.color;
-			//}
-			if (sphere_intersect(&orig, &dir, (t_sphere*)obj->data, &t) != 0 && t > 0)
-					tmp[i.x + i.y * sdl->screen_size.x] = ((t_sphere*)obj->data)->color.color;
-				//((uint32_t*)canvas->pixels)[x + y * sdl->screen_size.x] = 0xFFFFFF;
-			//Vec3f hitPoint = orig + dir * t;
-			else
+
+			tmp_obj = obj;
+			tNear = DBL_MAX;
+			t = DBL_MAX;
+			while (tmp_obj)
+			{
+				t = DBL_MAX;
+				if (tmp_obj->intersect(&orig, &dir, tmp_obj->data, &t) != 0 && t < tNear)
+				{
+					tmp[i.x + i.y * sdl->screen_size.x] = obj->get_color(tmp_obj->data);
+					tNear = t;
+				}
+
+				//Vec3f hitPoint = orig + dir * t;
+				
+				tmp_obj = tmp_obj->next;
+			}
+			if (tmp[i.x + i.y * sdl->screen_size.x] == 0x000000)
 				tmp[i.x + i.y * sdl->screen_size.x] = 0x3914AF;
 			i.y++;
 		}
@@ -59,7 +68,7 @@ t_camera*	make_camera(int32_t size)
 	{
 		camera->cam = get_new_matrix(4);
 		fill_vertical_matrix(camera->cam);
-		camera->cam->matrix[3][2] = 25;
+		camera->cam->matrix[3][2] = 10;
 		camera->cam->matrix[3][0] = 0;
 	}
 	else
@@ -136,6 +145,15 @@ int main(int argc, char ** argv)
 	
 	ft_temp_fill(&centr, &color, &radius, sdl->screen_size);
 	obj = ft_new_sphere(centr, color, radius);
+
+	centr = vec_3d(-2.0, 3.0, -1.5);
+	set_color(&color, 33, 66, 30);
+	push_back_obj(ft_new_sphere(centr, color, radius), obj);
+
+	centr = vec_3d(5.0, 7.0, -0.5);
+	set_color(&color, 32, 33, 79);
+	push_back_obj(ft_new_sphere(centr, color, radius), obj);
+
 	obj_info(obj);
 
 	_CrtMemState tmp;
