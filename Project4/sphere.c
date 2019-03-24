@@ -2,7 +2,8 @@
 
 t_v3d	get_center_sphere(const void *data)
 {
-	return(((t_sphere*)data)->cam_centr);
+	t_sphere *s = data;
+	return(s->cam_centr);
 }
 
 int8_t	solve_quadratic(const double_t *a, const double_t *b, const double_t *c,

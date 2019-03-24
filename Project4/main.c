@@ -68,8 +68,11 @@ uint8_t		cast_ray(t_sdl *sdl, t_obj *obj, t_v3d *orig, t_v3d *dir, t_v2i i, SDL_
 		if (tmp_obj->intersect(orig, dir, tmp_obj->data, &t) != 0 && t < tNear)
 		{
 			tNear = t;
+			//Vec3f hitPoint = orig + dir * t;----------------
 			point_hit = vec_3add(*orig, vec_3fmul(*dir, t));
-			n_hit = vec_3sub(point_hit, obj->get_center(obj->data));
+			t_v3d ttt = tmp_obj->get_center(tmp_obj->data);
+			//------------------------------------------------
+			n_hit = vec_3sub(point_hit, ttt);
 			vec_3normalize(&n_hit);
 			shadow = vec_3dot(n_hit, vec_3invert(dir));
 			tmp[i.x + i.y * sdl->screen_size.x] = set_pixel_color(tmp_obj->get_color(tmp_obj->data), shadow);
@@ -77,7 +80,6 @@ uint8_t		cast_ray(t_sdl *sdl, t_obj *obj, t_v3d *orig, t_v3d *dir, t_v2i i, SDL_
 			//tmp[i.x + i.y * sdl->screen_size.x] = obj->get_color(tmp_obj->data);
 			result = true;
 		}
-		//Vec3f hitPoint = orig + dir * t;
 		tmp_obj = tmp_obj->next;
 	}
 	return (result);
@@ -88,7 +90,7 @@ static void set_var_to_draw_foo(t_v3d *orig, t_v3d *dir, t_v3d *point, t_v2i *i)
 	memset(orig, 0, sizeof(t_v3d));
 	memset(dir, 0, sizeof(t_v3d));
 	memset(point, 0, sizeof(t_v3d));
-	point->z = -DISTANCE_TO_CANVAS;
+	point->z = -1;
 	memset(i, 0, sizeof(t_v2i));
 }
 void	ft_draw(const t_sdl *sdl, SDL_Surface *canvas, const t_obj *obj, t_camera *camera)
@@ -124,13 +126,19 @@ void	ft_draw(const t_sdl *sdl, SDL_Surface *canvas, const t_obj *obj, t_camera *
 void	refresh_obj(const t_matrix *camera, t_obj *obj)
 {
 	t_v3d	point;
-	t_sphere *tmp = (t_sphere*)obj->data;
-	if (obj->flag == sphere)
+	t_sphere *tmp;
+	while (obj)
 	{
-		point = mult_vect_matrix_4_4(tmp->world_centr, camera->invert_matrix);
-		((t_sphere*)obj->data)->cam_centr = point;
-		//printf("\n%f, %f, %f\n", point.x, point.y, point.z);
+		tmp = (t_sphere*)obj->data;
+		if (obj->flag == sphere)
+		{
+			point = mult_vect_matrix_3_3(tmp->world_centr, camera->invert_matrix);
+			((t_sphere*)obj->data)->cam_centr = point;
+			//printf("\n%f, %f, %f\n", point.x, point.y, point.z);
+		}
+		obj = obj->next;
 	}
+
 }
 
 void			ft_render(t_sdl *sdl, t_obj *obj)
