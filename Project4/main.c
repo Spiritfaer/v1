@@ -49,9 +49,9 @@ t_v3d		vec_3invert(const t_v3d *src)
 	return (dest);
 }
 
-uint8_t		cast_ray(t_sdl *sdl, t_obj *obj, t_v3d *orig, t_v3d *dir, t_v2i i, SDL_Surface *canvas)
+uint8_t		cast_ray(const t_sdl *sdl, const t_obj *obj, t_v3d *orig, t_v3d *dir, t_v2i i, SDL_Surface *canvas)
 {
-	t_obj		*tmp_obj;
+	const t_obj		*tmp_obj;
 	double_t	tNear;
 	double_t	t;
 	uint32_t	*tmp = (uint32_t*)canvas->pixels;
@@ -70,14 +70,10 @@ uint8_t		cast_ray(t_sdl *sdl, t_obj *obj, t_v3d *orig, t_v3d *dir, t_v2i i, SDL_
 			tNear = t;
 			//Vec3f hitPoint = orig + dir * t;----------------
 			point_hit = vec_3add(*orig, vec_3fmul(*dir, t));
-			t_v3d ttt = tmp_obj->get_center(tmp_obj->data);
-			//------------------------------------------------
-			n_hit = vec_3sub(point_hit, ttt);
+			n_hit = vec_3sub(point_hit, tmp_obj->get_center(tmp_obj->data));
 			vec_3normalize(&n_hit);
 			shadow = vec_3dot(n_hit, vec_3invert(dir));
 			tmp[i.x + i.y * sdl->screen_size.x] = set_pixel_color(tmp_obj->get_color(tmp_obj->data), shadow);
-			//set_pixel_color(tmp[i.x + i.y * sdl->screen_size.x], obj->get_color(tmp_obj->data), hit);
-			//tmp[i.x + i.y * sdl->screen_size.x] = obj->get_color(tmp_obj->data);
 			result = true;
 		}
 		tmp_obj = tmp_obj->next;
@@ -90,7 +86,7 @@ static void set_var_to_draw_foo(t_v3d *orig, t_v3d *dir, t_v3d *point, t_v2i *i)
 	memset(orig, 0, sizeof(t_v3d));
 	memset(dir, 0, sizeof(t_v3d));
 	memset(point, 0, sizeof(t_v3d));
-	point->z = -1;
+	point->z = -DISTANCE_TO_CANVAS;
 	memset(i, 0, sizeof(t_v2i));
 }
 void	ft_draw(const t_sdl *sdl, SDL_Surface *canvas, const t_obj *obj, t_camera *camera)
@@ -126,19 +122,29 @@ void	ft_draw(const t_sdl *sdl, SDL_Surface *canvas, const t_obj *obj, t_camera *
 void	refresh_obj(const t_matrix *camera, t_obj *obj)
 {
 	t_v3d	point;
-	t_sphere *tmp;
+	t_v3d	normal;
+	t_sphere *sph;
+	t_plane *pl;
 	while (obj)
 	{
-		tmp = (t_sphere*)obj->data;
 		if (obj->flag == sphere)
 		{
-			point = mult_vect_matrix_3_3(tmp->world_centr, camera->invert_matrix);
+			sph = (t_sphere*)obj->data;
+			point = mult_vect_matrix_3_3(sph->world_centr, camera->invert_matrix);
 			((t_sphere*)obj->data)->cam_centr = point;
 			//printf("\n%f, %f, %f\n", point.x, point.y, point.z);
 		}
+		else if (obj->flag == plane)
+		{
+			pl = (t_plane*)obj->data;
+			point = mult_vect_matrix_3_3(pl->world_centr, camera->invert_matrix);
+			normal = mult_vect_matrix_3_3(pl->world_normal, camera->invert_matrix);
+			vec_3normalize(&normal);
+			((t_plane*)obj->data)->cam_centr = point;
+			((t_plane*)obj->data)->cam_normal = normal;
+		}
 		obj = obj->next;
 	}
-
 }
 
 void			ft_render(t_sdl *sdl, t_obj *obj)
@@ -183,7 +189,7 @@ int main(int argc, char ** argv)
 	t_v3d		centr;
 	t_rgb		color;
 	double_t	radius;
-
+	int32_t		q = 3;
 
 	sdl = ft_new_sdl();
 	
@@ -192,18 +198,23 @@ int main(int argc, char ** argv)
 
 	centr = vec_3d(-2.0, 3.0, -1.5);
 	set_color(&color, 33, 66, 30);
-	radius = 1.5;
+	radius = 1.5 * q;
 	push_back_obj(ft_new_sphere(centr, color, radius), obj);
 
 	centr = vec_3d(5.0, 7.0, 1.0);
 	set_color(&color, 83, 55, 122);
-	radius = 0.4;
+	radius = 0.7 * q;
 	push_back_obj(ft_new_sphere(centr, color, radius), obj);
 
 	centr = vec_3d(5.0, 7.0, -0.5);
 	set_color(&color, 255, 255, 255);
-	radius = 1;
+	radius = 1 * q;
 	push_back_obj(ft_new_sphere(centr, color, radius), obj);
+
+	centr = vec_3d(0.0, 0.0, -10.5);
+	set_color(&color, 200, 200, 25);
+	radius = 1 * q;
+	push_back_obj(ft_new_plane(centr, color, radius), obj);
 
 	obj_info(obj);
 

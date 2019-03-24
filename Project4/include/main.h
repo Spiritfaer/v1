@@ -14,7 +14,7 @@
 #include "vmth.h"
 #define _CRTDBG_MAP_ALLOC 
 
-#define DISTANCE_TO_CANVAS 1
+#define DISTANCE_TO_CANVAS 2
 #define CANVAS_SIZE 2
 
 #define WIN_SIZE_W 640
@@ -37,7 +37,15 @@ void		ft_del_sphere(t_obj **obj);
 
 t_rgb		ft_get_sphere_color(const void* data);
 t_v3d		get_center_sphere(void *data);
-int8_t		sphere_intersect(t_v3d *orig, t_v3d *dir, t_sphere *sphere, double_t *t);
+int8_t		sphere_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t *t);
+
+//----------------------plane()
+
+t_obj*	ft_new_plane(t_v3d centr, t_rgb color, double_t radius);
+int8_t	plane_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t *t);
+t_v3d	get_center_plane(const void *data);
+t_rgb	ft_get_plane_color(const void* data);
+
 
 //------------------------------
 

@@ -24,10 +24,20 @@ typedef struct		s_sphere
 	double_t		rad2;
 }					t_sphere;
 
+typedef struct		s_plane
+{
+	t_v3d			world_normal;
+	t_v3d			world_centr;
+	t_v3d			cam_normal;
+	t_v3d			cam_centr;
+	t_rgb			color;
+	double_t		size;
+}					t_plane;
+
 typedef struct 		s_obj
 {
 	void			*data;
-	int8_t(*intersect)(t_v3d *orig, t_v3d *dir, t_sphere *sphere, double_t *t);
+	int8_t(*intersect)(t_v3d *orig, t_v3d *dir, const void *data, double_t *t);
 	//t_rgb(*get_color)(const void* data, const t_v3d* intersect_point);
 	t_rgb(*get_color)(const void* data);
 	t_v3d(*get_center)(const void* data);

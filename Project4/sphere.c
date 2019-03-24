@@ -2,7 +2,7 @@
 
 t_v3d	get_center_sphere(const void *data)
 {
-	t_sphere *s = data;
+	const t_sphere *s = data;
 	return(s->cam_centr);
 }
 
@@ -40,13 +40,14 @@ void	ft_del_sphere(t_obj **obj)
 	(*obj) = NULL;
 }
 
-int8_t sphere_intersect(t_v3d *orig, t_v3d *dir, t_sphere *sphere, double_t *t)
+int8_t sphere_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t *t)
 {
+	const t_sphere *s = data;
 	double_t t0, t1; // solutions for t if the ray intersects 
-	t_v3d L = vec_3sub(*orig, sphere->world_centr);
+	t_v3d L = vec_3sub(*orig, s->world_centr);
 	double_t a = vec_3magnitude(*dir);
 	double_t b = 2 * vec_3dot(*dir, L);
-	double_t c = vec_3dot(L, L) - sphere->rad2;
+	double_t c = vec_3dot(L, L) - s->rad2;
 	if (solve_quadratic(&a, &b, &c, &t0, &t1) == 0)
 		return (0);
 	if (t0 > t1)
@@ -58,39 +59,6 @@ int8_t sphere_intersect(t_v3d *orig, t_v3d *dir, t_sphere *sphere, double_t *t)
 	}
 	*t = t0;
 	return (1);
-}
-
-uint8_t	trash_sphere_intersect(const t_v3i* origin, const t_v3d* dir, const void* data, double_t* t)
-{
-	t_sphere *my_sphere = (t_sphere*)data;
-	t_v2d	p_screen;
-	t_v2d	p_ndc;
-	t_v2i	p_raster;
-
-	double_t canvasWidth = 2;
-	double_t canvasHeight = 2;
-
-	p_screen.x = my_sphere->cam_centr.x / -my_sphere->cam_centr.z;
-	p_screen.y = my_sphere->cam_centr.y / -my_sphere->cam_centr.z;
-
-	p_ndc.x = (p_screen.x + canvasWidth * 0.5) / canvasWidth;
-	p_ndc.y = (p_screen.y + canvasHeight * 0.5) / canvasHeight;
-
-	p_raster.x = (int32_t)(p_ndc.x * 640);
-	p_raster.y = (int32_t)((1 - p_ndc.y) * 480);
-
-
-	if (((origin->x - p_raster.x) * (origin->x - p_raster.x))
-		+ ((origin->y - p_raster.y) * (origin->y - p_raster.y))
-		< (my_sphere->radius * my_sphere->radius))
-		return (1);
-	return (0);
-
-	//if (((i.x - p_raster.x) * (i.x - p_raster.x))
-	//	+ ((i.y - p_raster.y) * (i.y - p_raster.y))
-	//	< (my_sphere->radius * my_sphere->radius))
-	//	return (1);
-	//return (0);
 }
 
 t_rgb	ft_get_sphere_color(const void* data)
