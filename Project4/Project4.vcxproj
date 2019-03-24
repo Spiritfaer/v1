@@ -148,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="camera.c" />
     <ClCompile Include="deg_to_rad.c" />
     <ClCompile Include="event.c" />
     <ClCompile Include="info.c" />

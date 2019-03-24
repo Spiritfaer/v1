@@ -14,6 +14,8 @@
 #include "vmth.h"
 #define _CRTDBG_MAP_ALLOC 
 
+#define DISTANCE_TO_CANVAS 1
+#define CANVAS_SIZE 2
 
 #include "temp.h"
 #include "struct.h"
@@ -45,6 +47,9 @@ void		move_camera(const uint8_t *cur_key, t_matrix *camera, t_time *time);
 void		time_tick(t_time *t);
 
 //------------------------------
+
+t_camera*	make_camera(int32_t size);
+void		destroy_camera(t_camera **camera);
 
 
 #endif

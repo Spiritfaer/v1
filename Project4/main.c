@@ -8,80 +8,61 @@ SDL_Surface *new_canvas(uint32_t width, uint32_t height)
 	return (new_surf);
 }
 
+uint8_t		cast_ray(t_sdl *sdl, t_obj *obj, t_v3d *orig, t_v3d *dir, t_v2i i, SDL_Surface *canvas)
+{
+	t_obj *tmp_obj;
+	double_t tNear;
+	double_t t;
+	uint32_t *tmp = (uint32_t*)canvas->pixels;
+
+	uint8_t result = 0;
+	tmp_obj = obj;
+	tNear = DBL_MAX;
+	while (tmp_obj)
+	{
+		t = DBL_MAX;
+		if (tmp_obj->intersect(orig, dir, tmp_obj->data, &t) != 0 && t < tNear)
+		{
+			tmp[i.x + i.y * sdl->screen_size.x] = obj->get_color(tmp_obj->data);
+			tNear = t;
+			result = 1;
+		}
+
+		//Vec3f hitPoint = orig + dir * t;
+
+		tmp_obj = tmp_obj->next;
+	}
+	return (result);
+}
+
 void	ft_draw(const t_sdl *sdl, SDL_Surface *canvas, const t_obj *obj, t_camera *camera)
 {
 	t_v3d		orig	= { 0, 0, 0 };
-	t_v3d		dir = /*camera->matrix*/ { 0, 0, 0 };
-	t_v3d		ray = { 0,0,-1 };
-	double_t	t		= DBL_MAX;
+	t_v3d		dir		= { 0, 0, 0 };
+	t_v3d		point	= { 0, 0, -DISTANCE_TO_CANVAS };
 	uint32_t	*tmp	= (uint32_t*)canvas->pixels;
-	double_t	imageAspectRatio = (double_t)(sdl->screen_size.x) / (double_t)(sdl->screen_size.y);
 	double_t	scale = tan(deg_to_rad(camera->fov * 0.5));
-	const t_obj *tmp_obj;
 	t_v2i		i = { 0,0 };
-	double_t	tNear = DBL_MAX;
 
 	orig = mult_vect_matrix_4_4((t_v3d){0,0,0}, camera->cam->matrix);
+	//print_v3d(&orig, "orig");
 	while (i.x < sdl->screen_size.x)
 	{
 		i.y = 0;
 		while (i.y < sdl->screen_size.y)
 		{
-			ray.x = (2 * (i.x + 0.5) / (double_t)(sdl->screen_size.x) - 1) * imageAspectRatio * scale;
-			ray.y = (1 - 2 * (i.y + 0.5) / (double_t)(sdl->screen_size.y)) * scale;
-			dir = mult_vect_matrix_3_3(ray, (camera->cam->invert_matrix));
+			point.x = (CANVAS_SIZE * (i.x + 0.5) / (double_t)(sdl->screen_size.x) - 1) * sdl->iar * scale;
+			point.y = (1 - CANVAS_SIZE * (i.y + 0.5) / (double_t)(sdl->screen_size.y)) * scale;
+			dir = mult_vect_matrix_3_3(point, (camera->cam->invert_matrix));
 			vec_3normalize(&dir);
 
-			tmp_obj = obj;
-			tNear = DBL_MAX;
-			t = DBL_MAX;
-			while (tmp_obj)
-			{
-				t = DBL_MAX;
-				if (tmp_obj->intersect(&orig, &dir, tmp_obj->data, &t) != 0 && t < tNear)
-				{
-					tmp[i.x + i.y * sdl->screen_size.x] = obj->get_color(tmp_obj->data);
-					tNear = t;
-				}
-
-				//Vec3f hitPoint = orig + dir * t;
-				
-				tmp_obj = tmp_obj->next;
-			}
-			if (tmp[i.x + i.y * sdl->screen_size.x] == 0x000000)
-				tmp[i.x + i.y * sdl->screen_size.x] = 0x3914AF;
+			if (cast_ray(sdl, obj, &orig, &dir, i, canvas) == 0)
+				tmp[i.x + i.y * sdl->screen_size.x] = 0xA3C6C0;
 			i.y++;
 		}
 		i.x++;
 	}
-}
-
-t_camera*	make_camera(int32_t size)
-{
-	t_camera *camera;
-
-	if ((camera = (t_camera*)malloc(sizeof(t_camera))) == NULL)
-		return (NULL);
-	memset(camera, 0, sizeof(t_camera));
-	camera->fov = 90;
-	if (size == 0)
-	{
-		camera->cam = get_new_matrix(4);
-		fill_vertical_matrix(camera->cam);
-		camera->cam->matrix[3][2] = 10;
-		camera->cam->matrix[3][0] = 0;
-	}
-	else
-		fill_random_matrix(camera->cam->matrix, camera->cam->size);
-	
-	return (camera);
-}
-
-void	destroy_camera(t_camera **camera)
-{
-	destroy_matrix(&((*camera)->cam));
-	free(*camera);
-	camera = NULL;
+	camera->on = 0;
 }
 
 void	refresh_obj(const t_matrix *camera, t_obj *obj)
@@ -106,22 +87,24 @@ void			ft_render(t_sdl *sdl, t_obj *obj)
 	camera = make_camera(0);
 	memset(&time, 0, sizeof(t_time));
 	canvas = new_canvas(sdl->screen_size.x, sdl->screen_size.y);
-
 	while (sdl->loop)
 	{
-		invert_matrix(camera->cam);
-		refresh_obj(camera->cam, obj);
+		if (camera->on > 0)
+		{
+			invert_matrix(camera->cam);
+			refresh_obj(camera->cam, obj);
+			memset(canvas->pixels, 0, sizeof(uint32_t) * 640 * 480);
+			ft_draw(sdl, canvas, obj, camera);
+			camera->on = 0;
+
+
+			screen = SDL_CreateTextureFromSurface(sdl->renderer, canvas);
+			SDL_RenderCopy(sdl->renderer, screen, 0, 0);
+			SDL_DestroyTexture(screen);
+		}
 		event_guard(sdl, camera, &time);
-		ft_draw(sdl, canvas, obj, camera);
 
-		screen = SDL_CreateTextureFromSurface(sdl->renderer, canvas);
-		memset(canvas->pixels, 0, sizeof(uint32_t) * 640 * 480);
-
-		SDL_RenderCopy(sdl->renderer, screen, 0, 0);
 		SDL_RenderPresent(sdl->renderer);
-
-		SDL_RenderClear(sdl->renderer);
-		SDL_DestroyTexture(screen);
 	}
 	destroy_camera(&camera);
 	SDL_FreeSurface(canvas);
@@ -150,8 +133,12 @@ int main(int argc, char ** argv)
 	set_color(&color, 33, 66, 30);
 	push_back_obj(ft_new_sphere(centr, color, radius), obj);
 
+	centr = vec_3d(5.0, 7.0, 0.0);
+	set_color(&color, 83, 55, 122);
+	push_back_obj(ft_new_sphere(centr, color, radius), obj);
+
 	centr = vec_3d(5.0, 7.0, -0.5);
-	set_color(&color, 32, 33, 79);
+	set_color(&color, 255, 255, 255);
 	push_back_obj(ft_new_sphere(centr, color, radius), obj);
 
 	obj_info(obj);

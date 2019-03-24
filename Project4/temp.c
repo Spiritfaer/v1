@@ -51,6 +51,15 @@ void	push_back_obj(t_obj *src, t_obj *des)
 	}
 }
 
+void	print_v3d(t_v3d *src, char *str)
+{
+	printf("%s.x = %10.4f; %s.y = %10.4f; %s.z = %10.4f;\n", str, src->x, str, src->y, str, src->z);
+}
+
+void	print_v3i()
+{
+
+}
 
 void	color_move(int *color, int up)
 {
