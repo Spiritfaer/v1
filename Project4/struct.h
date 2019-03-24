@@ -29,7 +29,8 @@ typedef struct 		s_obj
 	void			*data;
 	int8_t(*intersect)(t_v3d *orig, t_v3d *dir, t_sphere *sphere, double_t *t);
 	//t_rgb(*get_color)(const void* data, const t_v3d* intersect_point);
-	uint32_t(*get_color)(const void* data);
+	t_rgb(*get_color)(const void* data);
+	t_v3d(*get_center)(const void* data);
 	uint8_t			flag;
 	struct s_obj	*next;
 }					t_obj;
@@ -52,6 +53,7 @@ typedef struct		s_camera
 	double_t		max_t;
 	double_t		min_t;
 	double_t		fov;
+	double_t		scale;
 	uint8_t			on;
 }					t_camera;
 

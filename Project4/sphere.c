@@ -1,5 +1,10 @@
 #include "main.h"
 
+t_v3d	get_center_sphere(const void *data)
+{
+	return(((t_sphere*)data)->cam_centr);
+}
+
 int8_t	solve_quadratic(const double_t *a, const double_t *b, const double_t *c,
 	double_t *x0, double_t *x1)
 {
@@ -87,11 +92,11 @@ uint8_t	trash_sphere_intersect(const t_v3i* origin, const t_v3d* dir, const void
 	//return (0);
 }
 
-uint32_t	ft_get_sphere_color(const void* data)
+t_rgb	ft_get_sphere_color(const void* data)
 {
 	const t_sphere *temp;
 	temp = data;
-	return(temp->color.color);
+	return(temp->color);
 }
 
 t_obj*	ft_new_sphere(t_v3d centr, t_rgb color, double_t radius)
@@ -111,6 +116,7 @@ t_obj*	ft_new_sphere(t_v3d centr, t_rgb color, double_t radius)
 	obj->data = new_sphere;
 	obj->get_color = ft_get_sphere_color;
 	obj->intersect = sphere_intersect;
+	obj->get_center = get_center_sphere;
 	obj->next = NULL;
 
 	return (obj);

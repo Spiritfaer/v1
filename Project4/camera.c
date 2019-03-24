@@ -9,6 +9,7 @@ t_camera*	make_camera(int32_t size)
 	memset(camera, 0, sizeof(t_camera));
 	camera->fov = 60;
 	camera->on = 1;
+	camera->scale = tan(deg_to_rad(camera->fov * 0.5));
 	if (size == 0)
 	{
 		camera->cam = get_new_matrix(4);

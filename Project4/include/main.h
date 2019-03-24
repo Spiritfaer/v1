@@ -17,9 +17,13 @@
 #define DISTANCE_TO_CANVAS 1
 #define CANVAS_SIZE 2
 
+#define WIN_SIZE_W 640
+#define WIN_SIZE_H 480
+
 #include "temp.h"
 #include "struct.h"
 
+enum e_bool {false, true};
 
 t_sdl		*ft_new_sdl(void);
 void		ft_del_sdl(t_sdl *sdl);
@@ -31,8 +35,8 @@ int8_t		ft_init_sdl(t_sdl *sdl);
 t_obj*		ft_new_sphere(t_v3d centr, t_rgb color, double_t radius);
 void		ft_del_sphere(t_obj **obj);
 
-uint32_t	ft_get_sphere_color(const void* data);
-
+t_rgb		ft_get_sphere_color(const void* data);
+t_v3d		get_center_sphere(void *data);
 int8_t		sphere_intersect(t_v3d *orig, t_v3d *dir, t_sphere *sphere, double_t *t);
 
 //------------------------------
@@ -43,7 +47,7 @@ void		push_back_obj(t_obj *src, t_obj *des);
 //------------------------event
 
 void		event_guard(t_sdl *sdl, t_camera *camera, t_time *time);
-void		move_camera(const uint8_t *cur_key, t_matrix *camera, t_time *time);
+uint8_t		move_camera(const uint8_t *cur_key, t_matrix *camera, t_time *time);
 void		time_tick(t_time *t);
 
 //------------------------------

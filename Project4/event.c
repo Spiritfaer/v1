@@ -11,48 +11,30 @@ uint8_t	move_camera(const uint8_t *cur_key, t_matrix *camera, t_time *time)
 {
 	uint8_t i;
 
-	i = 0;
-	if (cur_key[SDL_SCANCODE_W])
+	i = false;
+	if (cur_key[SDL_SCANCODE_W] && (i = true))
 	{
 		camera->matrix[3][1] -= time->speed;
-		//print_matrix(camera->matrix, camera->size);
-		//print_matrix(camera->invert_matrix, camera->size);
-		i = 1;
 	}
-	if (cur_key[SDL_SCANCODE_S])
+	if (cur_key[SDL_SCANCODE_S] && (i = true))
 	{
 		camera->matrix[3][1] += time->speed;
-		//print_matrix(camera->matrix, camera->size);
-		//print_matrix(camera->invert_matrix, camera->size);
-		i = 1;
 	}
-	if (cur_key[SDL_SCANCODE_A])
+	if (cur_key[SDL_SCANCODE_A] && (i = true))
 	{
 		camera->matrix[3][0] -= time->speed;
-		//print_matrix(camera->matrix, camera->size);
-		//print_matrix(camera->invert_matrix, camera->size);
-		i = 1;
 	}
-	if (cur_key[SDL_SCANCODE_D])
+	if (cur_key[SDL_SCANCODE_D] && (i = true))
 	{
 		camera->matrix[3][0] += time->speed;
-		//print_matrix(camera->matrix, camera->size);
-		//print_matrix(camera->invert_matrix, camera->size);
-		i = 1;
 	}
-	if (cur_key[SDL_SCANCODE_SPACE])
+	if (cur_key[SDL_SCANCODE_SPACE] && (i = true))
 	{
 		camera->matrix[3][2] += time->speed;
-		//print_matrix(camera->matrix, camera->size);
-		//print_matrix(camera->invert_matrix, camera->size);
-		i = 1;
 	}
-	if (cur_key[SDL_SCANCODE_LCTRL])
+	if (cur_key[SDL_SCANCODE_LCTRL] && (i = true))
 	{
 		camera->matrix[3][2] -= time->speed;
-		//print_matrix(camera->matrix, camera->size);
-		//print_matrix(camera->invert_matrix, camera->size);
-		i = 1;
 	}
 	return (i);
 }
@@ -65,7 +47,7 @@ uint8_t	move_fov(const uint8_t *cur_key, t_camera *cam, t_time *time)
 		{
 			cam->fov += 1;
 			printf("\nfov = %3.1f\n", cam->fov);
-			return (1);
+			return (true);
 		}
 	}
 	else if (cur_key[SDL_SCANCODE_DOWN])
@@ -74,10 +56,10 @@ uint8_t	move_fov(const uint8_t *cur_key, t_camera *cam, t_time *time)
 		{
 			cam->fov -= 1;
 			printf("\nfov = %3.1f\n", cam->fov);
-			return (1);
+			return (true);
 		}
 	}
-	return (0);
+	return (false);
 }
 
 void	event_guard(t_sdl *sdl, t_camera *camera, t_time *time)
@@ -87,11 +69,11 @@ void	event_guard(t_sdl *sdl, t_camera *camera, t_time *time)
 	sdl->cur_key = SDL_GetKeyboardState(NULL);
 
 	if (sdl->event.type == SDL_QUIT)
-		sdl->loop = 0;
+		sdl->loop = false;
 	if (sdl->cur_key[SDL_SCANCODE_ESCAPE])
-		sdl->loop = 0;
+		sdl->loop = false;
 	camera->on = move_camera(sdl->cur_key, camera->cam, time);
 	camera->on = move_fov(sdl->cur_key, camera, time);
 	if (sdl->event.key.type == SDL_KEYDOWN)
-		camera->on = 1;
+		camera->on = true;
 }
