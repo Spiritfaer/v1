@@ -31,14 +31,17 @@ void		ft_del_sphere(t_obj **obj);
 
 t_rgb		ft_get_sphere_color(const void* data);
 
+int8_t		sphere_intersect(t_v3d *orig, t_v3d *dir, t_sphere *sphere, double_t *t);
+
 //------------------------------
 
 void		obj_info(const t_obj* obj);
 
-//------------------------matrix
+//------------------------event
 
-void		print_matrix(double_t **matrix, int32_t n);
-void		fill_random_matrix(double_t **matrix, int32_t n);
+void	event_guard(t_sdl *sdl, t_camera *camera, t_time *time);
+void	move_camera(uint8_t *cur_key, t_matrix *camera, t_time *time);
+void	time_tick(t_time *t);
 
 //------------------------------
 

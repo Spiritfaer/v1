@@ -31,7 +31,6 @@ typedef struct 		s_obj
 	//					const t_v3d ray, t_v3d* const intersect_point);
 	int8_t(*intersect)(const t_v3i* origin, const t_v3d* dir,
 						const void* data, double_t* t);
-	//int8_t(*intersect)(const t_v3i orig, const t_sphere* my_sphere);
 	//t_rgb(*get_color)(const void* data, const t_v3d* intersect_point);
 	t_rgb(*get_color)(const void* data);
 	uint8_t			flag;

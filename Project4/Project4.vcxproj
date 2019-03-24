@@ -148,6 +148,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="deg_to_rad.c" />
+    <ClCompile Include="event.c" />
     <ClCompile Include="info.c" />
     <ClCompile Include="mat_change_symbol.c" />
     <ClCompile Include="mat_discriminant.c" />
@@ -163,6 +165,7 @@
     <ClCompile Include="mat_minus_matrix_buffer.c" />
     <ClCompile Include="mat_mult_for_double_buffer.c" />
     <ClCompile Include="mat_mult_m_to_m.c" />
+    <ClCompile Include="mat_mult_vect_matrix.c" />
     <ClCompile Include="mat_swap_for_rows.c" />
     <ClCompile Include="mat_transposed_matrix.c" />
     <ClCompile Include="sf_sdl.c" />

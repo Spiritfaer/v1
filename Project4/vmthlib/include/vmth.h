@@ -58,6 +58,8 @@ typedef struct s_matrix
 	int32_t		size;
 }				t_matrix;
 
+double_t		deg_to_rad(const double_t deg);
+
 t_v3d			vec_1up(void);
 t_v3d			vec_1back(void);
 t_v3d			vec_1right(void);
@@ -113,5 +115,8 @@ void			get_rows(t_matrix *m, int32_t y, double_t *buffer);
 void			swap_for_rows(t_matrix *m, t_v2i i);
 void			minus_matrix_buffer(double_t *src, double_t *dst, int32_t size);
 double_t		mult_for_double_buffer(double_t *src, double_t *dst, int32_t size);
+t_v3d			mult_vect_matrix_4_4(t_v3d world_centr, double_t **invert_matrix);
+t_v3d			mult_vect_matrix_3_3(t_v3d world_centr, double_t **invert_matrix);
+
 
 #endif
