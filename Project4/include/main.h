@@ -41,7 +41,7 @@ int8_t		sphere_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t *t)
 
 //----------------------plane()
 
-t_obj*	ft_new_plane(t_v3d centr, t_rgb color, double_t radius);
+t_obj*	ft_new_plane(t_v3d centr, t_rgb color, double_t radius, int32_t flag);
 int8_t	plane_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t *t);
 t_v3d	get_center_plane(const void *data);
 t_rgb	ft_get_plane_color(const void* data);

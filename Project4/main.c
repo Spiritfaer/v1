@@ -132,9 +132,8 @@ void	refresh_obj(const t_matrix *camera, t_obj *obj)
 			sph = (t_sphere*)obj->data;
 			point = mult_vect_matrix_3_3(sph->world_centr, camera->invert_matrix);
 			((t_sphere*)obj->data)->cam_centr = point;
-			//printf("\n%f, %f, %f\n", point.x, point.y, point.z);
 		}
-		else if (obj->flag == plane)
+		else if (obj->flag == plane || obj->flag == disk)
 		{
 			pl = (t_plane*)obj->data;
 			point = mult_vect_matrix_3_3(pl->world_centr, camera->invert_matrix);
@@ -211,10 +210,10 @@ int main(int argc, char ** argv)
 	radius = 1 * q;
 	push_back_obj(ft_new_sphere(centr, color, radius), obj);
 
-	centr = vec_3d(0.0, 0.0, -10.5);
+	centr = vec_3d(0.0, -5.5, -20.5);
 	set_color(&color, 200, 200, 25);
-	radius = 1 * q;
-	push_back_obj(ft_new_plane(centr, color, radius), obj);
+	radius = 5 * q;
+	push_back_obj(ft_new_plane(centr, color, radius, disk), obj);
 
 	obj_info(obj);
 

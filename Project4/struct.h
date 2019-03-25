@@ -5,7 +5,7 @@
 
 #define _INF (DBL_MAX*2)
 
-enum e_type_flag	{plane, sphere, cube, cone};
+enum e_type_flag	{plane, sphere, box, cone, disk};
 
 typedef struct		s_rgb
 {
@@ -32,7 +32,18 @@ typedef struct		s_plane
 	t_v3d			cam_centr;
 	t_rgb			color;
 	double_t		size;
+	double_t		s2;
 }					t_plane;
+
+typedef struct		s_box
+{
+	t_v3d			max;
+	t_v3d			min;
+	t_v3d			world_centr;
+	t_v3d			cam_centr;
+	t_rgb			color;
+	double_t		size;
+}					t_box;
 
 typedef struct 		s_obj
 {

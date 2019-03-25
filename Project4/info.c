@@ -29,7 +29,7 @@ void	obj_info(const t_obj* obj)
 			ft_print_plane(obj->data);
 		else if (obj->flag == sphere)
 			ft_print_sphere(obj->data);
-		else if (obj->flag == cube)
+		else if (obj->flag == box)
 			ft_print_cube(obj->data);
 		else if (obj->flag == cone)
 			ft_print_cone(obj->data);
