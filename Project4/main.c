@@ -125,6 +125,7 @@ void	refresh_obj(const t_matrix *camera, t_obj *obj)
 	t_v3d	normal;
 	t_sphere *sph;
 	t_plane *pl;
+	t_box *b;
 	while (obj)
 	{
 		if (obj->flag == sphere)
@@ -141,6 +142,12 @@ void	refresh_obj(const t_matrix *camera, t_obj *obj)
 			vec_3normalize(&normal);
 			((t_plane*)obj->data)->cam_centr = point;
 			((t_plane*)obj->data)->cam_normal = normal;
+		}
+		else if (obj->flag == box)
+		{
+			b = (t_box*)obj->data;
+			b->cam_min = mult_vect_matrix_3_3(b->min, camera->invert_matrix);
+			b->cam_max = mult_vect_matrix_3_3(b->max, camera->invert_matrix);
 		}
 		obj = obj->next;
 	}
@@ -186,6 +193,7 @@ int main(int argc, char ** argv)
 	t_sdl		*sdl = NULL;
 	t_obj		*obj = NULL;
 	t_v3d		centr;
+	t_v3d		centr2;
 	t_rgb		color;
 	double_t	radius;
 	int32_t		q = 3;
@@ -214,6 +222,11 @@ int main(int argc, char ** argv)
 	set_color(&color, 200, 200, 25);
 	radius = 5 * q;
 	push_back_obj(ft_new_plane(centr, color, radius, disk), obj);
+
+	centr = (t_v3d) { 2, 2, 2 };
+	centr2 = (t_v3d) { -2, -2, -2 };
+	set_color(&color, 35, 75, 150);
+	push_back_obj(ft_new_box(&centr, &centr2, color), obj);
 
 	obj_info(obj);
 

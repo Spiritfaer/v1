@@ -8,7 +8,16 @@ void	ft_print_color(const t_rgb* color)
 {
 	printf("Red = %5d; Green = %5d; Blue = %5d;\nINT COLOR = %9d;\n", color->r, color->g, color->b, color->color);
 }
-void	ft_print_plane(const void *data) {}
+void	ft_print_plane(const void *data)
+{
+	const t_plane* temp;
+	temp = data;
+	printf("\n---PLANE INFO---\n");
+	ft_print_pos(&temp->world_centr);
+	ft_print_pos(&temp->world_normal);
+	ft_print_color(&temp->color);
+	printf("------------------\n");
+}
 void	ft_print_sphere(const void *data)
 {
 	const t_sphere* temp;
@@ -19,7 +28,16 @@ void	ft_print_sphere(const void *data)
 	printf("Radius = %6.2f;\n", temp->radius);
 	printf("------------------\n");
 }
-void	ft_print_cube(const void *data) {}
+void	ft_print_box(const void *data)
+{
+	const t_box* temp;
+	temp = data;
+	printf("\n----BOX INFO----\n");
+	ft_print_pos(&temp->cam_min);
+	ft_print_pos(&temp->cam_max);
+	ft_print_color(&temp->color);
+	printf("------------------\n");
+}
 void	ft_print_cone(const void *data) {}
 void	obj_info(const t_obj* obj)
 {
@@ -30,7 +48,7 @@ void	obj_info(const t_obj* obj)
 		else if (obj->flag == sphere)
 			ft_print_sphere(obj->data);
 		else if (obj->flag == box)
-			ft_print_cube(obj->data);
+			ft_print_box(obj->data);
 		else if (obj->flag == cone)
 			ft_print_cone(obj->data);
 		else

@@ -14,10 +14,6 @@ void		fill_3(double_t **matrix, int32_t n);
 void		fill_4(double_t **matrix, int32_t n);
 void		fill_random_matrix(double_t **matrix, int32_t n);
 
-void		mult_matrix_rows(double_t **src, double_t mult, int32_t size, int32_t y);
-void		mult_matrix_columns(double_t **src, double_t mult, int32_t size, int32_t x);
-void		minus_matrix_rows(double_t **src, int32_t size, int32_t y, int32_t step);
-void		minus_matrix_columns(double_t **src, int32_t size, int32_t x, int32_t step);
 double_t	get_dis(double_t a, double_t b, double_t c, double_t d);
 void		print_matrix(double_t **matrix, int32_t n);
 void		fs_swap(double_t *s, double_t *d);
