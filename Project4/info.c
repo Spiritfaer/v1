@@ -33,8 +33,8 @@ void	ft_print_box(const void *data)
 	const t_box* temp;
 	temp = data;
 	printf("\n----BOX INFO----\n");
-	ft_print_pos(&temp->cam_min);
-	ft_print_pos(&temp->cam_max);
+	print_v3d(&temp->min, "min");
+	print_v3d(&temp->max, "min");
 	ft_print_color(&temp->color);
 	printf("------------------\n");
 }

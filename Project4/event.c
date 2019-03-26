@@ -14,11 +14,11 @@ uint8_t	move_camera(const uint8_t *cur_key, t_matrix *camera, t_time *time)
 	i = false;
 	if (cur_key[SDL_SCANCODE_W] && (i = true))
 	{
-		camera->matrix[3][1] -= time->speed;
+		camera->matrix[3][1] += time->speed;
 	}
 	if (cur_key[SDL_SCANCODE_S] && (i = true))
 	{
-		camera->matrix[3][1] += time->speed;
+		camera->matrix[3][1] -= time->speed;
 	}
 	if (cur_key[SDL_SCANCODE_A] && (i = true))
 	{
