@@ -223,10 +223,11 @@ int main(int argc, char ** argv)
 	radius = 5 * q;
 	push_back_obj(ft_new_plane(centr, color, radius, disk), obj);
 
-	centr = (t_v3d) { 1, 1, 1 };
-	centr2 = (t_v3d) { -1, -1, -1 };
+	centr = (t_v3d) { 5.5, -1, 0 };
+	//centr = (t_v3d) { 1, 1, 1 };
+	//centr2 = (t_v3d) { -1, -1, -1 };
 	set_color(&color, 35, 75, 150);
-	push_back_obj(ft_new_box(&centr, &centr2, color), obj);
+	push_back_obj(ft_new_box(&centr, NULL, color, (double_t)2.0), obj);
 
 	obj_info(obj);
 

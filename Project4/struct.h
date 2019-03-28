@@ -35,14 +35,23 @@ typedef struct		s_plane
 	double_t		s2;
 }					t_plane;
 
+typedef struct		s_aabb_ray
+{
+	t_v3d			invdir;
+	int8_t			flag[3];
+}					t_aabb_ray;
+
 typedef struct		s_box
 {
-	t_v3d			max;
 	t_v3d			min;
-	t_v3d			cam_max;
+	t_v3d			max;
 	t_v3d			cam_min;
-	t_v3d			tmax;
+	t_v3d			cam_max;
 	t_v3d			tmin;
+	t_v3d			tmax;
+	t_v3d			bounds[2];
+	t_v3d			centr;
+	double_t		size;
 	t_rgb			color;
 }					t_box;
 
