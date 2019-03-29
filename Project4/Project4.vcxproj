@@ -149,6 +149,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="box.c" />
+    <ClCompile Include="box_set_get.c" />
     <ClCompile Include="camera.c" />
     <ClCompile Include="deg_to_rad.c" />
     <ClCompile Include="event.c" />
@@ -178,6 +179,7 @@
     </ClCompile>
     <ClCompile Include="sphere.c" />
     <ClCompile Include="temp.c" />
+    <ClCompile Include="vec_3invert_dir.c" />
     <ClCompile Include="vmthlib\src\vec_1back.c" />
     <ClCompile Include="vmthlib\src\vec_1right.c" />
     <ClCompile Include="vmthlib\src\vec_1up.c" />

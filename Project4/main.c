@@ -8,47 +8,6 @@ SDL_Surface *new_canvas(uint32_t width, uint32_t height)
 	return (new_surf);
 }
 
-uint32_t	set_pixel_color(t_rgb color, double_t shadow)
-{
-	uint32_t	result;
-	t_v3d		tmp;
-
-	tmp.x = color.r;
-	if (tmp.x * shadow > tmp.x)
-		tmp.x = 0.0;
-	else if (tmp.x * shadow < 0)
-		tmp.x = 0.0;
-	else
-		tmp.x *= shadow;
-	tmp.y = color.g;
-	if (tmp.y * shadow > tmp.y)
-		tmp.y = 0.0;
-	else if (tmp.y * shadow < 0)
-		tmp.y = 0.0;
-	else
-		tmp.y *= shadow;
-	tmp.z = color.b;
-	if (tmp.z * shadow > tmp.z)
-		tmp.z = 0.0;
-	else if (tmp.z * shadow < 0)
-		tmp.z = 0.0;
-	else
-		tmp.z *= shadow;
-
-	result = ((uint8_t)tmp.x << 16 | (uint8_t)tmp.y << 8 | (uint8_t)tmp.z);
-	return (result);
-}
-
-t_v3d		vec_3invert(const t_v3d *src)
-{
-	t_v3d dest;
-
-	dest.x = -src->x;
-	dest.y = -src->y;
-	dest.z = -src->z;
-	return (dest);
-}
-
 uint8_t		cast_ray(const t_sdl *sdl, const t_obj *obj, t_v3d *orig, t_v3d *dir, t_v2i i, SDL_Surface *canvas)
 {
 	const t_obj		*tmp_obj;
@@ -72,7 +31,7 @@ uint8_t		cast_ray(const t_sdl *sdl, const t_obj *obj, t_v3d *orig, t_v3d *dir, t
 			point_hit = vec_3add(*orig, vec_3fmul(*dir, t));
 			n_hit = vec_3sub(point_hit, tmp_obj->get_center(tmp_obj->data));
 			vec_3normalize(&n_hit);
-			shadow = vec_3dot(n_hit, vec_3invert(dir));
+			shadow = vec_3dot(n_hit, vec_3invert_dir(dir));
 			tmp[i.x + i.y * sdl->screen_size.x] = set_pixel_color(tmp_obj->get_color(tmp_obj->data), shadow);
 			result = true;
 		}
@@ -208,14 +167,14 @@ int main(int argc, char ** argv)
 	radius = 1.5 * q;
 	push_back_obj(ft_new_sphere(centr, color, radius), obj);
 
-	centr = vec_3d(5.0, 7.0, 1.0);
+	centr = vec_3d(10.0, 7.0, 1.0);
 	set_color(&color, 83, 55, 122);
 	radius = 0.7 * q;
 	push_back_obj(ft_new_sphere(centr, color, radius), obj);
 
-	centr = vec_3d(5.0, 7.0, -0.5);
+	centr = vec_3d(7.0, 7.0, -0.5);
 	set_color(&color, 255, 255, 255);
-	radius = 1 * q;
+	radius = 1.3 * q;
 	push_back_obj(ft_new_sphere(centr, color, radius), obj);
 
 	centr = vec_3d(0.0, -5.5, -20.5);
@@ -223,7 +182,7 @@ int main(int argc, char ** argv)
 	radius = 5 * q;
 	push_back_obj(ft_new_plane(centr, color, radius, disk), obj);
 
-	centr = (t_v3d) { 5.5, -1, 0 };
+	centr = (t_v3d) { 15, -1, 0 };
 	//centr = (t_v3d) { 1, 1, 1 };
 	//centr2 = (t_v3d) { -1, -1, -1 };
 	set_color(&color, 35, 75, 150);

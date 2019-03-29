@@ -16,8 +16,12 @@ void		fill_random_matrix(double_t **matrix, int32_t n);
 
 double_t	get_dis(double_t a, double_t b, double_t c, double_t d);
 void		print_matrix(double_t **matrix, int32_t n);
-void		fs_swap(double_t *s, double_t *d);
+void		fs_double_swap(double_t *s, double_t *d);
 void		set_color(t_rgb *color, uint8_t r, uint8_t g, uint8_t b);
 void		print_v3d(t_v3d *src, char *str);
+void		print_v3i(t_v3i *src, char *str);
+
+uint32_t	set_pixel_color(t_rgb color, double_t shadow);
+
 
 #endif

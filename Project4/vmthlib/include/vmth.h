@@ -96,27 +96,34 @@ void			vec_3drotate(t_v3d *v, t_v3d rot);
 t_v3d			vec_3dscale(t_v3d v, double_t scale);
 t_v3d			vec_3dreflect(t_v3d v, t_v3d norm);
 
-t_matrix*		get_new_matrix(uint8_t n);
+t_v3d			vec_3invert_dir(const t_v3d *dir);
+
 double_t**		get_new_m(uint8_t n);
+t_matrix*		get_new_matrix(uint8_t n);
 t_matrix*		get_copy_matryx(t_matrix *m);
-void			free_mat(double_t **data, int32_t size);
-void			destroy_matrix(t_matrix **m);
-void			fill_vertical_matrix(t_matrix *m);
-void			set_rows_buffer(double_t *src, int32_t size, double_t *buffer, double_t mult);
+
+void			get_rows(t_matrix *m, int32_t y, double_t *buffer);
 void			get_colums(t_matrix *m, int32_t x, double_t *buffer);
+void			set_rows_buffer(double_t *src, int32_t size, double_t *buffer, double_t mult);
+
 double_t		get_discriminant(t_matrix *m);
+double_t		get_minor(t_matrix *m, t_v2i i);
+t_matrix*		get_minors_matrix(t_matrix *m);
+
+void			destroy_matrix(t_matrix **m);
+void			free_mat(double_t **data, int32_t size);
+
 void			change_symbol(t_matrix *m);
 t_matrix*		transposed_matrix(t_matrix *m);
 t_matrix*		mult_m_to_m(t_matrix *one, t_matrix *two);
-t_matrix*		get_minors_matrix(t_matrix *m);
-void			invert_matrix(t_matrix *m);
-double_t		get_minor(t_matrix *m, t_v2i i);
-void			get_rows(t_matrix *m, int32_t y, double_t *buffer);
-void			swap_for_rows(t_matrix *m, t_v2i i);
+
 void			minus_matrix_buffer(double_t *src, double_t *dst, int32_t size);
+void			swap_for_rows(t_matrix *m, t_v2i i);
+void			invert_matrix(t_matrix *m);
+
 double_t		mult_for_double_buffer(double_t *src, double_t *dst, int32_t size);
-t_v3d			mult_vect_matrix_4_4(t_v3d world_centr, double_t **invert_matrix);
 t_v3d			mult_vect_matrix_3_3(t_v3d world_centr, double_t **invert_matrix);
+t_v3d			mult_vect_matrix_4_4(t_v3d world_centr, double_t **invert_matrix);
 
-
+void			fill_vertical_matrix(t_matrix *m);
 #endif

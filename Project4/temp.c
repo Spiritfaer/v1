@@ -20,15 +20,14 @@ void	ft_temp_fill(t_v3d *center, t_rgb *color, double_t *radius, t_v2i win_size)
 	*/
 
 }
-void	set_color(t_rgb *color, uint8_t r, uint8_t g, uint8_t b)
+void		set_color(t_rgb *color, uint8_t r, uint8_t g, uint8_t b)
 {
 	color->r = r;
 	color->g = g;
 	color->b = b;
 	color->color = (color->r << 16 | color->g << 8 | color->b);
 }
-
-void	push_back_obj(t_obj *src, t_obj *des)
+void		push_back_obj(t_obj *src, t_obj *des)
 {
 	t_obj *tmp;
 
@@ -50,18 +49,15 @@ void	push_back_obj(t_obj *src, t_obj *des)
 		}
 	}
 }
-
-void	print_v3d(t_v3d *src, char *str)
+void		print_v3d(t_v3d *src, char *str)
 {
 	printf("%s.x = %10.4f; %s.y = %10.4f; %s.z = %10.4f;\n", str, src->x, str, src->y, str, src->z);
 }
-
-void	print_v3i()
+void		print_v3i(t_v3i *src, char *str)
 {
-
+	printf("%s.x = %10d; %s.y = %10d; %s.z = %10d;\n", str, src->x, str, src->y, str, src->z);
 }
-
-void	color_move(int *color, int up)
+void		color_move(int *color, int up)
 {
 	if (up)
 		(*color)++;
@@ -70,8 +66,7 @@ void	color_move(int *color, int up)
 	if ((*color) > 255)
 		(*color) = 0;
 }
-
-void	print_sdl(t_sdl *sdl)
+void		print_sdl(t_sdl *sdl)
 {
 	printf("\n---Point status---\n");
 	printf("init flag = %d", sdl->init_flag);
@@ -83,8 +78,7 @@ void	print_sdl(t_sdl *sdl)
 	printf("loop = %d\n", sdl->loop);
 	printf("win_name = \"%s\"\n", sdl->win_name);
 }
-
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+void		*ft_memcpy(void *dst, const void *src, size_t n)
 {
 	size_t i;
 
@@ -95,7 +89,6 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 		*((unsigned char*)dst)++ = *((unsigned char*)src)++;
 	return ((unsigned char*)dst - i);
 }
-
 void		fill_2(double_t **matrix, int32_t n)
 {
 	matrix[0][0] = 2.0;
@@ -148,49 +141,7 @@ void		fill_random_matrix(double_t **matrix, int32_t n)
 	else
 		printf("ERROR! fill_random_matrix have wrong matrix size!\n");
 }
-
-//void			minus_matrix_columns(double_t **src, int32_t size, int32_t x, int32_t step)
-//{
-//	int32_t i = 0;
-//	while (i < size)
-//	{
-//		src[i][x] -= src[i][step];
-//		i++;
-//	}
-//}
-//void			minus_matrix_rows(double_t **src, int32_t size, int32_t y, int32_t step)
-//{
-//	int32_t i = 0;
-//	while (i < size)
-//	{
-//		src[y][i] -= src[step][i];
-//		i++;
-//	}
-//}
-//
-//void			mult_matrix_columns(double_t **src, double_t mult, int32_t size, int32_t x)
-//{
-//	int32_t i = 0;
-//
-//	while (i < size)
-//	{
-//		src[i][x] *= mult;
-//		i++;
-//	}
-//}
-//
-//void			mult_matrix_rows(double_t **src, double_t mult, int32_t size, int32_t y)
-//{
-//	int32_t i = 0;
-//
-//	while (i < size)
-//	{
-//		src[y][i] *= mult;
-//		i++;
-//	}
-//}
-
-void			print_matrix(double_t **matrix, int32_t n)
+void		print_matrix(double_t **matrix, int32_t n)
 {
 	t_v2i i;
 
@@ -208,12 +159,41 @@ void			print_matrix(double_t **matrix, int32_t n)
 	}
 	printf("\n");
 }
-
-void		fs_swap(double_t *s, double_t *d)
+void		fs_double_swap(double_t *s, double_t *d)
 {
 	double_t t;
 
 	t = *s;
 	*s = *d;
 	*d = t;
+}
+uint32_t	set_pixel_color(t_rgb color, double_t shadow)
+{
+	uint32_t	result;
+	t_v3d		tmp;
+
+	tmp.x = color.r;
+	if (tmp.x * shadow > tmp.x)
+		tmp.x = 0.0;
+	else if (tmp.x * shadow < 0)
+		tmp.x = 0.0;
+	else
+		tmp.x *= shadow;
+	tmp.y = color.g;
+	if (tmp.y * shadow > tmp.y)
+		tmp.y = 0.0;
+	else if (tmp.y * shadow < 0)
+		tmp.y = 0.0;
+	else
+		tmp.y *= shadow;
+	tmp.z = color.b;
+	if (tmp.z * shadow > tmp.z)
+		tmp.z = 0.0;
+	else if (tmp.z * shadow < 0)
+		tmp.z = 0.0;
+	else
+		tmp.z *= shadow;
+
+	result = ((uint8_t)tmp.x << 16 | (uint8_t)tmp.y << 8 | (uint8_t)tmp.z);
+	return (result);
 }

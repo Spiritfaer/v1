@@ -25,7 +25,7 @@ int8_t	solve_quadratic(const double_t *a, const double_t *b, const double_t *c,
 	if (x0 > x1)
 	{
 		//I should use swap... but I forget where it defined
-		fs_swap(x0, x1);
+		fs_double_swap(x0, x1);
 	}
 	return (1);
 }
@@ -51,7 +51,7 @@ int8_t sphere_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t *t)
 	if (solve_quadratic(&a, &b, &c, &t0, &t1) == 0)
 		return (0);
 	if (t0 > t1)
-		fs_swap(&t0, &t1);
+		fs_double_swap(&t0, &t1);
 	if (t0 < 0) {
 		t0 = t1; // if t0 is negative, let's use t1 instead 
 		if (t0 < 0)
