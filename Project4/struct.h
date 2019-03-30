@@ -55,6 +55,19 @@ typedef struct		s_box
 	t_rgb			color;
 }					t_box;
 
+typedef	struct		s_light
+{
+	t_v3d			pos;
+	t_v3d			cam_pos;
+	t_rgb			color;
+	double_t		light_color;
+	double_t		intensity;
+	t_v3d			dir;
+	t_v3d			invdir;
+	double_t		albedo;
+	struct s_light	*next;
+}					t_light;
+
 typedef struct 		s_obj
 {
 	void			*data;

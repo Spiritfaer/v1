@@ -70,15 +70,15 @@ void		time_tick(t_time *t);
 
 //-------------------------render.c
 
-void		ft_render(t_sdl *sdl, t_obj *obj);
-void		refresh_obj(const t_matrix *camera, t_obj *obj);
-void		ft_draw(const t_sdl *sdl, SDL_Surface *canvas, const t_obj *obj, t_camera *camera);
-uint8_t		cast_ray(const t_sdl *sdl, const t_obj *obj, t_v3d *orig, t_v3d *dir, t_v2i i, SDL_Surface *canvas);
+void		ft_render(t_sdl *sdl, t_obj *obj, t_light *suns);
+void		refresh_obj(const t_matrix *camera, t_obj *obj, t_light *suns);
+void		ft_draw(const t_sdl *sdl, SDL_Surface *canvas, const t_obj *obj, t_camera *camera, t_light *suns);
+uint8_t		cast_ray(const t_sdl *sdl, const t_obj *obj, t_v3d *orig, t_v3d *dir, t_v2i i, SDL_Surface *canvas, t_light *suns);
 
 //------------------------------
 
 t_camera*	make_camera(int32_t size);
 void		destroy_camera(t_camera **camera);
-
+t_light*	new_light(t_v3d *pos, t_rgb *color, double_t intensity);
 
 #endif

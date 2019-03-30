@@ -1,9 +1,41 @@
 #include "main.h"
-
-
-uint8_t		cast_ray(const t_sdl *sdl, const t_obj *obj, t_v3d *orig, t_v3d *dir, t_v2i i, SDL_Surface *canvas)
+/*
+Vec3f castRay(
+	const Vec3f &orig, const Vec3f &dir,
+	const std::vector<std::unique_ptr<Object>> &objects,
+	const std::unique_ptr<DistantLight> &light,
+	const Options &options)
 {
-	const t_obj		*tmp_obj;
+	Vec3f hitColor = options.backgroundColor;
+	float tnear = kInfinity;
+	Vec2f uv;
+	uint32_t index = 0;
+	Object *hitObject = nullptr;
+	if (trace(orig, dir, objects, tnear, index, uv, &hitObject)) {
+		Vec3f hitPoint = orig + dir * tnear;
+		Vec3f hitNormal;
+		Vec2f hitTexCoordinates;
+		hitObject->getSurfaceProperties(hitPoint, dir, index, uv, hitNormal, hitTexCoordinates);
+		Vec3f L = -light->dir;
+		// compute color of diffuse surface illuminated
+		// by a single distant light source.
+		hitColor = hitObject->albedo / M_PI * light->intensity * light->color * std::max(0.f, hitNormal.dotProduct(L));
+	}
+
+	return hitColor;
+}
+*/
+
+uint8_t		cast_ray(
+	const t_sdl *sdl,
+	const t_obj *obj,
+	t_v3d *orig,
+	t_v3d *dir,
+	t_v2i i,
+	SDL_Surface *canvas,
+	t_light *suns)
+{
+	const t_obj	*tmp_obj;
 	double_t	tNear;
 	double_t	t;
 	uint32_t	*tmp = (uint32_t*)canvas->pixels;
@@ -24,6 +56,9 @@ uint8_t		cast_ray(const t_sdl *sdl, const t_obj *obj, t_v3d *orig, t_v3d *dir, t
 			point_hit = vec_3add(*orig, vec_3fmul(*dir, t));
 			n_hit = vec_3sub(point_hit, tmp_obj->get_center(tmp_obj->data));
 			vec_3normalize(&n_hit);
+			//-----------
+
+			//-----------
 			shadow = vec_3dot(n_hit, vec_3invert_dir(dir));
 			tmp[i.x + i.y * sdl->screen_size.x] = set_pixel_color(tmp_obj->get_color(tmp_obj->data), shadow);
 			result = true;
@@ -38,11 +73,11 @@ static void set_var_to_draw_foo(t_v3d *orig, t_v3d *dir, t_v3d *point, t_v2i *i)
 	memset(orig, 0, sizeof(t_v3d));
 	memset(dir, 0, sizeof(t_v3d));
 	memset(point, 0, sizeof(t_v3d));
-	point->z = -DISTANCE_TO_CANVAS;
+	point->z = -1;
 	memset(i, 0, sizeof(t_v2i));
 }
 
-void	ft_draw(const t_sdl *sdl, SDL_Surface *canvas, const t_obj *obj, t_camera *camera)
+void	ft_draw(const t_sdl *sdl, SDL_Surface *canvas, const t_obj *obj, t_camera *camera, t_light *suns)
 {
 	t_v3d		orig;
 	t_v3d		dir;
@@ -61,7 +96,7 @@ void	ft_draw(const t_sdl *sdl, SDL_Surface *canvas, const t_obj *obj, t_camera *
 			point.y = (1 - CANVAS_SIZE * (i.y + 0.5) / (double_t)(sdl->screen_size.y)) * camera->scale;
 			dir = mult_vect_matrix_3_3(point, (camera->cam->invert_matrix));
 			vec_3normalize(&dir);
-			if (cast_ray(sdl, obj, &orig, &dir, i, canvas) == 0)
+			if (cast_ray(sdl, obj, &orig, &dir, i, canvas, suns) == 0)
 			{
 				tmp[i.x + i.y * sdl->screen_size.x] = 0xA3C6C0;
 			}
@@ -72,13 +107,18 @@ void	ft_draw(const t_sdl *sdl, SDL_Surface *canvas, const t_obj *obj, t_camera *
 	camera->on = false;
 }
 
-void	refresh_obj(const t_matrix *camera, t_obj *obj)
+void	refresh_obj(const t_matrix *camera, t_obj *obj, t_light *suns)
 {
 	t_v3d	point;
 	t_v3d	normal;
 	t_sphere *sph;
 	t_plane *pl;
 	t_box *b;
+	while (suns)
+	{
+		suns->cam_pos = mult_vect_matrix_3_3(suns->pos , camera->invert_matrix);
+		suns = suns->next;
+	}
 	while (obj)
 	{
 		if (obj->flag == sphere)
@@ -106,7 +146,7 @@ void	refresh_obj(const t_matrix *camera, t_obj *obj)
 	}
 }
 
-void			ft_render(t_sdl *sdl, t_obj *obj)
+void			ft_render(t_sdl *sdl, t_obj *obj, t_light *suns)
 {
 	SDL_Surface *canvas = NULL;
 	SDL_Texture *screen = NULL;
@@ -121,9 +161,9 @@ void			ft_render(t_sdl *sdl, t_obj *obj)
 		if (camera->on > false)
 		{
 			invert_matrix(camera->cam);
-			refresh_obj(camera->cam, obj);
+			refresh_obj(camera->cam, obj, suns);
 			memset(canvas->pixels, 0, sizeof(uint32_t) * 640 * 480);
-			ft_draw(sdl, canvas, obj, camera);
+			ft_draw(sdl, canvas, obj, camera, suns);
 			screen = SDL_CreateTextureFromSurface(sdl->renderer, canvas);
 			SDL_RenderCopy(sdl->renderer, screen, 0, 0);
 			SDL_DestroyTexture(screen);

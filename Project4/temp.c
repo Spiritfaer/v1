@@ -27,6 +27,30 @@ void		set_color(t_rgb *color, uint8_t r, uint8_t g, uint8_t b)
 	color->b = b;
 	color->color = (color->r << 16 | color->g << 8 | color->b);
 }
+
+void		push_back_light(t_light *src, t_light *des)
+{
+	t_light *tmp;
+
+	if (!src || !des)
+		return;
+	if (des->next == NULL)
+	{
+		des->next = src;
+		return;
+	}
+	tmp = des;
+	while (tmp->next != NULL)
+	{
+		tmp = tmp->next;
+		if (tmp->next == NULL)
+		{
+			tmp->next = src;
+			return;
+		}
+	}
+}
+
 void		push_back_obj(t_obj *src, t_obj *des)
 {
 	t_obj *tmp;
@@ -49,14 +73,7 @@ void		push_back_obj(t_obj *src, t_obj *des)
 		}
 	}
 }
-void		print_v3d(t_v3d *src, char *str)
-{
-	printf("%s.x = %10.4f; %s.y = %10.4f; %s.z = %10.4f;\n", str, src->x, str, src->y, str, src->z);
-}
-void		print_v3i(t_v3i *src, char *str)
-{
-	printf("%s.x = %10d; %s.y = %10d; %s.z = %10d;\n", str, src->x, str, src->y, str, src->z);
-}
+
 void		color_move(int *color, int up)
 {
 	if (up)

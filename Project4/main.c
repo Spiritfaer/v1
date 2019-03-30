@@ -8,6 +8,7 @@ int main(int argc, char ** argv)
 
 	t_sdl		*sdl = NULL;
 	t_obj		*obj = NULL;
+	t_light		*suns = NULL;
 	t_v3d		centr;
 	t_v3d		centr2;
 	t_rgb		color;
@@ -53,6 +54,10 @@ int main(int argc, char ** argv)
 		set_color(&color, 200, 200, 25);
 		radius = 5 * q;
 		push_back_obj(ft_new_plane(centr, color, radius, disk), obj);
+
+		centr = vec_3d(0.0, 25.0, -1.0);
+		set_color(&color, 255, 255, 255);
+		push_back_light(new_light(&centr, &color, (double_t)100.0), suns);
 	}
 
 
@@ -61,7 +66,7 @@ int main(int argc, char ** argv)
 	_CrtMemState tmp;
 	_CrtMemCheckpoint(&tmp);
 
-	ft_render(sdl, obj);
+	ft_render(sdl, obj, suns);
 
 	if (obj)
 		ft_del_sphere(&obj);

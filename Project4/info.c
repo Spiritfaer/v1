@@ -1,6 +1,13 @@
 #include "main.h"
 
-
+void		print_v3d(t_v3d *src, char *str)
+{
+	printf("%s.x = %10.4f; %s.y = %10.4f; %s.z = %10.4f;\n", str, src->x, str, src->y, str, src->z);
+}
+void		print_v3i(t_v3i *src, char *str)
+{
+	printf("%s.x = %10d; %s.y = %10d; %s.z = %10d;\n", str, src->x, str, src->y, str, src->z);
+}
 void	ft_print_pos(const t_v3d *pos)
 {
 	printf("x = %10.4f; y = %10.4f; z = %10.4f;\n", pos->x, pos->y, pos->z);
