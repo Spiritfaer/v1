@@ -29,7 +29,7 @@ t_sdl		*ft_new_sdl(void);
 void		ft_del_sdl(t_sdl *sdl);
 
 int8_t		ft_init_sdl(t_sdl *sdl);
-
+SDL_Surface *new_canvas(uint32_t width, uint32_t height);
 //----------------------sphere()
 
 t_obj*		ft_new_sphere(t_v3d centr, t_rgb color, double_t radius);
@@ -48,13 +48,13 @@ t_rgb		ft_get_plane_color(const void* data);
 
 //------------------------box()
 
-t_obj*	ft_new_box(t_v3d *max, t_v3d *min, t_rgb color, double_t size);
-t_rgb	ft_get_box_color(const void* data);
-int8_t	box_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t *t);
-void	ft_del_box(t_obj **obj);
-t_v3d	get_box_centr(const void *data);
-void	set_box_centr(t_box *box);
-void	set_min_max(t_box *box);
+t_obj*		ft_new_box(t_v3d *max, t_v3d *min, t_rgb color, double_t size);
+t_rgb		ft_get_box_color(const void* data);
+int8_t		box_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t *t);
+void		ft_del_box(t_obj **obj);
+t_v3d		get_box_centr(const void *data);
+void		set_box_centr(t_box *box);
+void		set_min_max(t_box *box);
 
 //------------------------------
 
@@ -66,6 +66,14 @@ void		push_back_obj(t_obj *src, t_obj *des);
 void		event_guard(t_sdl *sdl, t_camera *camera, t_time *time);
 uint8_t		move_camera(const uint8_t *cur_key, t_matrix *camera, t_time *time);
 void		time_tick(t_time *t);
+
+
+//-------------------------render.c
+
+void		ft_render(t_sdl *sdl, t_obj *obj);
+void		refresh_obj(const t_matrix *camera, t_obj *obj);
+void		ft_draw(const t_sdl *sdl, SDL_Surface *canvas, const t_obj *obj, t_camera *camera);
+uint8_t		cast_ray(const t_sdl *sdl, const t_obj *obj, t_v3d *orig, t_v3d *dir, t_v2i i, SDL_Surface *canvas);
 
 //------------------------------
 

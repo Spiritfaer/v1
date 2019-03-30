@@ -1,5 +1,6 @@
 #include "main.h"
 
+
 void	ft_print_pos(const t_v3d *pos)
 {
 	printf("x = %10.4f; y = %10.4f; z = %10.4f;\n", pos->x, pos->y, pos->z);
@@ -39,11 +40,12 @@ void	ft_print_box(const void *data)
 	printf("------------------\n");
 }
 void	ft_print_cone(const void *data) {}
+
 void	obj_info(const t_obj* obj)
 {
 	while (obj)
 	{
-		if (obj->flag == plane)
+		if (obj->flag == plane || obj->flag == disk)
 			ft_print_plane(obj->data);
 		else if (obj->flag == sphere)
 			ft_print_sphere(obj->data);

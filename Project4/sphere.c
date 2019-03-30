@@ -61,6 +61,7 @@ int8_t sphere_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t *t)
 	return (1);
 }
 
+
 t_rgb	ft_get_sphere_color(const void* data)
 {
 	const t_sphere *temp;

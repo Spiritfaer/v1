@@ -198,6 +198,9 @@
     <ClCompile Include="vec_3invert_dir.c">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="render.c">
+      <Filter>Файлы ресурсов</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vmthlib\include\vmth.h">

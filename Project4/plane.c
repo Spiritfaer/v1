@@ -1,5 +1,6 @@
 #include "main.h"
 
+
 t_rgb	ft_get_plane_color(const void* data)
 {
 	const t_plane *temp;
@@ -65,12 +66,10 @@ t_obj*	ft_new_plane(t_v3d centr, t_rgb color, double_t radius, int32_t flag)
 	new_plane->size = radius;
 	new_plane->s2 = radius * radius;
 	new_plane->world_centr = centr;
-//	new_plane->world_normal = (t_v3d){ 0, 0, -1 }; //задн€€ стенка
-	new_plane->world_normal = (t_v3d){ 1, 0, 0 };
+	new_plane->world_normal = (t_v3d){ 0, 1, 0 };
 	new_plane->color = color;
 	obj->data = new_plane;
 	obj->get_color = ft_get_plane_color;
-
 	obj->get_center = get_center_plane;
 	obj->next = NULL;
 

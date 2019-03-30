@@ -1,5 +1,14 @@
 #include "main.h"
 
+SDL_Surface *new_canvas(uint32_t width, uint32_t height)
+{
+	SDL_Surface *new_surf;
+	new_surf = SDL_CreateRGBSurface(0, width, height, 32,
+		0, 0, 0, 0);
+	return (new_surf);
+}
+
+
 void	ft_del_sdl(t_sdl *sdl)
 {
 	if (sdl->renderer)

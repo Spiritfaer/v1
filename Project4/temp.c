@@ -3,7 +3,7 @@
 void	ft_temp_fill(t_v3d *center, t_rgb *color, double_t *radius, t_v2i win_size)
 {
 	center->x = 5;
-	center->y = -5;
+	center->y = -3;
 	center->z = -1;
 
 	color->r = 255;
@@ -11,7 +11,7 @@ void	ft_temp_fill(t_v3d *center, t_rgb *color, double_t *radius, t_v2i win_size)
 	color->b = 20;
 	color->color = (color->r << 16 | color->g << 8 | color->b);
 
-	*radius = 0.9;
+	*radius = 1.9;
 
 	/*
 	*centr = { 0,0,50 };	
@@ -167,8 +167,11 @@ void		fs_double_swap(double_t *s, double_t *d)
 	*s = *d;
 	*d = t;
 }
-uint32_t	set_pixel_color(t_rgb color, double_t shadow)
+uint32_t	set_pixel_color(t_rgb color, double_t tone)
 {
+	//hitColor = std::max(0.f, hitNormal.dotProduct(-dir)); // facing ratio 
+	double_t	shadow = tone < 0.0 ? 0.0 : tone;
+
 	uint32_t	result;
 	t_v3d		tmp;
 
@@ -193,6 +196,7 @@ uint32_t	set_pixel_color(t_rgb color, double_t shadow)
 		tmp.z = 0.0;
 	else
 		tmp.z *= shadow;
+
 
 	result = ((uint8_t)tmp.x << 16 | (uint8_t)tmp.y << 8 | (uint8_t)tmp.z);
 	return (result);
