@@ -18,7 +18,7 @@ static void	fill_aabb_ray(const t_v3d *origin, const t_v3d *dir, t_aabb_ray *ray
 	ray->flag[2] = (ray->invdir.z < 0);
 }
 
-int8_t	box_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t *t)
+int8_t	box_intersect(t_v3d *orig, t_v3d *dir, void *data, double_t *t)
 {
 	t_box		*box = data;
 	t_aabb_ray	r;
@@ -70,7 +70,7 @@ t_obj*	ft_new_box(t_v3d *max, t_v3d *min, t_rgb color, double_t size)
 
 	obj->flag = box;
 	new_box->color = color;
-
+	new_box->albedo = vec_1double(0.18);
 	if (!min)
 	{
 		new_box->size = size;
@@ -85,6 +85,7 @@ t_obj*	ft_new_box(t_v3d *max, t_v3d *min, t_rgb color, double_t size)
 	}
 
 	obj->data = new_box;
+	obj->get_albedo = get_box_albedo;
 	obj->get_color = ft_get_box_color;
 	obj->intersect = box_intersect;
 	obj->get_center = get_box_centr;

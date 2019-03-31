@@ -38,6 +38,7 @@ void		ft_del_sphere(t_obj **obj);
 t_rgb		ft_get_sphere_color(const void* data);
 t_v3d		get_center_sphere(void *data);
 int8_t		sphere_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t *t);
+t_v3d		get_sphere_albedo(const void *data);
 
 //----------------------plane()
 
@@ -45,6 +46,7 @@ t_obj*		ft_new_plane(t_v3d centr, t_rgb color, double_t radius, int32_t flag);
 int8_t		plane_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t *t);
 t_v3d		get_center_plane(const void *data);
 t_rgb		ft_get_plane_color(const void* data);
+t_v3d		get_plane_albedo(const void *data);
 
 //------------------------box()
 
@@ -55,6 +57,7 @@ void		ft_del_box(t_obj **obj);
 t_v3d		get_box_centr(const void *data);
 void		set_box_centr(t_box *box);
 void		set_min_max(t_box *box);
+t_v3d		get_box_albedo(const void *data);
 
 //------------------------------
 

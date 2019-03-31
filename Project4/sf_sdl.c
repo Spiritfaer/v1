@@ -34,7 +34,7 @@ int8_t	ft_init_sdl(t_sdl *sdl)
 	}
 	else
 	{
-		sdl->window = SDL_CreateWindow(sdl->win_name, 200, 100,
+		sdl->window = SDL_CreateWindow(sdl->win_name, 10, 40,
 			sdl->screen_size.x, sdl->screen_size.y, SDL_WINDOW_SHOWN);
 		if (!sdl->window)
 		{

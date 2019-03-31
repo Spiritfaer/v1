@@ -28,26 +28,26 @@ void		set_color(t_rgb *color, uint8_t r, uint8_t g, uint8_t b)
 	color->color = (color->r << 16 | color->g << 8 | color->b);
 }
 
-void		push_back_light(t_light *src, t_light *des)
+void		push_back_light(t_light *src, t_light **des)
 {
 	t_light *tmp;
 
 	if (!src || !des)
 		return;
-	if (des->next == NULL)
+	if (!*des)
 	{
-		des->next = src;
+		*des = src;
 		return;
 	}
-	tmp = des;
-	while (tmp->next != NULL)
+	tmp = *des;
+	while (tmp != NULL)
 	{
-		tmp = tmp->next;
 		if (tmp->next == NULL)
 		{
 			tmp->next = src;
 			return;
 		}
+		tmp = tmp->next;
 	}
 }
 
@@ -193,22 +193,26 @@ uint32_t	set_pixel_color(t_rgb color, double_t tone)
 	t_v3d		tmp;
 
 	tmp.x = color.r;
+	tmp.y = color.g;
+	tmp.z = color.b;
+
+
 	if (tmp.x * shadow > tmp.x)
-		tmp.x = 0.0;
+		tmp.x = color.r;
 	else if (tmp.x * shadow < 0)
 		tmp.x = 0.0;
 	else
 		tmp.x *= shadow;
-	tmp.y = color.g;
+
 	if (tmp.y * shadow > tmp.y)
-		tmp.y = 0.0;
+		tmp.y = color.g;
 	else if (tmp.y * shadow < 0)
 		tmp.y = 0.0;
 	else
 		tmp.y *= shadow;
-	tmp.z = color.b;
+
 	if (tmp.z * shadow > tmp.z)
-		tmp.z = 0.0;
+		tmp.z = color.b;
 	else if (tmp.z * shadow < 0)
 		tmp.z = 0.0;
 	else

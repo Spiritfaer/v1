@@ -8,6 +8,11 @@ t_rgb	ft_get_plane_color(const void* data)
 	return(temp->color);
 }
 
+t_v3d	get_plane_albedo(const void *data)
+{
+	return (((t_plane*)data)->albedo);
+}
+
 t_v3d	get_center_plane(const void *data)
 {
 	const t_plane *s = data;
@@ -63,11 +68,13 @@ t_obj*	ft_new_plane(t_v3d centr, t_rgb color, double_t radius, int32_t flag)
 		obj->flag = plane;
 		obj->intersect = plane_intersect;
 	}
+	new_plane->albedo = vec_1double(0.18);
 	new_plane->size = radius;
 	new_plane->s2 = radius * radius;
 	new_plane->world_centr = centr;
 	new_plane->world_normal = (t_v3d){ 0, -1, 0 };
 	new_plane->color = color;
+	obj->get_albedo = get_plane_albedo;
 	obj->data = new_plane;
 	obj->get_color = ft_get_plane_color;
 	obj->get_center = get_center_plane;

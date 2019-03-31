@@ -42,6 +42,7 @@ uint8_t		cast_ray(
 	t_v3d		point_hit;
 	t_v3d		n_hit;
 	double_t	shadow;
+	
 
 	uint8_t result = false;
 	tmp_obj = obj;
@@ -57,10 +58,21 @@ uint8_t		cast_ray(
 			n_hit = vec_3sub(point_hit, tmp_obj->get_center(tmp_obj->data));
 			vec_3normalize(&n_hit);
 			//-----------
+			t_v3d test_l_dir = suns->cam_pos;
+			vec_3normalize(&test_l_dir);
+			shadow = vec_3dot(n_hit, test_l_dir);
+			//shadow = vec_3dot(n_hit, suns->invdir);
+			shadow = shadow < 0 ? 0 : shadow;
+			
 
+			//hitColor = hitObject->albedo / (PI * suns->intensity * suns->light_color * shadow));
+			tmp[i.x + i.y * sdl->screen_size.x] = set_pixel_color(tmp_obj->get_color(tmp_obj->data), (0.18/ PI * suns->intensity * suns->light_color * shadow));
 			//-----------
+			/*
 			shadow = vec_3dot(n_hit, vec_3invert_dir(dir));
 			tmp[i.x + i.y * sdl->screen_size.x] = set_pixel_color(tmp_obj->get_color(tmp_obj->data), shadow);
+			*/
+
 			result = true;
 		}
 		tmp_obj = tmp_obj->next;

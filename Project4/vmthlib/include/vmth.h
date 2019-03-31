@@ -19,7 +19,7 @@
 # include <string.h>
 # include <stdint.h>
 
-# define PI 3.1415926
+# define PI 3.14159265358979323846264338327950288
 # define DEG_TO_RAD PI / 180
 # define RAD_TO_DEG 180 / PI
 
@@ -64,6 +64,7 @@ t_v3d			vec_1up(void);
 t_v3d			vec_1back(void);
 t_v3d			vec_1right(void);
 t_v3d			vec_1zero(void);
+t_v3d			vec_1double(double_t d);
 
 t_v3d			vec_reflect(t_v3d vector, t_v3d normal);
 t_v3d			vec_inters(t_v3d v1, t_v3d v2);

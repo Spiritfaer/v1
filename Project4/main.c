@@ -47,6 +47,10 @@ int main(int argc, char ** argv)
 		//centr2 = (t_v3d) { -1, -1, -1 };
 		set_color(&color, 35, 75, 150);
 		push_back_obj(ft_new_box(&centr, NULL, color, (double_t)2.0), obj);
+
+		centr = vec_3d(-5.0, 2.0, 5.0);
+		set_color(&color, 255, 255, 255);
+		push_back_light(new_light(&centr, &color, (double_t)15.0), &suns);
 	}
 	else
 	{
@@ -55,9 +59,9 @@ int main(int argc, char ** argv)
 		radius = 5 * q;
 		push_back_obj(ft_new_plane(centr, color, radius, disk), obj);
 
-		centr = vec_3d(0.0, 25.0, -1.0);
+		centr = vec_3d(1.0, -3.0, 2.0);
 		set_color(&color, 255, 255, 255);
-		push_back_light(new_light(&centr, &color, (double_t)100.0), suns);
+		push_back_light(new_light(&centr, &color, (double_t)15.0), &suns);
 	}
 
 

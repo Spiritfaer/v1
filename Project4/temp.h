@@ -22,6 +22,6 @@ void		print_v3d(t_v3d *src, char *str);
 void		print_v3i(t_v3i *src, char *str);
 
 uint32_t	set_pixel_color(t_rgb color, double_t shadow);
-void		push_back_light(t_light *src, t_light *des);
+void		push_back_light(t_light *src, t_light **des);
 
 #endif

@@ -1,6 +1,11 @@
 #include "main.h"
 
-t_v3d	get_box_centr(void *data)
+t_v3d	get_box_albedo(void *data)
+{
+	return (((t_box*)data)->albedo);
+}
+
+t_v3d	get_box_centr(const void *data)
 {
 	t_box *b = data;
 	return (b->centr);
