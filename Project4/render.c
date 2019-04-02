@@ -55,13 +55,19 @@ uint8_t		cast_ray(
 			tNear = t;
 			//Vec3f hitPoint = orig + dir * t;----------------
 			point_hit = vec_3add(*orig, vec_3fmul(*dir, t));
-			n_hit = vec_3sub(point_hit, tmp_obj->get_center(tmp_obj->data));
-			vec_3normalize(&n_hit);
+			if (tmp_obj->flag == sphere && 0)
+			{
+				n_hit = tmp_obj->get_n_hit(&point_hit, tmp_obj);
+			}
+			else
+			{
+				n_hit = vec_3sub(point_hit, tmp_obj->get_center(tmp_obj->data));
+				vec_3normalize(&n_hit);
+			}
+
 			//-----------
-			t_v3d test_l_dir = suns->cam_pos;
-			vec_3normalize(&test_l_dir);
-			shadow = vec_3dot(n_hit, test_l_dir);
-			//shadow = vec_3dot(n_hit, suns->invdir);
+
+			shadow = vec_3dot(n_hit, suns->invdir);
 			shadow = shadow < 0 ? 0 : shadow;
 			
 

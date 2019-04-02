@@ -14,7 +14,7 @@ int main(int argc, char ** argv)
 	t_rgb		color;
 	double_t	radius;
 	int32_t		q = 3;
-	int8_t		scena = 1;
+	int8_t		scena = 0;
 	sdl = ft_new_sdl();
 	
 	ft_temp_fill(&centr, &color, &radius, sdl->screen_size);

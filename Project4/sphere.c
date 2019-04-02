@@ -1,100 +1,113 @@
 #include "main.h"
 
-t_v3d	get_center_sphere(const void *data)
-{
-	const t_sphere *s = data;
-	return(s->cam_centr);
-}
 
-t_v3d	get_sphere_albedo(const void *data)
+//	geters and setters
+t_v3d			ft_get_center_sphere(const void *data)
+{
+	return(((t_sphere*)data)->cam_centr);
+}
+t_v3d			ft_get_sphere_albedo(const void *data)
 {
 	return (((t_sphere*)data)->albedo);
 }
-
-int8_t	solve_quadratic(const double_t *a, const double_t *b, const double_t *c,
-	double_t *x0, double_t *x1)
+t_rgb			ft_get_sphere_color(const void* data)
 {
-	double_t discr = (*b) * (*b) - 4 * (*a) * (*c);
-	double_t q;
+	return(((t_sphere*)data)->color);
+}
+t_v3d			get_sphere_n_hit(const t_v3d *point_hit, const t_obj *obj)
+{
+	t_v3d		n_hit;
+
+	n_hit = vec_3sub(*point_hit, obj->get_center(obj->data));
+	vec_3normalize(&n_hit);
+	return (n_hit);
+}
+
+//	sphere intersect function
+int8_t			ft_solve_quadratic(t_v3d *abc, t_v2d *tt)
+{
+	double_t	discr;
+	double_t	q;
+
+	discr = abc->y * abc->y - 4 * abc->x * abc->z;
 	if (discr < 0)
 		return (0);
 	else if (discr == 0)
-		(*x0) = (*x1) = -0.5 * (*b) / (*a);
-	else {
-		q = ((*b) > 0) ?
-			-0.5 * ((*b) + sqrt(discr)) :
-			-0.5 * ((*b) - sqrt(discr));
-		(*x0) = q / (*a);
-		(*x1) = (*c) / q;
+		tt->x = tt->y = -0.5 * abc->y / abc->x;
+	else
+	{
+		q = (abc->y > 0) ?
+			-0.5 * (abc->y + sqrt(discr)) :
+			-0.5 * (abc->y - sqrt(discr));
+		tt->x = q / abc->x;
+		tt->y = abc->z / q;
 	}
-	if (x0 > x1)
+	if (tt->x > tt->y)
 	{
 		//I should use swap... but I forget where it defined
-		fs_double_swap(x0, x1);
+		fs_double_swap(&tt->x, &tt->y);
 	}
-	return (1);
+	return (true);
+}
+int8_t			ft_sphere_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t *t)
+{
+	const t_sphere	*s;
+	t_v2d			tt = { 0.0, 0.0 };
+	t_v3d			light;
+	t_v3d			abc;
+
+	s = data;
+	light = vec_3sub(*orig, s->world_centr);
+	abc.x = vec_3magnitude(*dir);
+	abc.y = 2 * vec_3dot(*dir, light);
+	abc.z = vec_3dot(light, light) - s->rad2;
+
+	if (ft_solve_quadratic(&abc, &tt) == false)
+		return (false);
+	if (tt.x > tt.y)
+		fs_double_swap(&tt.x, &tt.y);
+	if (tt.x < 0)
+	{
+		tt.x = tt.y; // if tt.x is negative, let's use t1 instead 
+		if (tt.x < 0)
+			return (false); // both tt.x and t1 are negative 
+	}
+	*t = tt.x;
+	return (true);
 }
 
 
-
-void	ft_del_sphere(t_obj **obj)
+//	constructor and destructor
+void			ft_del_sphere(t_obj **obj)
 {
 	free((*obj)->data);
 	(*obj)->data = NULL;
 	free(*obj);
 	(*obj) = NULL;
 }
-
-int8_t sphere_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t *t)
+t_obj*			ft_new_sphere(t_v3d centr, t_rgb color, double_t radius)
 {
-	const t_sphere *s = data;
-	double_t t0, t1; // solutions for t if the ray intersects 
-	t_v3d L = vec_3sub(*orig, s->world_centr);
-	double_t a = vec_3magnitude(*dir);
-	double_t b = 2 * vec_3dot(*dir, L);
-	double_t c = vec_3dot(L, L) - s->rad2;
-	if (solve_quadratic(&a, &b, &c, &t0, &t1) == 0)
-		return (0);
-	if (t0 > t1)
-		fs_double_swap(&t0, &t1);
-	if (t0 < 0) {
-		t0 = t1; // if t0 is negative, let's use t1 instead 
-		if (t0 < 0)
-			return (0); // both t0 and t1 are negative 
-	}
-	*t = t0;
-	return (1);
-}
+	t_obj		*obj;
+	t_sphere	*new_sphere;
 
-
-t_rgb	ft_get_sphere_color(const void* data)
-{
-	const t_sphere *temp;
-	temp = data;
-	return(temp->color);
-}
-
-t_obj*	ft_new_sphere(t_v3d centr, t_rgb color, double_t radius)
-{
-	t_obj *obj = (t_obj*)malloc(sizeof(t_obj));
-	t_sphere *new_sphere = (t_sphere*)malloc(sizeof(t_sphere));
-
+	obj = (t_obj*)malloc(sizeof(t_obj));
+	new_sphere = (t_sphere*)malloc(sizeof(t_sphere));
+	if (!obj || !new_sphere)
+		return (NULL);
 	ft_memcpy(&new_sphere->world_centr, &centr, sizeof(t_v3d));
 	ft_memcpy(&new_sphere->color, &color, sizeof(t_rgb));
-
 	obj->flag = sphere;
 	new_sphere->albedo = vec_1double(0.18);
 	new_sphere->radius = radius;
 	new_sphere->rad2 = radius * radius;
 	new_sphere->world_centr = centr;
 	new_sphere->color = color;
-
 	obj->data = new_sphere;
-	obj->get_albedo = get_sphere_albedo;
+	obj->get_n_hit = get_sphere_n_hit;
+	obj->get_albedo = ft_get_sphere_albedo;
 	obj->get_color = ft_get_sphere_color;
-	obj->intersect = sphere_intersect;
-	obj->get_center = get_center_sphere;
+	obj->intersect = ft_sphere_intersect;
+	obj->get_center = ft_get_center_sphere;
 	obj->next = NULL;
-
 	return (obj);
 }

@@ -36,9 +36,10 @@ t_obj*		ft_new_sphere(t_v3d centr, t_rgb color, double_t radius);
 void		ft_del_sphere(t_obj **obj);
 
 t_rgb		ft_get_sphere_color(const void* data);
-t_v3d		get_center_sphere(void *data);
-int8_t		sphere_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t *t);
-t_v3d		get_sphere_albedo(const void *data);
+t_v3d		ft_get_center_sphere(void *data);
+int8_t		ft_sphere_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t *t);
+t_v3d		ft_get_sphere_albedo(const void *data);
+t_v3d		get_sphere_n_hit(const t_v3d *point_hit, const t_obj *obj);
 
 //----------------------plane()
 
