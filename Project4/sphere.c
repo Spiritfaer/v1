@@ -14,7 +14,7 @@ t_rgb			ft_get_sphere_color(const void* data)
 {
 	return(((t_sphere*)data)->color);
 }
-t_v3d			get_sphere_n_hit(const t_v3d *point_hit, const t_obj *obj)
+t_v3d			ft_get_sphere_n_hit(const t_v3d *point_hit, const t_obj *obj)
 {
 	t_v3d		n_hit;
 
@@ -76,7 +76,6 @@ int8_t			ft_sphere_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t
 	return (true);
 }
 
-
 //	constructor and destructor
 void			ft_del_sphere(t_obj **obj)
 {
@@ -103,11 +102,13 @@ t_obj*			ft_new_sphere(t_v3d centr, t_rgb color, double_t radius)
 	new_sphere->world_centr = centr;
 	new_sphere->color = color;
 	obj->data = new_sphere;
-	obj->get_n_hit = get_sphere_n_hit;
+
+	obj->get_center = ft_get_center_sphere;
 	obj->get_albedo = ft_get_sphere_albedo;
 	obj->get_color = ft_get_sphere_color;
+	obj->get_n_hit = ft_get_sphere_n_hit;
+
 	obj->intersect = ft_sphere_intersect;
-	obj->get_center = ft_get_center_sphere;
 	obj->next = NULL;
 	return (obj);
 }

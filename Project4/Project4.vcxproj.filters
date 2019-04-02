@@ -192,9 +192,6 @@
     <ClCompile Include="box.c">
       <Filter>Файлы ресурсов</Filter>
     </ClCompile>
-    <ClCompile Include="box_set_get.c">
-      <Filter>Файлы ресурсов</Filter>
-    </ClCompile>
     <ClCompile Include="vec_3invert_dir.c">
       <Filter>Исходные файлы</Filter>
     </ClCompile>

@@ -1,38 +1,38 @@
 #include "main.h"
 
-
-t_rgb	ft_get_plane_color(const void* data)
+//	geters and setters
+t_rgb		ft_get_plane_color(const void* data)
 {
-	const t_plane *temp;
-	temp = data;
-	return(temp->color);
+	return(((t_plane*)data)->color);
 }
-
-t_v3d	get_plane_albedo(const void *data)
+t_v3d		get_plane_albedo(const void *data)
 {
 	return (((t_plane*)data)->albedo);
 }
-
-t_v3d	get_center_plane(const void *data)
+t_v3d		get_center_plane(const void *data)
 {
-	const t_plane *s = data;
-	return(s->cam_normal);
+	return(((t_plane*)data)->cam_centr);
 }
 
-int8_t plane_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t *t)
+
+//	plane and disk intersect function
+int8_t		plane_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t *t)
 {
-	const t_plane *pl = data;
-	double_t demon = vec_3dot(*dir, pl->cam_normal);
+	const t_plane	*pl;
+	double_t		demon;
+	t_v3d			p0l0;
+
+	pl = data;
+	demon = vec_3dot(*dir, pl->cam_normal);
 	if (demon > 1e-6) //or only (demon > 1e-6)
 	{
-		t_v3d p0l0 = vec_3sub(pl->cam_centr, *orig);
+		p0l0 = vec_3sub(pl->cam_centr, *orig);
 		*t = vec_3dot(p0l0, pl->cam_normal) / demon;
 		return (*t >= 0); // and then only (*t >= 0)
 	}
 	return (false);
 }
-
-int8_t disk_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t *t)
+int8_t		disk_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t *t)
 {
 	t_v3d		p;
 	t_v3d		v;
@@ -49,7 +49,7 @@ int8_t disk_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t *t)
 	return (false);
 }
 
-
+//	constructor and destructor
 t_obj*	ft_new_plane(t_v3d centr, t_rgb color, double_t radius, int32_t flag)
 {
 	t_obj *obj = (t_obj*)malloc(sizeof(t_obj));
