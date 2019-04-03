@@ -53,12 +53,12 @@ t_v3d		get_plane_albedo(const void *data);
 
 t_obj*		ft_new_box(t_v3d *max, t_v3d *min, t_rgb color, double_t size);
 t_rgb		ft_get_box_color(const void* data);
-int8_t		box_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t *t);
+int8_t		ft_box_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t *t);
 void		ft_del_box(t_obj **obj);
-t_v3d		get_box_centr(const void *data);
-void		set_box_centr(t_box *box);
-void		set_min_max(t_box *box);
-t_v3d		get_box_albedo(const void *data);
+t_v3d		ft_get_box_centr(const void *data);
+void		ft_set_box_centr(t_box *box);
+void		ft_set_min_max(t_box *box);
+t_v3d		ft_get_box_albedo(const void *data);
 
 //------------------------------
 
