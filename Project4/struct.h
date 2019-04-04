@@ -68,10 +68,25 @@ typedef	struct		s_light
 	struct s_light	*next;
 }					t_light;
 
+typedef struct		s_ray
+{
+	t_v3d			orig;
+	t_v3d			dir;
+}					t_ray;
+
+typedef struct		s_hit
+{
+	t_v3d			point_hit;
+	t_v3d			norml_hit;
+	double_t		shadow;
+	double_t		tNear;
+	double_t		t;
+}					t_hit;
+
 typedef struct 		s_obj
 {
 	void			*data;
-	int8_t(*intersect)(t_v3d *orig, t_v3d *dir, const void *data, double_t *t);
+	int8_t(*intersect)(t_ray *ray, const void *data, double_t *t);
 	//t_rgb(*get_color)(const void* data, const t_v3d* intersect_point);
 	t_rgb(*get_color)(const void* data);
 	t_v3d(*get_center)(const void* data);
@@ -102,11 +117,19 @@ typedef struct		s_camera
 	uint8_t			on;
 }					t_camera;
 
+typedef struct		s_scena
+{
+	t_obj			*obj_list;
+	t_light			*light_list;
+	t_camera		*camera_point;
+}					t_scena;
+
 typedef struct		s_sdl
 {
 	int8_t			init_flag;
 	SDL_Window		*window;
 	SDL_Renderer	*renderer;
+	SDL_Surface		*canvas;
 	SDL_Event		event;
 	const uint8_t	*cur_key;
 	char			*win_name;

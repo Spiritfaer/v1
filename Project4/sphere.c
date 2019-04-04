@@ -41,7 +41,7 @@ int8_t			ft_solve_quadratic(t_v3d *abc, t_v2d *tt)
 	}
 	return (true);
 }
-int8_t			ft_sphere_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t *t)
+int8_t			ft_sphere_intersect(t_ray *ray, const void *data, double_t *t)
 {
 	const t_sphere	*s;
 	t_v2d			tt = { 0.0, 0.0 };
@@ -49,9 +49,9 @@ int8_t			ft_sphere_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t
 	t_v3d			abc;
 
 	s = data;
-	light = vec_3sub(*orig, s->world_centr);
-	abc.x = vec_3magnitude(*dir);
-	abc.y = 2 * vec_3dot(*dir, light);
+	light = vec_3sub(ray->orig, s->world_centr);
+	abc.x = vec_3magnitude(ray->dir);
+	abc.y = 2 * vec_3dot(ray->dir, light);
 	abc.z = vec_3dot(light, light) - s->rad2;
 
 	if (ft_solve_quadratic(&abc, &tt) == false)

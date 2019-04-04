@@ -8,19 +8,19 @@ int main(int argc, char ** argv)
 
 	t_sdl		*sdl = NULL;
 	t_obj		*obj = NULL;
-	t_light		*suns = NULL;
+	t_light		*light = NULL;
 	t_v3d		centr;
 	t_v3d		centr2;
 	t_rgb		color;
 	double_t	radius;
 	int32_t		q = 3;
-	int8_t		scena = 1;
+	int8_t		index_scena = 0;
 	sdl = ft_new_sdl();
 	
 	ft_temp_fill(&centr, &color, &radius, sdl->screen_size);
 	obj = ft_new_sphere(centr, color, radius);
 
-	if (scena == 0)
+	if (index_scena == 0)
 	{
 		centr = vec_3d(-2.0, 3.0, -1.5);
 		set_color(&color, 33, 66, 30);
@@ -48,9 +48,9 @@ int main(int argc, char ** argv)
 
 		centr = vec_3d(0.0, 0.0, 0.0);
 		set_color(&color, 255, 255, 255);
-		push_back_light(new_light(&centr, &color, (double_t)15.0), &suns);
+		push_back_light(new_light(&centr, &color, (double_t)15.0), &light);
 	}
-	else if (scena == 1) // a sphere and a plane
+	else if (index_scena == 1) // a sphere and a plane
 	{
 		centr = vec_3d(0.0, -5.5, 0.0);
 		set_color(&color, 200, 200, 25);
@@ -63,9 +63,9 @@ int main(int argc, char ** argv)
 
 		centr = vec_3d(1.0, -3.0, 2.0);
 		set_color(&color, 255, 255, 255);
-		push_back_light(new_light(&centr, &color, (double_t)15.0), &suns);
+		push_back_light(new_light(&centr, &color, (double_t)15.0), &light);
 	}
-	else if (scena == 2) //a box, a sphere
+	else if (index_scena == 2) //a box, a sphere
 	{
 		centr = (t_v3d) { 15, -1, 0 };
 		set_color(&color, 35, 75, 150);
@@ -73,16 +73,19 @@ int main(int argc, char ** argv)
 
 		centr = vec_3d(1.0, -3.0, 2.0);
 		set_color(&color, 255, 255, 255);
-		push_back_light(new_light(&centr, &color, (double_t)15.0), &suns);
+		push_back_light(new_light(&centr, &color, (double_t)15.0), &light);
 	}
 
 
 	obj_info(obj);
+	t_scena scena;
+	scena.obj_list = obj;
+	scena.light_list = light;
 
 	_CrtMemState tmp;
 	_CrtMemCheckpoint(&tmp);
 
-	ft_render(sdl, obj, suns);
+	ft_render(sdl, &scena);
 
 	if (obj)
 		ft_del_sphere(&obj);

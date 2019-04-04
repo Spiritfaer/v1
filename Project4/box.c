@@ -31,32 +31,32 @@ void		ft_set_min_max(t_box *box)
 }
 
 //	sphere intersect function
-void		ft_fill_aabb_ray(const t_v3d *origin, const t_v3d *dir, t_aabb_ray *ray)
+void		ft_fill_aabb_ray(t_ray *src, t_aabb_ray *dest)
 {
-	ray->invdir.x = 1 / dir->x;
-	ray->invdir.y = 1 / dir->y;
-	ray->invdir.z = 1 / dir->z;
-	ray->flag[0] = (ray->invdir.x < 0);
-	ray->flag[1] = (ray->invdir.y < 0);
-	ray->flag[2] = (ray->invdir.z < 0);
+	dest->invdir.x = 1 / src->dir.x;
+	dest->invdir.y = 1 / src->dir.y;
+	dest->invdir.z = 1 / src->dir.z;
+	dest->flag[0] = (dest->invdir.x < 0);
+	dest->flag[1] = (dest->invdir.y < 0);
+	dest->flag[2] = (dest->invdir.z < 0);
 }
-int8_t		ft_box_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t *t)
+int8_t		ft_box_intersect(t_ray *ray, const void *data, double_t *t)
 {
 	t_aabb_ray	r;
 	t_v3d		tmin;
 	t_v3d		tmax;
 	t_v3d		bounds[2];
 
-	ft_fill_aabb_ray(orig, dir, &r);
+	ft_fill_aabb_ray(ray, &r);
 	bounds[0] = ((t_box*)data)->cam_min;
 	bounds[1] = ((t_box*)data)->cam_max;
 
 
-	tmin.x = (bounds[r.flag[0]].x - orig->x) * r.invdir.x;
-	tmax.x = (bounds[1 - r.flag[0]].x - orig->x) * r.invdir.x;
+	tmin.x = (bounds[r.flag[0]].x - ray->orig.x) * r.invdir.x;
+	tmax.x = (bounds[1 - r.flag[0]].x - ray->orig.x) * r.invdir.x;
 
-	tmin.y = (bounds[r.flag[1]].y - orig->y) * r.invdir.y;
-	tmax.y = (bounds[1 - r.flag[1]].y - orig->y) * r.invdir.y;
+	tmin.y = (bounds[r.flag[1]].y - ray->orig.y) * r.invdir.y;
+	tmax.y = (bounds[1 - r.flag[1]].y - ray->orig.y) * r.invdir.y;
 
 	if ((tmin.x > tmax.y) || (tmin.y > tmax.x))
 		return (false);
@@ -64,8 +64,8 @@ int8_t		ft_box_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t *t)
 	tmin.x = (tmin.y > tmin.x) ? tmin.y : tmin.x;
 	tmax.x = (tmax.y < tmax.x) ? tmax.y : tmax.x;
 
-	tmin.z = (bounds[r.flag[2]].z - orig->z) * r.invdir.z;
-	tmax.z = (bounds[1 - r.flag[2]].z - orig->z) * r.invdir.z;
+	tmin.z = (bounds[r.flag[2]].z - ray->orig.z) * r.invdir.z;
+	tmax.z = (bounds[1 - r.flag[2]].z - ray->orig.z) * r.invdir.z;
 
 	if ((tmin.x > tmax.z) || (tmin.z > tmax.x))
 		return (false);

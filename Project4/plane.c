@@ -14,34 +14,33 @@ t_v3d		get_center_plane(const void *data)
 	return(((t_plane*)data)->cam_centr);
 }
 
-
 //	plane and disk intersect function
-int8_t		plane_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t *t)
+int8_t		plane_intersect(t_ray *ray, const void *data, double_t *t)
 {
 	const t_plane	*pl;
 	double_t		demon;
 	t_v3d			p0l0;
 
 	pl = data;
-	demon = vec_3dot(*dir, pl->cam_normal);
+	demon = vec_3dot(ray->dir, pl->cam_normal);
 	if (demon > 1e-6) //or only (demon > 1e-6)
 	{
-		p0l0 = vec_3sub(pl->cam_centr, *orig);
+		p0l0 = vec_3sub(pl->cam_centr, ray->orig);
 		*t = vec_3dot(p0l0, pl->cam_normal) / demon;
 		return (*t >= 0); // and then only (*t >= 0)
 	}
 	return (false);
 }
-int8_t		disk_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t *t)
+int8_t		disk_intersect(t_ray *ray, const void *data, double_t *t)
 {
 	t_v3d		p;
 	t_v3d		v;
 	double_t	d2;
 
 	*t = 0;
-	if (plane_intersect(orig, dir, data, t))
+	if (plane_intersect(ray, data, t))
 	{
-		p = vec_3add(*orig, vec_3fmul(*dir, *t));
+		p = vec_3add(ray->orig, vec_3fmul(ray->dir, *t));
 		v = vec_3sub(p, ((t_plane*)data)->cam_centr);
 		d2 = vec_3dot(v,v);
 		return (d2 <= ((t_plane*)data)->s2);

@@ -71,6 +71,7 @@ t_sdl	*ft_new_sdl(void)
 		sdl->screen_size.x = WIN_SIZE_W;
 		sdl->screen_size.y = WIN_SIZE_H;
 		sdl->iar = ((double_t)sdl->screen_size.x) / ((double_t)sdl->screen_size.y);
+		sdl->canvas = new_canvas(sdl->screen_size.x, sdl->screen_size.y);
 		sdl->loop = 1;
 		if (ft_init_sdl(sdl) < 0)
 		{
