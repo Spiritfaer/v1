@@ -14,14 +14,6 @@ t_rgb			ft_get_sphere_color(const void* data)
 {
 	return(((t_sphere*)data)->color);
 }
-t_v3d			ft_get_sphere_n_hit(const t_v3d *point_hit, const t_obj *obj)
-{
-	t_v3d		n_hit;
-
-	n_hit = vec_3sub(*point_hit, obj->get_center(obj->data));
-	vec_3normalize(&n_hit);
-	return (n_hit);
-}
 
 //	sphere intersect function
 int8_t			ft_solve_quadratic(t_v3d *abc, t_v2d *tt)
@@ -75,7 +67,14 @@ int8_t			ft_sphere_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t
 	*t = tt.x;
 	return (true);
 }
+t_v3d			ft_get_sphere_n_hit(const t_v3d *point_hit, const t_obj *obj)
+{
+	t_v3d		n_hit;
 
+	n_hit = vec_3sub(*point_hit, obj->get_center(obj->data));
+	vec_3normalize(&n_hit);
+	return (n_hit);
+}
 //	constructor and destructor
 void			ft_del_sphere(t_obj **obj)
 {

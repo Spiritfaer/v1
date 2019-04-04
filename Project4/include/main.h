@@ -14,7 +14,6 @@
 #include "vmth.h"
 #define _CRTDBG_MAP_ALLOC 
 
-#define DISTANCE_TO_CANVAS 2
 #define CANVAS_SIZE 2
 
 #define WIN_SIZE_W 640
@@ -59,6 +58,7 @@ t_v3d		ft_get_box_centr(const void *data);
 void		ft_set_box_centr(t_box *box);
 void		ft_set_min_max(t_box *box);
 t_v3d		ft_get_box_albedo(const void *data);
+t_v3d		box_intersect_normals(const t_v3d *hit_point, const t_obj *obj_box);
 
 //------------------------------
 

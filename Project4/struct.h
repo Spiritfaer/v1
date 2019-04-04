@@ -49,9 +49,6 @@ typedef struct		s_box
 	t_v3d			max;
 	t_v3d			cam_min;
 	t_v3d			cam_max;
-	//t_v3d			tmin;
-	//t_v3d			tmax;
-	//t_v3d			bounds[2];
 	t_v3d			centr;
 	double_t		size;
 	t_rgb			color;

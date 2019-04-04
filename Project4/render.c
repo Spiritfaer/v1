@@ -55,24 +55,22 @@ uint8_t		cast_ray(
 			tNear = t;
 			//Vec3f hitPoint = orig + dir * t;----------------
 			point_hit = vec_3add(*orig, vec_3fmul(*dir, t));
-			if (tmp_obj->flag == sphere && 0)
-			{
-				n_hit = tmp_obj->get_n_hit(&point_hit, tmp_obj);
-			}
-			else
-			{
-				n_hit = vec_3sub(point_hit, tmp_obj->get_center(tmp_obj->data));
-				vec_3normalize(&n_hit);
-			}
+			//if (tmp_obj->flag == sphere || tmp_obj->flag == box)
+			n_hit = tmp_obj->get_n_hit(&point_hit, tmp_obj);
+			//else
+			//{
+			//	n_hit = vec_3sub(point_hit, tmp_obj->get_center(tmp_obj->data));
+			//	vec_3normalize(&n_hit);
+			//}
 
 			//-----------
-
-			shadow = vec_3dot(n_hit, suns->invdir);
+			vec_3normalize(&suns->dir);
+			shadow = vec_3dot(n_hit, suns->dir);
 			shadow = shadow < 0 ? 0 : shadow;
 			
 
 			//hitColor = hitObject->albedo / (PI * suns->intensity * suns->light_color * shadow));
-			tmp[i.x + i.y * sdl->screen_size.x] = set_pixel_color(tmp_obj->get_color(tmp_obj->data), (0.18/ PI * suns->intensity * suns->light_color * shadow));
+			tmp[i.x + i.y * sdl->screen_size.x] = set_pixel_color(tmp_obj->get_color(tmp_obj->data), (0.18 / PI * suns->intensity * suns->light_color * shadow));
 			//-----------
 			/*
 			shadow = vec_3dot(n_hit, vec_3invert_dir(dir));
@@ -159,6 +157,7 @@ void	refresh_obj(const t_matrix *camera, t_obj *obj, t_light *suns)
 			b = (t_box*)obj->data;
 			b->cam_min = mult_vect_matrix_3_3(b->min, camera->invert_matrix);
 			b->cam_max = mult_vect_matrix_3_3(b->max, camera->invert_matrix);
+			ft_set_box_centr((t_box*)obj->data);
 		}
 		obj = obj->next;
 	}
@@ -190,6 +189,7 @@ void			ft_render(t_sdl *sdl, t_obj *obj, t_light *suns)
 		event_guard(sdl, camera, &time);
 		SDL_RenderPresent(sdl->renderer);
 	}
+	print_matrix(camera->cam->matrix, camera->cam->size);
 	destroy_camera(&camera);
 	SDL_FreeSurface(canvas);
 }

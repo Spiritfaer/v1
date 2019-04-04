@@ -48,6 +48,14 @@ int8_t		disk_intersect(t_v3d *orig, t_v3d *dir, const void *data, double_t *t)
 	}
 	return (false);
 }
+t_v3d		plane_intersect_normals(const t_v3d *hit_point, const t_obj *obj_plane)
+{
+	//it seems it doesn't work right
+	t_plane *pl;
+
+	pl = obj_plane->data;
+	return (vec_3invert_dir(&pl->world_normal));
+}
 
 //	constructor and destructor
 t_obj*	ft_new_plane(t_v3d centr, t_rgb color, double_t radius, int32_t flag)
@@ -74,8 +82,9 @@ t_obj*	ft_new_plane(t_v3d centr, t_rgb color, double_t radius, int32_t flag)
 	new_plane->world_centr = centr;
 	new_plane->world_normal = (t_v3d){ 0, -1, 0 };
 	new_plane->color = color;
-	obj->get_albedo = get_plane_albedo;
 	obj->data = new_plane;
+	obj->get_n_hit = plane_intersect_normals;
+	obj->get_albedo = get_plane_albedo;
 	obj->get_color = ft_get_plane_color;
 	obj->get_center = get_center_plane;
 	obj->next = NULL;
