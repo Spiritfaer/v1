@@ -60,8 +60,11 @@ typedef	struct		s_light
 	t_v3d			pos;
 	t_v3d			cam_pos;
 	t_rgb			color;
+	t_v3d			dir_to_hit;
 	double_t		light_color;
-	double_t		intensity;
+	double_t		power_light;
+	t_v3d			intensity_light;
+	double_t		r2;
 	t_v3d			dir;
 	t_v3d			invdir;
 	t_matrix		*transform;
@@ -78,6 +81,7 @@ typedef struct		s_hit
 {
 	t_v3d			point_hit;
 	t_v3d			norml_hit;
+	t_rgb			color_hit;
 	double_t		shadow;
 	double_t		tNear;
 	double_t		t;

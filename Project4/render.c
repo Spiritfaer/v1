@@ -21,64 +21,61 @@ Vec3f castRay(
 		// by a single distant light source.
 		hitColor = hitObject->albedo / M_PI * light->intensity * light->color * std::max(0.f, hitNormal.dotProduct(L));
 	}
-
 	return hitColor;
 }
 */
 
-int8_t		trace(t_scena *scena, t_ray *ray, t_hit *hit)
+t_obj		*intersect_obj(t_obj *obj, t_ray *ray, t_hit *hit)
 {
-	const t_obj	*tmp_obj;
-
-	tmp_obj = scena->obj_list;
-	while (tmp_obj)
+	t_obj	*tmp;
+	
+	tmp = NULL;
+	hit->tNear = DBL_MAX;
+	while (obj)
 	{
-		if (tmp_obj->intersect(ray, tmp_obj->data, &hit->t) != 0 && hit->t < hit->tNear)
-			return (true);
-		tmp_obj = tmp_obj->next;
+		hit->t = DBL_MAX;
+		if (obj->intersect(ray, obj->data, &hit->t) != 0 && hit->t < hit->tNear)
+		{
+			hit->tNear = hit->t;
+			tmp = obj;
+		}
+		obj = obj->next;
 	}
-	return (false);
+	hit->t = hit->tNear;
+	if (hit->tNear < DBL_MAX)
+	{
+		//Vec3f hitPoint = orig + dir * t;
+		hit->point_hit = vec_3add(ray->orig, vec_3fmul(ray->dir, hit->t));
+		hit->norml_hit = tmp->get_n_hit(&hit->point_hit, tmp);
+		return (tmp);
+	}
+	return (NULL);
 }
 
 uint8_t		cast_ray(const t_sdl *sdl, t_scena *scena, t_ray *ray, t_v2i i)
 {
 	const t_obj	*tmp_obj;
-	uint32_t	*tmp;
+	uint32_t	*pix;
 	t_hit		hit;
+	double_t	tone;
 
-	uint8_t result = false;
-	tmp = (uint32_t*)sdl->canvas->pixels;
-	tmp_obj = scena->obj_list;
-	hit.tNear = DBL_MAX;
-
-
-
-	while (tmp_obj)
+	pix = (uint32_t*)sdl->canvas->pixels;
+	tmp_obj = intersect_obj(scena->obj_list, ray, &hit);
+	if (tmp_obj)
 	{
-		hit.t = DBL_MAX;
-		if (tmp_obj->intersect(ray, tmp_obj->data, &hit.t) != 0 && hit.t < hit.tNear)
-		{
-			hit.tNear = hit.t;
-			//Vec3f hitPoint = orig + dir * t;
-			hit.point_hit = vec_3add(ray->orig, vec_3fmul(ray->dir, hit.t));
-			hit.norml_hit = tmp_obj->get_n_hit(&hit.point_hit, tmp_obj);
-			vec_3normalize(&scena->light_list->dir);
-			if (!trace(scena, ray, &hit))
-			{
-				hit.shadow = vec_3dot(hit.norml_hit, scena->light_list->dir);
-				hit.shadow = hit.shadow < 0 ? 0 : hit.shadow;
-			}
-			else
-				hit.shadow = 0;
-			//hitColor = hitObject->albedo / (PI * suns->intensity * suns->light_color * shadow));
-			tmp[i.x + i.y * sdl->screen_size.x] 
-				= set_pixel_color(tmp_obj->get_color(tmp_obj->data), 
-				(0.18 / PI * scena->light_list->intensity * scena->light_list->light_color * hit.shadow));
-			result = true;
-		}
-		tmp_obj = tmp_obj->next;
+		scena->light_list->dir_to_hit = get_light_dir(&hit, scena->light_list);
+		//vec_3normalize(&scena->light_list->dir);
+		//hit.shadow = vec_3dot(hit.norml_hit, scena->light_list->dir);
+		//hit.shadow = hit.shadow < 0 ? 0 : hit.shadow;
+	/*	tone = 0.18 / PI * scena->light_list->power_light * scena->light_list->light_color * hit.shadow;
+		scena->light_list->intensity_light;*/
+		
+		//hitColor = hitObject->albedo / (PI * suns->intensity * suns->light_color * shadow));
+		pix[i.x + i.y * sdl->screen_size.x] = set_pixel_color_with_hit_color(tmp_obj->get_color(tmp_obj->data), &hit, scena->light_list);
+		//pix[i.x + i.y * sdl->screen_size.x] = set_pixel_color(tmp_obj->get_color(tmp_obj->data), tone);
+		return (true);
 	}
-	return (result);
+	return (false);
 }
 
 static void set_var_to_draw_foo(t_ray *ray, t_v3d *point, t_v2i *i)

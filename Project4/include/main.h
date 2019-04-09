@@ -84,5 +84,6 @@ uint8_t		cast_ray(const t_sdl *sdl, t_scena *scena, t_ray *ray, t_v2i i);
 t_camera*	make_camera(int32_t size);
 void		destroy_camera(t_camera **camera);
 t_light*	new_light(t_v3d *pos, t_rgb *color, double_t intensity);
+t_v3d		get_light_dir(t_hit *hit, t_light *light);
 
 #endif

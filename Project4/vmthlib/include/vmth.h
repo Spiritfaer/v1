@@ -88,6 +88,8 @@ t_v3d			vec_3add(t_v3d v1, t_v3d v2);
 t_v3d			vec_3sub(t_v3d v1, t_v3d v2);
 t_v3d			vec_3mul(t_v3d v1, t_v3d v2);
 t_v3d			vec_3fmul(t_v3d v, double_t m);
+t_v3d			vec_3div(t_v3d v1, t_v3d v2);
+t_v3d			vec_3fdiv(t_v3d v, double_t f);
 double_t		vec_3magnitude(t_v3d v);
 t_v3d			vec_3norm(t_v3d v);
 void			vec_3normalize(t_v3d *v);

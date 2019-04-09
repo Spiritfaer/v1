@@ -204,6 +204,12 @@
     <ClCompile Include="vec_1double.c">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="vec_3fdiv.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="vec_3div.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vmthlib\include\vmth.h">

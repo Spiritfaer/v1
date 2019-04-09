@@ -181,6 +181,8 @@
     <ClCompile Include="sphere.c" />
     <ClCompile Include="temp.c" />
     <ClCompile Include="vec_1double.c" />
+    <ClCompile Include="vec_3div.c" />
+    <ClCompile Include="vec_3fdiv.c" />
     <ClCompile Include="vec_3invert_dir.c" />
     <ClCompile Include="vmthlib\src\vec_1back.c" />
     <ClCompile Include="vmthlib\src\vec_1right.c" />

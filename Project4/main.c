@@ -14,7 +14,7 @@ int main(int argc, char ** argv)
 	t_rgb		color;
 	double_t	radius;
 	int32_t		q = 3;
-	int8_t		index_scena = 0;
+	int8_t		index_scena = 2;
 	sdl = ft_new_sdl();
 	
 	ft_temp_fill(&centr, &color, &radius, sdl->screen_size);
@@ -48,7 +48,7 @@ int main(int argc, char ** argv)
 
 		centr = vec_3d(0.0, 0.0, 0.0);
 		set_color(&color, 255, 255, 255);
-		push_back_light(new_light(&centr, &color, (double_t)15.0), &light);
+		push_back_light(new_light(&centr, &color, (double_t)10.0), &light);
 	}
 	else if (index_scena == 1) // a sphere and a plane
 	{
@@ -67,13 +67,13 @@ int main(int argc, char ** argv)
 	}
 	else if (index_scena == 2) //a box, a sphere
 	{
-		centr = (t_v3d) { 15, -1, 0 };
+		centr = (t_v3d) { 0.0, -22.0, -15.0 };
 		set_color(&color, 35, 75, 150);
-		push_back_obj(ft_new_box(&centr, NULL, color, (double_t)2.0), obj);
+		push_back_obj(ft_new_box(&centr, NULL, color, (double_t)17.0), obj);
 
-		centr = vec_3d(1.0, -3.0, 2.0);
+		centr = vec_3d(0.0, -30.0, -20.0);
 		set_color(&color, 255, 255, 255);
-		push_back_light(new_light(&centr, &color, (double_t)15.0), &light);
+		push_back_light(new_light(&centr, &color, (double_t)1.0), &light);
 	}
 
 
