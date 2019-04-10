@@ -227,12 +227,12 @@ uint32_t	set_pixel_color_with_hit_color(t_rgb color, t_hit *hit, t_light *light)
 {
 	uint32_t	result;
 	t_v3d		tmp;
-	double_t	f = (double_t)hit->color_hit.r / 255;
 
-
-	tmp.x = color.r * f * light->intensity_light.x;
-	tmp.y = color.g * f * light->intensity_light.y;
-	tmp.z = color.b * f * light->intensity_light.z;
+	double_t	tone = vec_3dot(get_to_light_dir(hit, light), hit->norml_hit);
+	tone = tone < 0 ? 0 : tone;
+	tmp.x = color.r * tone;
+	tmp.y = color.g * tone;
+	tmp.z = color.b * tone;
 
 	result = ((uint8_t)tmp.x << 16 | (uint8_t)tmp.y << 8 | (uint8_t)tmp.z);
 	return (result);

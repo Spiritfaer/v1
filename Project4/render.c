@@ -28,6 +28,7 @@ Vec3f castRay(
 t_obj		*intersect_obj(t_obj *obj, t_ray *ray, t_hit *hit)
 {
 	t_obj	*tmp;
+	double_t bias = 1;
 	
 	tmp = NULL;
 	hit->tNear = DBL_MAX;
@@ -47,35 +48,51 @@ t_obj		*intersect_obj(t_obj *obj, t_ray *ray, t_hit *hit)
 		//Vec3f hitPoint = orig + dir * t;
 		hit->point_hit = vec_3add(ray->orig, vec_3fmul(ray->dir, hit->t));
 		hit->norml_hit = tmp->get_n_hit(&hit->point_hit, tmp);
+		//-------------------------
+
+		hit->point_hit = vec_3add(hit->point_hit, vec_3fmul(hit->norml_hit, bias));
+		//-------------------------
 		return (tmp);
 	}
 	return (NULL);
 }
 
-uint8_t		cast_ray(const t_sdl *sdl, t_scena *scena, t_ray *ray, t_v2i i)
+int8_t			shadow_ray(t_obj *obj, t_hit *hit, t_v3d *dir_to_light)
+{
+	double_t tmp;
+	t_ray shadow_ray;
+
+	shadow_ray.orig = hit->point_hit;
+	shadow_ray.dir = *dir_to_light;
+
+	while (obj)
+	{
+		if (obj->intersect(&shadow_ray, obj->data, &tmp))
+			return (false);
+		obj = obj->next;
+	}
+	return (true);
+}
+
+uint32_t		cast_ray(const t_sdl *sdl, t_scena *scena, t_ray *ray, t_v2i i)
 {
 	const t_obj	*tmp_obj;
-	uint32_t	*pix;
+	uint32_t	pix;
 	t_hit		hit;
 	double_t	tone;
 
-	pix = (uint32_t*)sdl->canvas->pixels;
 	tmp_obj = intersect_obj(scena->obj_list, ray, &hit);
 	if (tmp_obj)
 	{
-		scena->light_list->dir_to_hit = get_light_dir(&hit, scena->light_list);
-		//vec_3normalize(&scena->light_list->dir);
-		//hit.shadow = vec_3dot(hit.norml_hit, scena->light_list->dir);
-		//hit.shadow = hit.shadow < 0 ? 0 : hit.shadow;
-	/*	tone = 0.18 / PI * scena->light_list->power_light * scena->light_list->light_color * hit.shadow;
-		scena->light_list->intensity_light;*/
+		t_v3d dir_to_light = get_to_light_dir(&hit, scena->light_list);
+		if (shadow_ray(scena->obj_list, &hit, &dir_to_light))
+			pix = set_pixel_color_with_hit_color(tmp_obj->get_color(tmp_obj->data), &hit, scena->light_list);
+		else
+			pix = 0x000000;
 		
-		//hitColor = hitObject->albedo / (PI * suns->intensity * suns->light_color * shadow));
-		pix[i.x + i.y * sdl->screen_size.x] = set_pixel_color_with_hit_color(tmp_obj->get_color(tmp_obj->data), &hit, scena->light_list);
-		//pix[i.x + i.y * sdl->screen_size.x] = set_pixel_color(tmp_obj->get_color(tmp_obj->data), tone);
-		return (true);
+		return (pix);
 	}
-	return (false);
+	return (BG_COLOR);
 }
 
 static void set_var_to_draw_foo(t_ray *ray, t_v3d *point, t_v2i *i)
@@ -103,10 +120,8 @@ void	ft_draw(const t_sdl *sdl, t_scena *scena)
 			point.y = (1 - CANVAS_SIZE * (i.y + 0.5) / (double_t)(sdl->screen_size.y)) * scena->camera_point->scale;
 			ray.dir = mult_vect_matrix_3_3(point, (scena->camera_point->cam->invert_matrix));
 			vec_3normalize(&ray.dir);
-			if (cast_ray(sdl, scena, &ray, i) == 0)
-			{
-				tmp[i.x + i.y * sdl->screen_size.x] = 0xA3C6C0;
-			}
+			tmp[i.x + i.y * sdl->screen_size.x] = cast_ray(sdl, scena, &ray, i);
+			//tmp[i.x + i.y * sdl->screen_size.x] = 0xA3C6C0;
 			i.y++;
 		}
 		i.x++;
