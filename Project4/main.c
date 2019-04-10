@@ -46,7 +46,7 @@ int main(int argc, char ** argv)
 		set_color(&color, 35, 75, 150);
 		push_back_obj(ft_new_box(&centr, NULL, color, (double_t)2.0), obj);
 
-		centr = vec_3d(0.0, 15.0, 10.0);
+		centr = vec_3d(0.0, 15.0, 12.0);
 		set_color(&color, 255, 255, 255);
 		push_back_light(new_light(&centr, &color, (double_t)10.0), &light);
 	}
@@ -75,7 +75,6 @@ int main(int argc, char ** argv)
 		set_color(&color, 255, 255, 255);
 		push_back_light(new_light(&centr, &color, (double_t)15.0), &light);
 	}
-
 
 	obj_info(obj);
 	t_scena scena;

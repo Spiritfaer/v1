@@ -84,6 +84,7 @@ uint32_t		cast_ray(const t_sdl *sdl, t_scena *scena, t_ray *ray, t_v2i i)
 	tmp_obj = intersect_obj(scena->obj_list, ray, &hit);
 	if (tmp_obj)
 	{
+		//t_v3d reflect = vec_reflect(ray->dir, hit.norml_hit);
 		t_v3d dir_to_light = get_to_light_dir(&hit, scena->light_list);
 		if (shadow_ray(scena->obj_list, &hit, &dir_to_light))
 			pix = set_pixel_color_with_hit_color(tmp_obj->get_color(tmp_obj->data), &hit, scena->light_list);

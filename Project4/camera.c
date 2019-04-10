@@ -15,8 +15,8 @@ t_camera*	make_camera(int32_t size)
 		camera->cam = get_new_matrix(4);
 		fill_vertical_matrix(camera->cam);
 		camera->cam->matrix[3][0] = 2.574;
-		camera->cam->matrix[3][1] = 2.364;
-		camera->cam->matrix[3][2] = 23.956;
+		camera->cam->matrix[3][1] = 6.675;
+		camera->cam->matrix[3][2] = 10.096;
 	}
 	else
 		fill_random_matrix(camera->cam->matrix, camera->cam->size);
