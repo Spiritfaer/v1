@@ -45,10 +45,10 @@ t_v3d		ft_get_sphere_n_hit(const t_v3d *point_hit, const t_obj *obj);
 //----------------------plane()
 
 t_obj*		ft_new_plane(t_v3d centr, t_rgb color, double_t radius, int32_t flag);
-int8_t		plane_intersect(t_ray *ray, const void *data, double_t *t);
-t_v3d		get_center_plane(const void *data);
+int8_t		ft_plane_intersect(t_ray *ray, const void *data, double_t *t);
+t_v3d		ft_get_center_plane(const void *data);
 t_rgb		ft_get_plane_color(const void* data);
-t_v3d		get_plane_albedo(const void *data);
+t_v3d		ft_get_plane_albedo(const void *data);
 
 //------------------------box()
 
@@ -58,14 +58,15 @@ int8_t		ft_box_intersect(t_ray *ray, const void *data, double_t *t);
 void		ft_del_box(t_obj **obj);
 t_v3d		ft_get_box_centr(const void *data);
 void		ft_set_box_centr(t_box *box);
-void		ft_set_min_max(t_box *box);
+void		ft_set_box_min_max(t_box *box);
 t_v3d		ft_get_box_albedo(const void *data);
-t_v3d		box_intersect_normals(const t_v3d *hit_point, const t_obj *obj_box);
+t_v3d		ft_box_intersect_normals(const t_v3d *hit_point, const t_obj *obj_box);
 
 //------------------------------
 
 void		obj_info(const t_obj* obj);
-void		push_back_obj(t_obj *src, t_obj *des);
+void		push_back_obj(t_obj *src, t_obj **des);
+void		push_back_light(t_light *src, t_light **des);
 
 //------------------------event
 
@@ -79,7 +80,7 @@ void		time_tick(t_time *t);
 void		ft_render(t_sdl *sdl, t_scena *scena);
 void		refresh_obj(const t_matrix *camera, t_obj *obj, t_light *suns);
 void		ft_draw(const t_sdl *sdl, t_scena *scena);
-uint32_t		cast_ray(const t_sdl *sdl, t_scena *scena, t_ray *ray, t_v2i i);
+uint32_t	cast_ray(const t_sdl *sdl, t_scena *scena, t_ray *ray);
 
 //------------------------------
 

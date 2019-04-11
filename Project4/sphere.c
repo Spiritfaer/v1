@@ -14,6 +14,13 @@ t_rgb			ft_get_sphere_color(const void* data)
 {
 	return(((t_sphere*)data)->color);
 }
+void			ft_set_sphere_to_cam_pos(const t_matrix *camera, void *src)
+{
+	t_sphere	*sph;
+
+	sph = src;
+	sph->cam_centr = mult_vect_matrix_3_3(sph->world_centr, camera->invert_matrix);
+}
 
 //	sphere intersect function
 int8_t			ft_solve_quadratic(t_v3d *abc, t_v2d *tt)
@@ -107,6 +114,7 @@ t_obj*			ft_new_sphere(t_v3d centr, t_rgb color, double_t radius)
 	obj->get_color = ft_get_sphere_color;
 	obj->get_n_hit = ft_get_sphere_n_hit;
 
+	obj->to_camera = ft_set_sphere_to_cam_pos;
 	obj->intersect = ft_sphere_intersect;
 	obj->next = NULL;
 	return (obj);

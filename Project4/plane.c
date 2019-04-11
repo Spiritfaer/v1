@@ -5,17 +5,26 @@ t_rgb		ft_get_plane_color(const void* data)
 {
 	return(((t_plane*)data)->color);
 }
-t_v3d		get_plane_albedo(const void *data)
+t_v3d		ft_get_plane_albedo(const void *data)
 {
 	return (((t_plane*)data)->albedo);
 }
-t_v3d		get_center_plane(const void *data)
+t_v3d		ft_get_center_plane(const void *data)
 {
 	return(((t_plane*)data)->cam_centr);
 }
+void		ft_set_plane_to_cam_pos(const t_matrix *camera, void *src)
+{
+	t_plane *pl;
+
+	pl = src;
+	pl->cam_centr = mult_vect_matrix_3_3(pl->world_centr, camera->invert_matrix);
+	pl->cam_normal = mult_vect_matrix_3_3(pl->world_normal, camera->invert_matrix);
+	vec_3normalize(&pl->cam_normal);
+}
 
 //	plane and disk intersect function
-int8_t		plane_intersect(t_ray *ray, const void *data, double_t *t)
+int8_t		ft_plane_intersect(t_ray *ray, const void *data, double_t *t)
 {
 	const t_plane	*pl;
 	double_t		demon;
@@ -31,14 +40,14 @@ int8_t		plane_intersect(t_ray *ray, const void *data, double_t *t)
 	}
 	return (false);
 }
-int8_t		disk_intersect(t_ray *ray, const void *data, double_t *t)
+int8_t		ft_disk_intersect(t_ray *ray, const void *data, double_t *t)
 {
 	t_v3d		p;
 	t_v3d		v;
 	double_t	d2;
 
 	*t = 0;
-	if (plane_intersect(ray, data, t))
+	if (ft_plane_intersect(ray, data, t))
 	{
 		p = vec_3add(ray->orig, vec_3fmul(ray->dir, *t));
 		v = vec_3sub(p, ((t_plane*)data)->cam_centr);
@@ -47,7 +56,7 @@ int8_t		disk_intersect(t_ray *ray, const void *data, double_t *t)
 	}
 	return (false);
 }
-t_v3d		plane_intersect_normals(const t_v3d *hit_point, const t_obj *obj_plane)
+t_v3d		ft_plane_intersect_normals(const t_v3d *hit_point, const t_obj *obj_plane)
 {
 	//it seems it doesn't work right
 	t_plane *pl;
@@ -68,12 +77,12 @@ t_obj*	ft_new_plane(t_v3d centr, t_rgb color, double_t radius, int32_t flag)
 	if (flag == disk)
 	{
 		obj->flag = disk;
-		obj->intersect = disk_intersect;
+		obj->intersect = ft_disk_intersect;
 	}
 	else
 	{
 		obj->flag = plane;
-		obj->intersect = plane_intersect;
+		obj->intersect = ft_plane_intersect;
 	}
 	new_plane->albedo = vec_1double(0.18);
 	new_plane->size = radius;
@@ -82,10 +91,12 @@ t_obj*	ft_new_plane(t_v3d centr, t_rgb color, double_t radius, int32_t flag)
 	new_plane->world_normal = (t_v3d){ 0, -1, 0 };
 	new_plane->color = color;
 	obj->data = new_plane;
-	obj->get_n_hit = plane_intersect_normals;
-	obj->get_albedo = get_plane_albedo;
+	obj->get_n_hit = ft_plane_intersect_normals;
+	obj->get_albedo = ft_get_plane_albedo;
 	obj->get_color = ft_get_plane_color;
-	obj->get_center = get_center_plane;
+	obj->get_center = ft_get_center_plane;
+
+	obj->to_camera = ft_set_plane_to_cam_pos;
 	obj->next = NULL;
 
 	return (obj);

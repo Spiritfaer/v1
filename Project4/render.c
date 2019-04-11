@@ -1,31 +1,6 @@
 #include "main.h"
-/*
-Vec3f castRay(
-	const Vec3f &orig, const Vec3f &dir,
-	const std::vector<std::unique_ptr<Object>> &objects,
-	const std::unique_ptr<DistantLight> &light,
-	const Options &options)
-{
-	Vec3f hitColor = options.backgroundColor;
-	float tnear = kInfinity;
-	Vec2f uv;
-	uint32_t index = 0;
-	Object *hitObject = nullptr;
-	if (trace(orig, dir, objects, tnear, index, uv, &hitObject)) {
-		Vec3f hitPoint = orig + dir * tnear;
-		Vec3f hitNormal;
-		Vec2f hitTexCoordinates;
-		hitObject->getSurfaceProperties(hitPoint, dir, index, uv, hitNormal, hitTexCoordinates);
-		Vec3f L = -light->dir;
-		// compute color of diffuse surface illuminated
-		// by a single distant light source.
-		hitColor = hitObject->albedo / M_PI * light->intensity * light->color * std::max(0.f, hitNormal.dotProduct(L));
-	}
-	return hitColor;
-}
-*/
 
-t_obj		*intersect_obj(t_obj *obj, t_ray *ray, t_hit *hit)
+t_obj		*trace(t_obj *obj, t_ray *ray, t_hit *hit)
 {
 	t_obj	*tmp;
 	double_t bias = 1;
@@ -74,14 +49,14 @@ int8_t			shadow_ray(t_obj *obj, t_hit *hit, t_v3d *dir_to_light)
 	return (true);
 }
 
-uint32_t		cast_ray(const t_sdl *sdl, t_scena *scena, t_ray *ray, t_v2i i)
+uint32_t		cast_ray(const t_sdl *sdl, t_scena *scena, t_ray *ray)
 {
 	const t_obj	*tmp_obj;
 	uint32_t	pix;
 	t_hit		hit;
-	double_t	tone;
 
-	tmp_obj = intersect_obj(scena->obj_list, ray, &hit);
+
+	tmp_obj = trace(scena->obj_list, ray, &hit);
 	if (tmp_obj)
 	{
 		//t_v3d reflect = vec_reflect(ray->dir, hit.norml_hit);
@@ -93,6 +68,7 @@ uint32_t		cast_ray(const t_sdl *sdl, t_scena *scena, t_ray *ray, t_v2i i)
 		
 		return (pix);
 	}
+
 	return (BG_COLOR);
 }
 
@@ -121,7 +97,7 @@ void	ft_draw(const t_sdl *sdl, t_scena *scena)
 			point.y = (1 - CANVAS_SIZE * (i.y + 0.5) / (double_t)(sdl->screen_size.y)) * scena->camera_point->scale;
 			ray.dir = mult_vect_matrix_3_3(point, (scena->camera_point->cam->invert_matrix));
 			vec_3normalize(&ray.dir);
-			tmp[i.x + i.y * sdl->screen_size.x] = cast_ray(sdl, scena, &ray, i);
+			tmp[i.x + i.y * sdl->screen_size.x] = cast_ray(sdl, scena, &ray);
 			//tmp[i.x + i.y * sdl->screen_size.x] = 0xA3C6C0;
 			i.y++;
 		}
@@ -132,11 +108,6 @@ void	ft_draw(const t_sdl *sdl, t_scena *scena)
 
 void			refresh_obj(const t_matrix *camera, t_obj *obj, t_light *light)
 {
-	t_v3d	point;
-	t_v3d	normal;
-	t_sphere *sph;
-	t_plane *pl;
-	t_box *b;
 	while (light)
 	{
 		light->cam_pos = mult_vect_matrix_3_3(light->pos , camera->invert_matrix);
@@ -144,28 +115,7 @@ void			refresh_obj(const t_matrix *camera, t_obj *obj, t_light *light)
 	}
 	while (obj)
 	{
-		if (obj->flag == sphere)
-		{
-			sph = (t_sphere*)obj->data;
-			point = mult_vect_matrix_3_3(sph->world_centr, camera->invert_matrix);
-			((t_sphere*)obj->data)->cam_centr = point;
-		}
-		else if (obj->flag == plane || obj->flag == disk)
-		{
-			pl = (t_plane*)obj->data;
-			point = mult_vect_matrix_3_3(pl->world_centr, camera->invert_matrix);
-			normal = mult_vect_matrix_3_3(pl->world_normal, camera->invert_matrix);
-			vec_3normalize(&normal);
-			((t_plane*)obj->data)->cam_centr = point;
-			((t_plane*)obj->data)->cam_normal = normal;
-		}
-		else if (obj->flag == box)
-		{
-			b = (t_box*)obj->data;
-			b->cam_min = mult_vect_matrix_3_3(b->min, camera->invert_matrix);
-			b->cam_max = mult_vect_matrix_3_3(b->max, camera->invert_matrix);
-			ft_set_box_centr((t_box*)obj->data);
-		}
+		obj->to_camera(camera, obj->data);
 		obj = obj->next;
 	}
 }
@@ -192,7 +142,7 @@ void			ft_render(t_sdl *sdl, t_scena *scena)
 		event_guard(sdl, scena->camera_point, &time);
 		SDL_RenderPresent(sdl->renderer);
 	}
-	print_matrix(scena->camera_point->cam->matrix, scena->camera_point->cam->size);
+	//print_matrix(scena->camera_point->cam->matrix, scena->camera_point->cam->size);
 	destroy_camera(&scena->camera_point);
 	SDL_FreeSurface(sdl->canvas);
 }

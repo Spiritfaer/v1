@@ -33,7 +33,7 @@ void		push_back_light(t_light *src, t_light **des)
 	t_light *tmp;
 
 	if (!src || !des)
-		return;
+		return ;
 	if (!*des)
 	{
 		*des = src;
@@ -51,26 +51,26 @@ void		push_back_light(t_light *src, t_light **des)
 	}
 }
 
-void		push_back_obj(t_obj *src, t_obj *des)
+void		push_back_obj(t_obj *src, t_obj **des)
 {
-	t_obj *tmp;
+	t_obj	*tmp;
 
 	if (!src || !des)
-		return ;
-	if (des->next == NULL)
+		return;
+	if (!*des)
 	{
-		des->next = src;
-		return ;
+		*des = src;
+		return;
 	}
-	tmp = des;
-	while (tmp->next != NULL)
+	tmp = *des;
+	while (tmp != NULL)
 	{
-		tmp = tmp->next;
 		if (tmp->next == NULL)
 		{
 			tmp->next = src;
 			return;
 		}
+		tmp = tmp->next;
 	}
 }
 

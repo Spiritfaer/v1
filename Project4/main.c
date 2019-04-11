@@ -25,26 +25,26 @@ int main(int argc, char ** argv)
 		centr = vec_3d(-2.0, 3.0, -1.5);
 		set_color(&color, 33, 66, 30);
 		radius = 1.5 * q;
-		push_back_obj(ft_new_sphere(centr, color, radius), obj);
+		push_back_obj(ft_new_sphere(centr, color, radius), &obj);
 
 		centr = vec_3d(10.0, 7.0, 1.0);
 		set_color(&color, 83, 55, 122);
 		radius = 0.7 * q;
-		push_back_obj(ft_new_sphere(centr, color, radius), obj);
+		push_back_obj(ft_new_sphere(centr, color, radius), &obj);
 
 		centr = vec_3d(7.0, 7.0, -0.5);
 		set_color(&color, 255, 255, 255);
 		radius = 1.3 * q;
-		push_back_obj(ft_new_sphere(centr, color, radius), obj);
+		push_back_obj(ft_new_sphere(centr, color, radius), &obj);
 
 		centr = vec_3d(0.0, -5.5, 0.0);
 		set_color(&color, 200, 200, 25);
 		radius = 5 * q;
-		push_back_obj(ft_new_plane(centr, color, radius, disk), obj);
+		push_back_obj(ft_new_plane(centr, color, radius, disk), &obj);
 
 		centr = (t_v3d) { 15, -1, 0 };
 		set_color(&color, 35, 75, 150);
-		push_back_obj(ft_new_box(&centr, NULL, color, (double_t)2.0), obj);
+		push_back_obj(ft_new_box(&centr, NULL, color, (double_t)2.0), &obj);
 
 		centr = vec_3d(0.0, 15.0, 12.0);
 		set_color(&color, 255, 255, 255);
@@ -55,11 +55,11 @@ int main(int argc, char ** argv)
 		centr = vec_3d(0.0, -5.5, 0.0);
 		set_color(&color, 200, 200, 25);
 		radius = 5 * q;
-		push_back_obj(ft_new_plane(centr, color, radius, disk), obj);
+		push_back_obj(ft_new_plane(centr, color, radius, disk), &obj);
 
 		centr = (t_v3d) { 15, -1, 0 };
 		set_color(&color, 35, 75, 150);
-		push_back_obj(ft_new_box(&centr, NULL, color, (double_t)2.0), obj);
+		push_back_obj(ft_new_box(&centr, NULL, color, (double_t)2.0), &obj);
 
 		centr = vec_3d(1.0, -3.0, 2.0);
 		set_color(&color, 255, 255, 255);
@@ -69,7 +69,7 @@ int main(int argc, char ** argv)
 	{
 		centr = (t_v3d) { 0.0, -22.0, 0.0 };
 		set_color(&color, 35, 75, 150);
-		push_back_obj(ft_new_box(&centr, NULL, color, (double_t)17.0), obj);
+		push_back_obj(ft_new_box(&centr, NULL, color, (double_t)17.0), &obj);
 
 		centr = vec_3d(20.0, 30.0, 20.0);
 		set_color(&color, 255, 255, 255);
@@ -95,6 +95,6 @@ int main(int argc, char ** argv)
 		free(sdl);
 	}
 	_CrtMemDumpAllObjectsSince(&tmp);
-	printf("ok!\n");
+	//printf("ok!\n");
 	return (0);
 }

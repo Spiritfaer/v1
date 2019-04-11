@@ -20,7 +20,7 @@ void		ft_set_box_centr(t_box *box)
 	box->centr.z = (box->min.z + box->max.z) / 2;
 	box->size = vec_3magnitude(vec_3sub(box->max, box->min));
 }
-void		ft_set_min_max(t_box *box)
+void		ft_set_box_min_max(t_box *box)
 {
 	box->min.x = box->centr.x - box->size;
 	box->min.y = box->centr.y - box->size;
@@ -28,6 +28,15 @@ void		ft_set_min_max(t_box *box)
 	box->max.x = box->centr.x + box->size;
 	box->max.y = box->centr.y + box->size;
 	box->max.z = box->centr.z + box->size;
+}
+void		ft_set_box_to_cam_pos(const t_matrix *camera, void *src)
+{
+	t_box	*box;
+
+	box = src;
+	box->cam_min = mult_vect_matrix_3_3(box->min, camera->invert_matrix);
+	box->cam_max = mult_vect_matrix_3_3(box->max, camera->invert_matrix);
+	ft_set_box_centr(box);
 }
 
 //	sphere intersect function
@@ -88,7 +97,7 @@ int8_t		ft_box_intersect(t_ray *ray, const void *data, double_t *t)
 */
 	return (true);
 }
-t_v3d		box_intersect_normals(const t_v3d *hit_point, const t_obj *obj_box)
+t_v3d		ft_box_intersect_normals(const t_v3d *hit_point, const t_obj *obj_box)
 {
 	t_v3d	centr;
 	t_v3d	normal;
@@ -149,7 +158,7 @@ t_obj*		ft_new_box(t_v3d *max, t_v3d *min, t_rgb color, double_t size)
 	{
 		new_box->size = size;
 		new_box->centr = *max;
-		ft_set_min_max(new_box);
+		ft_set_box_min_max(new_box);
 	}
 	else
 	{
@@ -166,7 +175,9 @@ t_obj*		ft_new_box(t_v3d *max, t_v3d *min, t_rgb color, double_t size)
 	obj->get_color = ft_get_box_color;
 	obj->get_center = ft_get_box_centr;
 	obj->intersect = ft_box_intersect;
-	obj->get_n_hit = box_intersect_normals;
+	obj->get_n_hit = ft_box_intersect_normals;
+
+	obj->to_camera = ft_set_box_to_cam_pos;
 	obj->next = NULL;
 	return (obj);
 }

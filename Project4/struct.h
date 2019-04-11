@@ -96,6 +96,7 @@ typedef struct 		s_obj
 	t_v3d(*get_center)(const void* data);
 	t_v3d(*get_albedo)(const void* data);
 	t_v3d(*get_n_hit)(const t_v3d *point_hit, const struct s_obj *obj);
+	void(*to_camera)(const t_matrix *camera, void *src);
 	uint8_t			flag;
 	struct s_obj	*next;
 }					t_obj;
