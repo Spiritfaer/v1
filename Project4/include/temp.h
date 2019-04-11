@@ -23,4 +23,11 @@ void		print_v3i(t_v3i *src, char *str);
 
 uint32_t	set_pixel_color(t_rgb color, double_t shadow);
 uint32_t	set_pixel_color_with_hit_color(t_rgb color, t_hit *hit, t_light *light);
+
+void		push_back_list(const char *line, t_list **des);
+void		print_list(t_list *head);
+
+int8_t		pars_file(const char *file_name, t_scena *scena);
+int8_t		new_scena(const char *file_name, t_scena *scena);
+
 #endif

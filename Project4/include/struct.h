@@ -120,6 +120,7 @@ typedef struct		s_camera
 	double_t		fov;
 	double_t		scale;
 	uint8_t			on;
+	t_rgb			bg_color;
 }					t_camera;
 
 typedef struct		s_scena
@@ -127,6 +128,7 @@ typedef struct		s_scena
 	t_obj			*obj_list;
 	t_light			*light_list;
 	t_camera		*camera_point;
+	t_list			*head_list;
 }					t_scena;
 
 typedef struct		s_sdl

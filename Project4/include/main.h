@@ -5,6 +5,7 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -12,7 +13,8 @@
 #include <crtdbg.h> 
 #include "SDL.h"
 #include "vmth.h"
-#define _CRTDBG_MAP_ALLOC 
+#include "get_next_line.h"
+#define _CRTDBG_MAP_ALLOC
 
 #define CANVAS_SIZE 2
 
@@ -96,15 +98,15 @@ t_light*	new_light(t_v3d *pos, t_rgb *color, double_t intensity);
 t_v3d		get_to_light_dir(t_hit *hit, t_light *light);
 
 //------------------------rgb()
-t_rgb	get_black_color(void);
-t_rgb	get_red_color(void);
-t_rgb	get_green_color(void);
-t_rgb	get_blue_color(void);
-t_rgb	get_white_color(void);
+t_rgb		get_black_color(void);
+t_rgb		get_red_color(void);
+t_rgb		get_green_color(void);
+t_rgb		get_blue_color(void);
+t_rgb		get_white_color(void);
 
-void	set_rgb_to_int(t_rgb *src);
-void	set_int_to_rgb(t_rgb *src);
-t_rgb	colort_add_colort(t_rgb one, t_rgb two);
-t_rgb	colort_mult_f(t_rgb one, double_t f);
+void		set_rgb_to_int(t_rgb *src);
+void		set_int_to_rgb(t_rgb *src);
+t_rgb		colort_add_colort(t_rgb one, t_rgb two);
+t_rgb		colort_mult_f(t_rgb one, double_t f);
 //-----------------------------
 #endif

@@ -124,7 +124,7 @@ void			ft_render(t_sdl *sdl, t_scena *scena)
 	SDL_Texture *screen = NULL;
 	t_time		time;
 
-	scena->camera_point = make_camera(0);
+	//scena->camera_point = make_camera(0);
 	memset(&time, 0, sizeof(t_time));
 	while (sdl->loop)
 	{
@@ -143,6 +143,6 @@ void			ft_render(t_sdl *sdl, t_scena *scena)
 		SDL_RenderPresent(sdl->renderer);
 	}
 	print_matrix(scena->camera_point->cam->matrix, scena->camera_point->cam->size);
-	destroy_camera(&scena->camera_point);
+	//destroy_camera(&scena->camera_point);
 	SDL_FreeSurface(sdl->canvas);
 }

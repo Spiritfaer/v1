@@ -14,16 +14,17 @@
 # define LIBFT_H
 # include <stdlib.h>
 # include <string.h>
+# include <stdint.h>
+
+# ifdef __WINDOWS__
 # include <io.h>
 # include <process.h>
 # include <direct.h>
-# include <stdint.h>
-
-# ifndef _WINDOWS
-#define write _write
-#define read _read
-#define close _close
-# else
+# define write _write
+# define read _read
+# define close _close
+# define open _open
+# elif __LINUX__
 # include <unistd.h>
 # endif
 

@@ -436,5 +436,8 @@
     <Text Include="scena_1.txt">
       <Filter>Файлы ресурсов</Filter>
     </Text>
+    <Text Include="scena_2.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
   </ItemGroup>
 </Project>

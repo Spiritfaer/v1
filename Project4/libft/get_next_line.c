@@ -34,8 +34,8 @@ int			ft_make_list(size_t fd, t_list **head)
 int64_t		ft_fd_struct(size_t fd, t_list *head)
 {
 	char	*buff;
-	size_t	read_size;
-	size_t	one_read_size;
+	size_t	read_size = 0;
+	size_t	one_read_size = 0;
 	size_t	count;
 
 	if (!(buff = (char*)malloc(BUFF_SIZE + 1)))
@@ -48,7 +48,7 @@ int64_t		ft_fd_struct(size_t fd, t_list *head)
 	if (!(head->content))
 		head->content = ft_realloc(head->content, read_size + 1);
 	while (!ft_strchr(head->content, '\n')
-	&& (one_read_size = (size_t)read((int)fd, buff, BUFF_SIZE)) && ++count)
+	&& (one_read_size = _read((int)fd, buff, BUFF_SIZE)) > 0 && ++count)
 	{
 		read_size += one_read_size;
 		head->content = ft_realloc(head->content, read_size + 1);

@@ -1,6 +1,5 @@
 #include "main.h"
 
-
 int main(int argc, char ** argv)
 {
 	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
@@ -9,17 +8,24 @@ int main(int argc, char ** argv)
 	t_sdl		*sdl = NULL;
 	t_obj		*obj = NULL;
 	t_light		*light = NULL;
+	t_scena		scena;
 	t_v3d		centr;
 	t_v3d		centr2;
 	t_rgb		color;
 	double_t	radius;
 	int32_t		q = 3;
 	int8_t		index_scena = 0;
+
+	ft_memset(&scena, 0, sizeof(t_scena));
 	sdl = ft_new_sdl();
 	
-	ft_temp_fill(&centr, &color, &radius, sdl->screen_size);
-	obj = ft_new_sphere(centr, color, radius);
+	//ft_temp_fill(&centr, &color, &radius, (t_v2i) {640, 480});
+	//ft_temp_fill(&centr, &color, &radius, sdl->screen_size);
+	//obj = ft_new_sphere(centr, color, radius);
 
+	//for (int q = 0; q < argc; )
+	//	printf("%s\n", argv[q++]);
+	/*
 	if (index_scena == 0)
 	{
 		centr = vec_3d(-2.0, 3.0, -1.5);
@@ -75,14 +81,16 @@ int main(int argc, char ** argv)
 		set_color(&color, 255, 255, 255);
 		push_back_light(new_light(&centr, &color, (double_t)15.0), &light);
 	}
+	*/
 
-	obj_info(obj);
-	t_scena scena;
-	scena.obj_list = obj;
-	scena.light_list = light;
-	
-	_CrtMemState tmp;
-	_CrtMemCheckpoint(&tmp);
+	new_scena(argv[1], &scena);
+	obj_info(scena.obj_list);
+
+	//scena.obj_list = obj;
+	//scena.light_list = light;
+	//
+	//_CrtMemState tmp;
+	//_CrtMemCheckpoint(&tmp);
 
 	ft_render(sdl, &scena);
 
@@ -94,7 +102,7 @@ int main(int argc, char ** argv)
 		ft_del_sdl(sdl);
 		free(sdl);
 	}
-	_CrtMemDumpAllObjectsSince(&tmp);
+	//_CrtMemDumpAllObjectsSince(&tmp);
 	//printf("ok!\n");
 	return (0);
 }

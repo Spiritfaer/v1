@@ -26,8 +26,7 @@ t_light*	new_light(t_v3d *pos, t_rgb *color, double_t intensity)
 	l->pos = *pos;
 	l->power_light = intensity;
 	l->color = *color;
-	l->light_color = (t_rgb){0, 0, 0, 0x000000};
-	//l->dir = (t_v3d) { -20, 15, 15 };
+	l->light_color = *color;
 	l->dir = (t_v3d) { 0, 0, 1 };
 	l->invdir = vec_3invert_dir(&l->dir);
 	memset(&l->cam_pos, 0, sizeof(t_v3d));
