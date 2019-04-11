@@ -1,0 +1,48 @@
+type: sphere;
+pos: 5.0 -3.0 -1.0;
+color: 255 117 20;
+radius: 1.9;
+end;
+
+
+type: sphere;
+pos: -2.0 3.0 -1.5;
+color: 33 66 30;
+radius: 1.5;
+end;
+
+type: sphere;
+pos: 10.0 7.0 1.0;
+color: 83 55 122;
+size: 0.7;
+end;
+
+type: sphere;
+pos: 7.0 7.0 -0.5;
+color: 255 255 255;
+size: 1.3;
+end;
+
+type: plane;
+pos: 0.0 -5.0 0.0;
+color: 200 200 25;
+size: 5;
+end;
+
+type: box;
+pos: 15.0 -1.0 0.0;
+color: 35 75 150;
+size: 5;
+end;
+
+type: point_light;
+pos: 15.0 -1.0 0.0;
+color: 255 255 255;
+power: 10;
+end;
+
+type: camera;
+pos: 2.574 6.675 10.096;
+fov: 60;
+bg: 0 0 0;
+end;

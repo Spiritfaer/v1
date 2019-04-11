@@ -41,15 +41,16 @@ void	set_int_to_rgb(t_rgb *src)
 uint8_t	add_8_bit(uint8_t a, uint8_t b)
 {
 	int16_t sum;
+
 	sum = (int16_t)a + (int16_t)b;
 	sum = sum > 255 ? 255 : sum;
 	sum = sum < 0 ? 0 : sum;
 	return ((uint8_t)sum);
 }
-
 uint8_t	mult_8_bit(uint8_t a, double_t f)
 {
 	int16_t mult;
+
 	mult = (int16_t)((double_t)a * f);
 	mult = mult > 255 ? 255 : mult;
 	mult = mult < 0 ? 0 : mult;
@@ -66,7 +67,6 @@ t_rgb	colort_add_colort(t_rgb one, t_rgb two)
 	set_rgb_to_int(&res);
 	return (res);
 }
-
 t_rgb	colort_mult_f(t_rgb one, double_t f)
 {
 	t_rgb res;

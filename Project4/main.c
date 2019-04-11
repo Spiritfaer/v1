@@ -84,7 +84,7 @@ int main(int argc, char ** argv)
 	_CrtMemState tmp;
 	_CrtMemCheckpoint(&tmp);
 
-	//ft_render(sdl, &scena);
+	ft_render(sdl, &scena);
 
 	if (obj)
 		ft_del_sphere(&obj);

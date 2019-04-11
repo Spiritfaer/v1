@@ -228,4 +228,12 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="scena_0.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
+    <Text Include="scena_1.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
+  </ItemGroup>
 </Project>

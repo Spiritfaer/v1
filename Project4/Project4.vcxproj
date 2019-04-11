@@ -224,6 +224,10 @@
     <ClInclude Include="temp.h" />
     <ClInclude Include="vmthlib\include\vmth.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="scena_0.txt" />
+    <Text Include="scena_1.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
