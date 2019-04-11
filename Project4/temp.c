@@ -88,7 +88,7 @@ void		print_sdl(t_sdl *sdl)
 	printf("loop = %d\n", sdl->loop);
 	printf("win_name = \"%s\"\n", sdl->win_name);
 }
-void		*ft_memcpy(void *dst, const void *src, size_t n)
+void		*sf_memcpy(void *dst, const void *src, size_t n)
 {
 	size_t i;
 

@@ -92,7 +92,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <CompileAs>CompileAsC</CompileAs>
-      <AdditionalIncludeDirectories>C:\SDL2\SDL2-2.0.9-for-MVS\include;C:\Users\User\source\repos\Project4\Project4\vmthlib\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\User\source\repos\Project4\Project4\libft;C:\SDL2\SDL2-2.0.9-for-MVS\include;C:\Users\User\source\repos\Project4\Project4\vmthlib\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -154,8 +154,71 @@
     <ClCompile Include="color.c" />
     <ClCompile Include="event.c" />
     <ClCompile Include="info.c" />
+    <ClCompile Include="libft\ft_atoi.c" />
+    <ClCompile Include="libft\ft_bzero.c" />
+    <ClCompile Include="libft\ft_isalnum.c" />
+    <ClCompile Include="libft\ft_isalpha.c" />
+    <ClCompile Include="libft\ft_isascii.c" />
+    <ClCompile Include="libft\ft_isdigit.c" />
+    <ClCompile Include="libft\ft_isprint.c" />
+    <ClCompile Include="libft\ft_isspase.c" />
+    <ClCompile Include="libft\ft_itoa.c" />
+    <ClCompile Include="libft\ft_lstadd.c" />
+    <ClCompile Include="libft\ft_lstdel.c" />
+    <ClCompile Include="libft\ft_lstdelone.c" />
+    <ClCompile Include="libft\ft_lstiter.c" />
+    <ClCompile Include="libft\ft_lstmap.c" />
+    <ClCompile Include="libft\ft_lstnew.c" />
+    <ClCompile Include="libft\ft_memalloc.c" />
+    <ClCompile Include="libft\ft_memccpy.c" />
+    <ClCompile Include="libft\ft_memchr.c" />
+    <ClCompile Include="libft\ft_memcmp.c" />
+    <ClCompile Include="libft\ft_memcpy.c" />
+    <ClCompile Include="libft\ft_memdel.c" />
+    <ClCompile Include="libft\ft_memmove.c" />
+    <ClCompile Include="libft\ft_memset.c" />
+    <ClCompile Include="libft\ft_putchar.c" />
+    <ClCompile Include="libft\ft_putchar_fd.c" />
+    <ClCompile Include="libft\ft_putendl.c" />
+    <ClCompile Include="libft\ft_putendl_fd.c" />
+    <ClCompile Include="libft\ft_putnbr.c" />
+    <ClCompile Include="libft\ft_putnbr_fd.c" />
+    <ClCompile Include="libft\ft_putstr.c" />
+    <ClCompile Include="libft\ft_putstr_fd.c" />
+    <ClCompile Include="libft\ft_realloc.c" />
+    <ClCompile Include="libft\ft_splitter.c" />
+    <ClCompile Include="libft\ft_sqrt.c" />
+    <ClCompile Include="libft\ft_strcat.c" />
+    <ClCompile Include="libft\ft_strchr.c" />
+    <ClCompile Include="libft\ft_strclr.c" />
+    <ClCompile Include="libft\ft_strcmp.c" />
+    <ClCompile Include="libft\ft_strcpy.c" />
+    <ClCompile Include="libft\ft_strdel.c" />
+    <ClCompile Include="libft\ft_strdup.c" />
+    <ClCompile Include="libft\ft_strequ.c" />
+    <ClCompile Include="libft\ft_striter.c" />
+    <ClCompile Include="libft\ft_striteri.c" />
+    <ClCompile Include="libft\ft_strjoin.c" />
+    <ClCompile Include="libft\ft_strlcat.c" />
+    <ClCompile Include="libft\ft_strlen.c" />
+    <ClCompile Include="libft\ft_strmap.c" />
+    <ClCompile Include="libft\ft_strmapi.c" />
+    <ClCompile Include="libft\ft_strncat.c" />
+    <ClCompile Include="libft\ft_strncmp.c" />
+    <ClCompile Include="libft\ft_strncpy.c" />
+    <ClCompile Include="libft\ft_strndup.c" />
+    <ClCompile Include="libft\ft_strnequ.c" />
+    <ClCompile Include="libft\ft_strnew.c" />
+    <ClCompile Include="libft\ft_strnstr.c" />
+    <ClCompile Include="libft\ft_strrchr.c" />
+    <ClCompile Include="libft\ft_strsplit.c" />
+    <ClCompile Include="libft\ft_strstr.c" />
+    <ClCompile Include="libft\ft_strsub.c" />
+    <ClCompile Include="libft\ft_strtrim.c" />
+    <ClCompile Include="libft\ft_tolower.c" />
+    <ClCompile Include="libft\ft_toupper.c" />
+    <ClCompile Include="libft\get_next_line.c" />
     <ClCompile Include="light.c" />
-
     <ClCompile Include="plane.c" />
     <ClCompile Include="render.c" />
     <ClCompile Include="sf_sdl.c" />
@@ -224,6 +287,8 @@
     <ClInclude Include="include\main.h" />
     <ClInclude Include="include\struct.h" />
     <ClInclude Include="include\temp.h" />
+    <ClInclude Include="libft\get_next_line.h" />
+    <ClInclude Include="libft\libft.h" />
     <ClInclude Include="vmthlib\include\vmth.h" />
   </ItemGroup>
   <ItemGroup>

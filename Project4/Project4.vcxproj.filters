@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="libft">
+      <UniqueIdentifier>{906bb3c6-c2a2-46ca-8fdb-5d804d61d739}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="vmthlib\src\vec_1back.c">
@@ -126,9 +129,6 @@
     <ClCompile Include="event.c">
       <Filter>Файлы ресурсов</Filter>
     </ClCompile>
-    <ClCompile Include="deg_to_rad.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="main.c">
       <Filter>Файлы ресурсов</Filter>
     </ClCompile>
@@ -141,9 +141,6 @@
     <ClCompile Include="box.c">
       <Filter>Файлы ресурсов</Filter>
     </ClCompile>
-    <ClCompile Include="vec_3invert_dir.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="render.c">
       <Filter>Файлы ресурсов</Filter>
     </ClCompile>
@@ -152,6 +149,264 @@
     </ClCompile>
     <ClCompile Include="color.c">
       <Filter>Файлы ресурсов</Filter>
+    </ClCompile>
+    <ClCompile Include="vmthlib\src\deg_to_rad.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="vmthlib\src\vec_1double.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="vmthlib\src\vec_3div.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="vmthlib\src\vec_3fdiv.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="vmthlib\src\vec_3invert_dir.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="vmthlib\src\mat_change_symbol.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="vmthlib\src\mat_discriminant.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="vmthlib\src\mat_fill_vertical_matrix.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="vmthlib\src\mat_free.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="vmthlib\src\mat_get_colums_rows.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="vmthlib\src\mat_get_copy.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="vmthlib\src\mat_get_minor.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="vmthlib\src\mat_get_new.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="vmthlib\src\mat_get_rows.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="vmthlib\src\mat_invert_matrix.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="vmthlib\src\mat_minors_matrix.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="vmthlib\src\mat_minus_matrix_buffer.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="vmthlib\src\mat_mult_for_double_buffer.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="vmthlib\src\mat_mult_m_to_m.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="vmthlib\src\mat_mult_vect_matrix.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="vmthlib\src\mat_swap_for_rows.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="vmthlib\src\mat_transposed_matrix.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_atoi.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_bzero.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_isalnum.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_isalpha.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_isascii.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_isdigit.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_isprint.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_isspase.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_itoa.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_lstadd.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_lstdel.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_lstdelone.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_lstiter.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_lstmap.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_lstnew.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_memalloc.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_memccpy.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_memchr.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_memcmp.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_memcpy.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_memdel.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_memmove.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_memset.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_putchar.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_putchar_fd.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_putendl.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_putendl_fd.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_putnbr.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_putnbr_fd.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_putstr.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_putstr_fd.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_realloc.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_splitter.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_sqrt.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strcat.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strchr.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strclr.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strcmp.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strcpy.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strdel.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strdup.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strequ.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_striter.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_striteri.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strjoin.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strlcat.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strlen.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strmap.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strmapi.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strncat.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strncmp.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strncpy.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strndup.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strnequ.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strnew.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strnstr.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strrchr.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strsplit.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strstr.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strsub.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strtrim.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_tolower.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_toupper.c">
+      <Filter>libft</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\get_next_line.c">
+      <Filter>libft</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +421,12 @@
     </ClInclude>
     <ClInclude Include="include\struct.h">
       <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="libft\get_next_line.h">
+      <Filter>libft</Filter>
+    </ClInclude>
+    <ClInclude Include="libft\libft.h">
+      <Filter>libft</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

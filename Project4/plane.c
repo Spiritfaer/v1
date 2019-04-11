@@ -71,8 +71,8 @@ t_obj*	ft_new_plane(t_v3d centr, t_rgb color, double_t radius, int32_t flag)
 	t_obj *obj = (t_obj*)malloc(sizeof(t_obj));
 	t_plane *new_plane = (t_plane*)malloc(sizeof(t_plane));
 
-	ft_memcpy(&new_plane->world_normal, &centr, sizeof(t_v3d));
-	ft_memcpy(&new_plane->color, &color, sizeof(t_rgb));
+	//ft_memcpy(&new_plane->world_normal, &centr, sizeof(t_v3d));
+	//ft_memcpy(&new_plane->color, &color, sizeof(t_rgb));
 
 	if (flag == disk)
 	{

@@ -1,6 +1,6 @@
 #include "main.h"
 
-t_obj		*trace(t_obj *obj, t_ray *ray, t_hit *hit)
+t_obj		*ft_trace(t_obj *obj, t_ray *ray, t_hit *hit)
 {
 	t_obj	*tmp;
 	double_t bias = 1;
@@ -56,7 +56,7 @@ uint32_t		cast_ray(const t_sdl *sdl, t_scena *scena, t_ray *ray)
 	t_hit		hit;
 
 
-	tmp_obj = trace(scena->obj_list, ray, &hit);
+	tmp_obj = ft_trace(scena->obj_list, ray, &hit);
 	if (tmp_obj)
 	{
 		//t_v3d reflect = vec_reflect(ray->dir, hit.norml_hit);
