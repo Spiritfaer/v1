@@ -21,6 +21,12 @@
 
 #define BG_COLOR 0xA3C6C0
 
+#define BLACK 0x000000
+#define RED 0xFF0000
+#define GREEN 0x00FF00
+#define BLUE 0x0000FF
+#define WHITE 0xFFFFFF
+
 #include "temp.h"
 #include "struct.h"
 
@@ -89,4 +95,16 @@ void		destroy_camera(t_camera **camera);
 t_light*	new_light(t_v3d *pos, t_rgb *color, double_t intensity);
 t_v3d		get_to_light_dir(t_hit *hit, t_light *light);
 
+//------------------------rgb()
+t_rgb	get_black_color(void);
+t_rgb	get_red_color(void);
+t_rgb	get_green_color(void);
+t_rgb	get_blue_color(void);
+t_rgb	get_white_color(void);
+
+void	set_rgb_to_int(t_rgb *src);
+void	set_int_to_rgb(t_rgb *src);
+t_rgb	colort_add_colort(t_rgb one, t_rgb two);
+t_rgb	colort_mult_f(t_rgb one, double_t f);
+//-----------------------------
 #endif

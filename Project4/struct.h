@@ -61,7 +61,7 @@ typedef	struct		s_light
 	t_v3d			cam_pos;
 	t_rgb			color;
 	t_v3d			dir_to_hit;
-	double_t		light_color;
+	t_rgb			light_color;
 	double_t		power_light;
 	t_v3d			intensity_light;
 	double_t		r2;

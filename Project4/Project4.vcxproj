@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClCompile Include="box.c" />
     <ClCompile Include="camera.c" />
+    <ClCompile Include="color.c" />
     <ClCompile Include="deg_to_rad.c" />
     <ClCompile Include="event.c" />
     <ClCompile Include="info.c" />
