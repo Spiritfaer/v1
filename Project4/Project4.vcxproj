@@ -72,7 +72,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\User\source\repos\Project4\Project4\include;C:\Users\User\source\repos\Project4\Project4\vmthlib\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\User\source\repos\Project4\Project4\include;C:\Users\User\source\repos\Project4\Project4\vmthlib\include;C:\Users\User\source\repos\Project4\Project4\vmthlib\src;$(IncludePath)</IncludePath>
+    <SourcePath>C:\Users\User\source\repos\Project4\Project4\vmthlib\src;C:\Users\User\source\repos\Project4\Project4;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -91,7 +92,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <CompileAs>CompileAsC</CompileAs>
-      <AdditionalIncludeDirectories>C:\SDL2\SDL2-2.0.9-for-MVS\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\SDL2\SDL2-2.0.9-for-MVS\include;C:\Users\User\source\repos\Project4\Project4\vmthlib\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -151,27 +152,10 @@
     <ClCompile Include="box.c" />
     <ClCompile Include="camera.c" />
     <ClCompile Include="color.c" />
-    <ClCompile Include="deg_to_rad.c" />
     <ClCompile Include="event.c" />
     <ClCompile Include="info.c" />
     <ClCompile Include="light.c" />
-    <ClCompile Include="mat_change_symbol.c" />
-    <ClCompile Include="mat_discriminant.c" />
-    <ClCompile Include="mat_fill_vertical_matrix.c" />
-    <ClCompile Include="mat_free.c" />
-    <ClCompile Include="mat_get_colums_rows.c" />
-    <ClCompile Include="mat_get_copy.c" />
-    <ClCompile Include="mat_get_minor.c" />
-    <ClCompile Include="mat_get_new.c" />
-    <ClCompile Include="mat_get_rows.c" />
-    <ClCompile Include="mat_invert_matrix.c" />
-    <ClCompile Include="mat_minors_matrix.c" />
-    <ClCompile Include="mat_minus_matrix_buffer.c" />
-    <ClCompile Include="mat_mult_for_double_buffer.c" />
-    <ClCompile Include="mat_mult_m_to_m.c" />
-    <ClCompile Include="mat_mult_vect_matrix.c" />
-    <ClCompile Include="mat_swap_for_rows.c" />
-    <ClCompile Include="mat_transposed_matrix.c" />
+
     <ClCompile Include="plane.c" />
     <ClCompile Include="render.c" />
     <ClCompile Include="sf_sdl.c" />
@@ -181,10 +165,28 @@
     </ClCompile>
     <ClCompile Include="sphere.c" />
     <ClCompile Include="temp.c" />
-    <ClCompile Include="vec_1double.c" />
-    <ClCompile Include="vec_3div.c" />
-    <ClCompile Include="vec_3fdiv.c" />
-    <ClCompile Include="vec_3invert_dir.c" />
+    <ClCompile Include="vmthlib\src\deg_to_rad.c" />
+    <ClCompile Include="vmthlib\src\vec_1double.c" />
+    <ClCompile Include="vmthlib\src\vec_3div.c" />
+    <ClCompile Include="vmthlib\src\vec_3fdiv.c" />
+    <ClCompile Include="vmthlib\src\vec_3invert_dir.c" />
+    <ClCompile Include="vmthlib\src\mat_change_symbol.c" />
+    <ClCompile Include="vmthlib\src\mat_discriminant.c" />
+    <ClCompile Include="vmthlib\src\mat_fill_vertical_matrix.c" />
+    <ClCompile Include="vmthlib\src\mat_free.c" />
+    <ClCompile Include="vmthlib\src\mat_get_colums_rows.c" />
+    <ClCompile Include="vmthlib\src\mat_get_copy.c" />
+    <ClCompile Include="vmthlib\src\mat_get_minor.c" />
+    <ClCompile Include="vmthlib\src\mat_get_new.c" />
+    <ClCompile Include="vmthlib\src\mat_get_rows.c" />
+    <ClCompile Include="vmthlib\src\mat_invert_matrix.c" />
+    <ClCompile Include="vmthlib\src\mat_minors_matrix.c" />
+    <ClCompile Include="vmthlib\src\mat_minus_matrix_buffer.c" />
+    <ClCompile Include="vmthlib\src\mat_mult_for_double_buffer.c" />
+    <ClCompile Include="vmthlib\src\mat_mult_m_to_m.c" />
+    <ClCompile Include="vmthlib\src\mat_mult_vect_matrix.c" />
+    <ClCompile Include="vmthlib\src\mat_swap_for_rows.c" />
+    <ClCompile Include="vmthlib\src\mat_transposed_matrix.c" />
     <ClCompile Include="vmthlib\src\vec_1back.c" />
     <ClCompile Include="vmthlib\src\vec_1right.c" />
     <ClCompile Include="vmthlib\src\vec_1up.c" />
@@ -220,8 +222,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\main.h" />
-    <ClInclude Include="struct.h" />
-    <ClInclude Include="temp.h" />
+    <ClInclude Include="include\struct.h" />
+    <ClInclude Include="include\temp.h" />
     <ClInclude Include="vmthlib\include\vmth.h" />
   </ItemGroup>
   <ItemGroup>

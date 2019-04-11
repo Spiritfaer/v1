@@ -123,57 +123,6 @@
     <ClCompile Include="info.c">
       <Filter>Файлы ресурсов</Filter>
     </ClCompile>
-    <ClCompile Include="mat_get_new.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="mat_get_copy.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="mat_free.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="mat_fill_vertical_matrix.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="mat_get_colums_rows.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="mat_discriminant.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="mat_change_symbol.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="mat_transposed_matrix.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="mat_mult_m_to_m.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="mat_minors_matrix.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="mat_invert_matrix.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="mat_get_minor.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="mat_get_rows.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="mat_swap_for_rows.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="mat_minus_matrix_buffer.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="mat_mult_for_double_buffer.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="mat_mult_vect_matrix.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="event.c">
       <Filter>Файлы ресурсов</Filter>
     </ClCompile>
@@ -201,15 +150,6 @@
     <ClCompile Include="light.c">
       <Filter>Файлы ресурсов</Filter>
     </ClCompile>
-    <ClCompile Include="vec_1double.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="vec_3fdiv.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="vec_3div.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="color.c">
       <Filter>Файлы ресурсов</Filter>
     </ClCompile>
@@ -221,10 +161,10 @@
     <ClInclude Include="include\main.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="temp.h">
+    <ClInclude Include="include\temp.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="struct.h">
+    <ClInclude Include="include\struct.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
