@@ -2,6 +2,7 @@
 
 double**		get_new_m(uint8_t n)
 {
+
 	double_t	**n_m = NULL;
 	int32_t		i = 0;
 
@@ -9,6 +10,8 @@ double**		get_new_m(uint8_t n)
 	{
 		if ((n_m = (double_t**)malloc(sizeof(double_t*) * n)) != NULL)
 		{
+			
+
 			while (i < n)
 			{
 				if ((*(n_m + i) = (double_t*)malloc(sizeof(double_t) * n)) == NULL)

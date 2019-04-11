@@ -1,6 +1,6 @@
 #include "main.h"
 
-void	ft_temp_fill(t_v3d *center, t_rgb *color, double_t *radius, t_v2i win_size)
+void		ft_temp_fill(t_v3d *center, t_rgb *color, double_t *radius, t_v2i win_size)
 {
 	center->x = 5;
 	center->y = -3;
@@ -20,7 +20,6 @@ void	ft_temp_fill(t_v3d *center, t_rgb *color, double_t *radius, t_v2i win_size)
 	*/
 
 }
-
 int8_t		pars_file(const char *file_name, t_scena *scena)
 {
 	int32_t	fd;
@@ -33,11 +32,11 @@ int8_t		pars_file(const char *file_name, t_scena *scena)
 	{
 		push_back_list(line, &scena->head_list);
 		free(line);
+
 	}
-	close(fd);
+	close(fd);	
 	return (true);
 }
-
 void		ft_split_del(char **head)
 {
 	int8_t	i;
@@ -52,7 +51,6 @@ void		ft_split_del(char **head)
 	free(head);
 	head = NULL;
 }
-
 int8_t		pars_pos(const char *str, t_v3d *pos)
 {
 	int8_t	i;
@@ -68,7 +66,6 @@ int8_t		pars_pos(const char *str, t_v3d *pos)
 	ft_split_del(split);
 	return (true);
 }
-
 int8_t		pars_color(const char *str, t_rgb *color)
 {
 	int8_t	i;
@@ -85,7 +82,6 @@ int8_t		pars_color(const char *str, t_rgb *color)
 	ft_split_del(split);
 	return (true);
 }
-
 int8_t		pars_size_fov_power(const char *str, double_t *src)
 {
 	int8_t	i;
@@ -99,7 +95,6 @@ int8_t		pars_size_fov_power(const char *str, double_t *src)
 	ft_split_del(split);
 	return (true);
 }
-
 int8_t		pars_info(t_list *list, t_rgb *color, t_v3d *pos, double_t *size)
 {
 	int8_t	i;
@@ -124,7 +119,6 @@ int8_t		pars_info(t_list *list, t_rgb *color, t_v3d *pos, double_t *size)
 	}
 	return (true);
 }
-
 t_camera*	new_camera(t_v3d *pos, t_rgb *color, double_t fov)
 {
 	t_camera *camera;
@@ -135,12 +129,12 @@ t_camera*	new_camera(t_v3d *pos, t_rgb *color, double_t fov)
 	camera->fov = fov;
 	camera->on = 1;
 	camera->scale = tan(deg_to_rad(camera->fov * 0.5));
-
 	camera->cam = get_new_matrix(4);
 	fill_vertical_matrix(camera->cam);
 	camera->cam->matrix[3][0] = pos->x;
 	camera->cam->matrix[3][1] = pos->y;
 	camera->cam->matrix[3][2] = pos->z;
+	camera->cam->invert_matrix = NULL;
 	camera->bg_color = *color;
 	return (camera);
 }
@@ -157,38 +151,21 @@ void		pars_type_obj(t_scena *scena)
 	{
 		if (ft_strnequ(tmp->content, "type:", 5))
 		{
+			pars_info(tmp, &color, &pos, &size);
 			if (ft_strnequ((((unsigned char*)tmp->content) + 6), "sphere;", 7))
-			{
-				pars_info(tmp, &color, &pos, &size);
 				push_back_obj(ft_new_sphere(pos, color, size), &scena->obj_list);
-			}
 			else if (ft_strnequ((((unsigned char*)tmp->content) + 6), "plane;", 6))
-			{
-				pars_info(tmp, &color, &pos, &size);
 				push_back_obj(ft_new_plane(pos, color, size, plane), &scena->obj_list);
-			}
 			else if (ft_strnequ((((unsigned char*)tmp->content) + 6), "disk;", 6))
-			{
-				pars_info(tmp, &color, &pos, &size);
 				push_back_obj(ft_new_plane(pos, color, size, disk), &scena->obj_list);
-			}
 			else if (ft_strnequ((((unsigned char*)tmp->content) + 6), "box;", 4))
-			{
-				pars_info(tmp, &color, &pos, &size);
 				push_back_obj(ft_new_box(&pos, NULL, color, size), &scena->obj_list);
-			}
 			else if (ft_strnequ((((unsigned char*)tmp->content) + 6), "point_light;", 12))
-			{
-				pars_info(tmp, &color, &pos, &size);
 				push_back_light(new_light(&pos, &color, size), &scena->light_list);
-			}
 			else if (ft_strnequ((((unsigned char*)tmp->content) + 6), "camera;", 7))
-			{
-				pars_info(tmp, &color, &pos, &size);
 				scena->camera_point = new_camera(&pos, &color, size);
-			}
 			else
-				write(1, "info\n", 5);
+				write(1, "error!\n", 7);
 		}
 		tmp = tmp->next;
 	}
@@ -197,15 +174,13 @@ void		pars_type_obj(t_scena *scena)
 int8_t		new_scena(const char *file_name, t_scena *scena)
 {
 
+
 	if (!pars_file(file_name, scena))
 		return (false);
+
 	pars_type_obj(scena);
 
-	//print_list(scena->head_list);
-	//centr = vec_3d(-2.0, 3.0, -1.5);
-	//set_color(&color, 33, 66, 30);
-	//radius = 1.5 * q;
-	//push_back_obj(ft_new_sphere(centr, color, radius), &obj);
+
 	return (true);
 }
 
@@ -320,58 +295,7 @@ void		*sf_memcpy(void *dst, const void *src, size_t n)
 		*((unsigned char*)dst)++ = *((unsigned char*)src)++;
 	return ((unsigned char*)dst - i);
 }
-void		fill_2(double_t **matrix, int32_t n)
-{
-	matrix[0][0] = 2.0;
-	matrix[0][1] = 5.0;
-	matrix[1][0] = 6.0;
-	matrix[1][1] = -3.0;
-}
-void		fill_3(double_t **matrix, int32_t n)
-{
-	matrix[0][0] = 22.0;
-		matrix[0][1] = 5.0;
-			matrix[0][2] = 7.0;
-	matrix[1][0] = 6.0;
-		matrix[1][1] = -33.0;
-			matrix[1][2] = 4.0;
-	matrix[2][0] = 5.0;
-		matrix[2][1] = -21.0;
-			matrix[2][2] = -3.0;
-}
-void		fill_4(double_t **matrix, int32_t n)
-{
-	matrix[0][0] = 22.0;
-	matrix[0][1] = 5.0;
-	matrix[0][2] = 7.0;
-	matrix[0][3] = 0.0;
-	matrix[1][0] = 6.0;
-	matrix[1][1] = -33.0;
-	matrix[1][2] = 4.0;
-	matrix[1][3] = 0.0;
-	matrix[2][0] = 5.0;
-	matrix[2][1] = -21.0;
-	matrix[2][2] = -3.0;
-	matrix[2][3] = 0.0;
-	matrix[3][0] = 25.0;
-	matrix[3][1] = -25.0;
-	matrix[3][2] = -5.0;
-	matrix[3][3] = 1.0;
-}
-void		fill_random_matrix(double_t **matrix, int32_t n)
-{
 
-	if (!matrix || !n)
-		return;
-	if (n == 2)
-		fill_2(matrix, n);
-	else if (n == 3)
-		fill_3(matrix, n);
-	else if (n == 4)
-		fill_4(matrix, n);
-	else
-		printf("ERROR! fill_random_matrix have wrong matrix size!\n");
-}
 void		print_matrix(double_t **matrix, int32_t n)
 {
 	t_v2i i;

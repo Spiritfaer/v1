@@ -142,7 +142,7 @@ void			ft_render(t_sdl *sdl, t_scena *scena)
 		event_guard(sdl, scena->camera_point, &time);
 		SDL_RenderPresent(sdl->renderer);
 	}
-	print_matrix(scena->camera_point->cam->matrix, scena->camera_point->cam->size);
-	//destroy_camera(&scena->camera_point);
-	SDL_FreeSurface(sdl->canvas);
+	//print_matrix(scena->camera_point->cam->matrix, scena->camera_point->cam->size);
+
+	//SDL_FreeSurface(sdl->canvas);
 }

@@ -9,11 +9,6 @@ void		print_sdl(t_sdl *sdl);
 void		*sf_memcpy(void *dst, const void *src, size_t n);
 void		obj_info(const t_obj* obj);
 
-void		fill_2(double_t **matrix, int32_t n);
-void		fill_3(double_t **matrix, int32_t n);
-void		fill_4(double_t **matrix, int32_t n);
-void		fill_random_matrix(double_t **matrix, int32_t n);
-
 double_t	get_dis(double_t a, double_t b, double_t c, double_t d);
 void		print_matrix(double_t **matrix, int32_t n);
 void		fs_double_swap(double_t *s, double_t *d);

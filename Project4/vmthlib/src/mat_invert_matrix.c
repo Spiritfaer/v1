@@ -23,7 +23,8 @@ void			invert_matrix(t_matrix *m)
 
 	minor_mat = NULL;
 	dis = 0;
-	if (!m->invert_matrix)
+
+	if (m->invert_matrix == NULL)
 		m->invert_matrix = get_new_m(m->size);
 	dis = get_discriminant(m);
 	minor_mat = get_minors_matrix(m);
