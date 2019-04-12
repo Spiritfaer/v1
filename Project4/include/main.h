@@ -72,9 +72,7 @@ t_v3d		ft_box_intersect_normals(const t_v3d *hit_point, const t_obj *obj_box);
 
 //------------------------------
 
-void		obj_info(const t_obj* obj);
-void		push_back_obj(t_obj *src, t_obj **des);
-void		push_back_light(t_light *src, t_light **des);
+
 
 //------------------------event
 
@@ -92,7 +90,7 @@ uint32_t	cast_ray(const t_sdl *sdl, t_scena *scena, t_ray *ray);
 
 //------------------------------
 
-t_camera*	make_camera(int32_t size);
+t_camera*	new_camera(t_v3d *pos, t_rgb *color, double_t fov);
 void		destroy_camera(t_camera **camera);
 t_light*	new_light(t_v3d *pos, t_rgb *color, double_t intensity);
 t_v3d		get_to_light_dir(t_hit *hit, t_light *light);
@@ -103,10 +101,20 @@ t_rgb		get_red_color(void);
 t_rgb		get_green_color(void);
 t_rgb		get_blue_color(void);
 t_rgb		get_white_color(void);
-
+void		set_color(t_rgb *color, uint8_t r, uint8_t g, uint8_t b);
 void		set_rgb_to_int(t_rgb *src);
 void		set_int_to_rgb(t_rgb *src);
 t_rgb		colort_add_colort(t_rgb one, t_rgb two);
 t_rgb		colort_mult_f(t_rgb one, double_t f);
-//-----------------------------
+//-------------------------parser()
+int8_t		new_scena(const char *file_name, t_scena *scena);
+void		pars_type_obj(t_scena *scena);
+int8_t		pars_info(t_list *list, t_rgb *color, t_v3d *pos, double_t *size);
+int8_t		pars_size_fov_power(const char *str, double_t *src);
+int8_t		pars_color(const char *str, t_rgb *color);
+int8_t		pars_pos(const char *str, t_v3d *pos);
+int8_t		pars_file(const char *file_name, t_scena *scena);
+//-------------------------------
+
+
 #endif

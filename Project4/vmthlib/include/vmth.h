@@ -104,6 +104,7 @@ t_v3d			vec_3invert_dir(const t_v3d *dir);
 double_t**		get_new_m(uint8_t n);
 t_matrix*		get_new_matrix(uint8_t n);
 t_matrix*		get_copy_matryx(t_matrix *m);
+double_t		get_dis(double_t a, double_t b, double_t c, double_t d);
 
 void			get_rows(t_matrix *m, int32_t y, double_t *buffer);
 void			get_colums(t_matrix *m, int32_t x, double_t *buffer);

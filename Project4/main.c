@@ -4,9 +4,9 @@ int main(int argc, char ** argv)
 {
 	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	//_CrtDumpMemoryLeaks();
-	_CrtMemState tmp;
-	_CrtMemCheckpoint(&tmp);
-	_CrtMemDumpAllObjectsSince(&tmp);
+	//_CrtMemState tmp;
+	//_CrtMemCheckpoint(&tmp);
+	//_CrtMemDumpAllObjectsSince(&tmp);
 
 	t_sdl		*sdl = NULL;
 	t_scena		scena;
@@ -24,8 +24,6 @@ int main(int argc, char ** argv)
 
 	ft_render(sdl, &scena);
 	destroy_camera(&scena.camera_point);
-
-
 
 	if (sdl)
 	{

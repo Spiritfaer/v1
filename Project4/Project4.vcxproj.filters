@@ -408,6 +408,9 @@
     <ClCompile Include="libft\get_next_line.c">
       <Filter>libft</Filter>
     </ClCompile>
+    <ClCompile Include="parser.c">
+      <Filter>Файлы ресурсов</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vmthlib\include\vmth.h">

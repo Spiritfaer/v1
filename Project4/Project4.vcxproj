@@ -219,6 +219,7 @@
     <ClCompile Include="libft\ft_toupper.c" />
     <ClCompile Include="libft\get_next_line.c" />
     <ClCompile Include="light.c" />
+    <ClCompile Include="parser.c" />
     <ClCompile Include="plane.c" />
     <ClCompile Include="render.c" />
     <ClCompile Include="sf_sdl.c" />
