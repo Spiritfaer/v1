@@ -69,7 +69,7 @@ uint32_t		cast_ray(const t_sdl *sdl, t_scena *scena, t_ray *ray)
 		return (pix);
 	}
 
-	return (BG_COLOR);
+	return (scena->camera_point->bg_color.color);
 }
 
 static void set_var_to_draw_foo(t_ray *ray, t_v3d *point, t_v2i *i)
@@ -124,7 +124,6 @@ void			ft_render(t_sdl *sdl, t_scena *scena)
 	SDL_Texture *screen = NULL;
 	t_time		time;
 
-	//scena->camera_point = make_camera(0);
 	memset(&time, 0, sizeof(t_time));
 	while (sdl->loop)
 	{
@@ -142,7 +141,6 @@ void			ft_render(t_sdl *sdl, t_scena *scena)
 		event_guard(sdl, scena->camera_point, &time);
 		SDL_RenderPresent(sdl->renderer);
 	}
-	//print_matrix(scena->camera_point->cam->matrix, scena->camera_point->cam->size);
-
-	//SDL_FreeSurface(sdl->canvas);
+	print_matrix(scena->camera_point->cam->matrix, scena->camera_point->cam->size);
+	SDL_FreeSurface(sdl->canvas);
 }
