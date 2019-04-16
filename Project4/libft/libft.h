@@ -10,13 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #ifndef LIBFT_H
 # define LIBFT_H
 # include <stdlib.h>
 # include <string.h>
 # include <stdint.h>
+# include <math.h>
 
-# ifdef __WINDOWS__
+//# ifdef __WINDOWS__
 # include <io.h>
 # include <process.h>
 # include <direct.h>
@@ -24,9 +26,6 @@
 # define read _read
 # define close _close
 # define open _open
-# elif __LINUX__
-# include <unistd.h>
-# endif
 
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);
@@ -50,6 +49,7 @@ char				*ft_strnstr(const char *haystack,
 int					ft_strcmp(const char *s1, const char *s2);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 int					ft_atoi(const char *str);
+double_t			ft_atof(const char* str);
 int					ft_isalpha(int c);
 int					ft_isdigit(int c);
 int					ft_isalnum(int c);

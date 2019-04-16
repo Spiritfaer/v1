@@ -411,6 +411,9 @@
     <ClCompile Include="parser.c">
       <Filter>Файлы ресурсов</Filter>
     </ClCompile>
+    <ClCompile Include="libft\ft_atof.c">
+      <Filter>libft</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vmthlib\include\vmth.h">

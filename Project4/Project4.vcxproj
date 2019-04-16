@@ -154,6 +154,7 @@
     <ClCompile Include="color.c" />
     <ClCompile Include="event.c" />
     <ClCompile Include="info.c" />
+    <ClCompile Include="libft\ft_atof.c" />
     <ClCompile Include="libft\ft_atoi.c" />
     <ClCompile Include="libft\ft_bzero.c" />
     <ClCompile Include="libft\ft_isalnum.c" />

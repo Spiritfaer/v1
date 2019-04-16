@@ -9,9 +9,9 @@ int8_t		pars_pos(const char *str, t_v3d *pos)
 	if (ft_splitter(str, ' ') != 4)
 		return (false);
 	split = ft_strsplit(str, ' ');
-	pos->x = atof(split[1]);
-	pos->y = atof(split[2]);
-	pos->z = atof(split[3]);
+	pos->x = ft_atof(split[1]);
+	pos->y = ft_atof(split[2]);
+	pos->z = ft_atof(split[3]);
 	ft_split_del(split);
 	return (true);
 }
@@ -42,7 +42,7 @@ int8_t		pars_size_fov_power(const char *str, double_t *src)
 	if (ft_splitter(str, ' ') != 2)
 		return (false);
 	split = ft_strsplit(str, ' ');
-	*src = ft_atoi(split[1]);
+	*src = ft_atof(split[1]);
 	ft_split_del(split);
 	return (true);
 }
