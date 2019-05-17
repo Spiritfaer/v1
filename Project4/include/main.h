@@ -29,10 +29,13 @@
 #define BLUE 0x0000FF
 #define WHITE 0xFFFFFF
 
+#define MAX_DEPTH 5
+
 #include "temp.h"
 #include "struct.h"
 
 enum e_bool {false, true};
+enum e_ray_type {primary, shadow, ReflectionAndRefraction};
 
 t_sdl		*ft_new_sdl(void);
 void		ft_del_sdl(t_sdl *sdl);
@@ -83,7 +86,7 @@ void		time_tick(t_time *t);
 void		ft_render(t_sdl *sdl, t_scena *scena);
 void		refresh_obj(const t_matrix *camera, t_obj *obj, t_light *suns);
 void		ft_draw(const t_sdl *sdl, t_scena *scena);
-uint32_t	cast_ray(const t_sdl *sdl, t_scena *scena, t_ray *ray);
+t_rgb		cast_ray(const t_sdl *sdl, t_scena *scena, t_ray *ray, int16_t depth);
 
 //------------------------------
 
@@ -104,6 +107,7 @@ void		set_rgb_to_int(t_rgb *src);
 void		set_int_to_rgb(t_rgb *src);
 t_rgb		colort_add_colort(t_rgb one, t_rgb two);
 t_rgb		colort_mult_f(t_rgb one, double_t f);
+int32_t		colort_int_add_colort_int(int32_t one, int32_t two);
 
 //-------------------------parser()
 

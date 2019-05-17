@@ -93,17 +93,8 @@ typedef struct		s_ray
 {
 	t_v3d			orig;
 	t_v3d			dir;
+	int16_t			type;
 }					t_ray;
-
-typedef struct		s_hit
-{
-	t_v3d			point_hit;
-	t_v3d			norml_hit;
-	t_rgb			color_hit;
-	double_t		shadow;
-	double_t		tNear;
-	double_t		t;
-}					t_hit;
 
 typedef struct 		s_obj
 {
@@ -163,5 +154,15 @@ typedef struct		s_sdl
 	int8_t			loop;
 }					t_sdl;
 
+typedef struct		s_hit
+{
+	t_v3d			point_hit;
+	t_v3d			norml_hit;
+	t_rgb			color_hit;
+	t_obj			*hit_obj;
+	double_t		shadow;
+	double_t		tNear;
+	double_t		t;
+}					t_hit;
 
 #endif
