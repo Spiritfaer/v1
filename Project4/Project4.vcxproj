@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -152,6 +152,8 @@
     <ClCompile Include="box.c" />
     <ClCompile Include="camera.c" />
     <ClCompile Include="color.c" />
+    <ClCompile Include="cone.c" />
+    <ClCompile Include="cylinder.c" />
     <ClCompile Include="event.c" />
     <ClCompile Include="info.c" />
     <ClCompile Include="libft\ft_atof.c" />
@@ -294,9 +296,11 @@
     <ClInclude Include="vmthlib\include\vmth.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="figure_v_1.txt" />
     <Text Include="scena_0.txt" />
     <Text Include="scena_1.txt" />
     <Text Include="scena_2.txt" />
+    <Text Include="scena_3.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

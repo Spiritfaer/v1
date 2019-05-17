@@ -117,5 +117,6 @@ int8_t		pars_file(const char *file_name, t_scena *scena);
 
 //-------------------------------
 
-
+int8_t		ft_solve_quadratic(t_v3d *abc, t_v2d *tt);
+t_obj*		ft_new_cone(t_v3d centr, t_rgb color, double_t radius);
 #endif

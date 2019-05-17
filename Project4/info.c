@@ -42,7 +42,16 @@ void		ft_print_box(const void *data)
 	ft_print_color(&temp->color);
 	printf("------------------\n");
 }
-void		ft_print_cone(const void *data) {}
+void		ft_print_cone(const void *data)
+{
+	const t_cone* temp;
+	temp = data;
+	printf("\n---SPHERE INFO---\n");
+	print_v3d(&temp->world_centr, "world_centr");
+	ft_print_color(&temp->color);
+	printf("Radius = %6.2f;\n", temp->radius);
+	printf("------------------\n");
+}
 void		print_list(t_list *head)
 {
 	while (head)

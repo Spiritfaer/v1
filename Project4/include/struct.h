@@ -55,6 +55,24 @@ typedef struct		s_box
 	t_v3d			albedo;
 }					t_box;
 
+typedef struct		s_cone
+{
+	t_v3d			cam_centr;
+	t_v3d			cam_normal; //axe
+	t_v3d			world_centr;
+	t_v3d			world_normal; //axe
+	t_v3d			albedo;
+	t_rgb			color;
+	double_t		radius;
+
+
+	double		angle;
+	double		size;
+	double      hauteur;
+	double		specular;
+
+}					t_cone;
+
 typedef	struct		s_light
 {
 	t_v3d			pos;

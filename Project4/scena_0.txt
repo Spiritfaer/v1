@@ -36,9 +36,9 @@ size: 5;
 end;
 
 type: point_light;
-pos: 0 15 10;
+pos: 30 60 40;
 color: 255 255 255;
-power: 15;
+power: 25;
 end;
 
 type: camera;

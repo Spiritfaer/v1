@@ -414,6 +414,12 @@
     <ClCompile Include="libft\ft_atof.c">
       <Filter>libft</Filter>
     </ClCompile>
+    <ClCompile Include="cylinder.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="cone.c">
+      <Filter>Файлы ресурсов</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vmthlib\include\vmth.h">
@@ -445,5 +451,9 @@
     <Text Include="scena_2.txt">
       <Filter>Файлы ресурсов</Filter>
     </Text>
+    <Text Include="scena_3.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
+    <Text Include="figure_v_1.txt" />
   </ItemGroup>
 </Project>

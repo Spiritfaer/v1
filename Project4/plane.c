@@ -32,7 +32,7 @@ int8_t		ft_plane_intersect(t_ray *ray, const void *data, double_t *t)
 
 	pl = data;
 	demon = vec_3dot(ray->dir, pl->cam_normal);
-	if (demon > 1e-6) //or only (demon > 1e-6)
+	if (demon > 1e-6 || demon < 1e-6) //or only (demon > 1e-6)
 	{
 		p0l0 = vec_3sub(pl->cam_centr, ray->orig);
 		*t = vec_3dot(p0l0, pl->cam_normal) / demon;

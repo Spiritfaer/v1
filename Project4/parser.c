@@ -93,6 +93,8 @@ void		pars_type_obj(t_scena *scena)
 				push_back_obj(ft_new_plane(pos, color, size, disk), &scena->obj_list);
 			else if (ft_strnequ((((unsigned char*)tmp->content) + 6), "box;", 4))
 				push_back_obj(ft_new_box(&pos, NULL, color, size), &scena->obj_list);
+			else if (ft_strnequ((((unsigned char*)tmp->content) + 6), "cone;", 5))
+				push_back_obj(ft_new_cone(pos, color, size), &scena->obj_list);
 			else if (ft_strnequ((((unsigned char*)tmp->content) + 6), "point_light;", 12))
 				push_back_light(new_light(&pos, &color, size), &scena->light_list);
 			else if (ft_strnequ((((unsigned char*)tmp->content) + 6), "camera;", 7))

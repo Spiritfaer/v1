@@ -55,11 +55,15 @@ int8_t			ft_sphere_intersect(t_ray *ray, const void *data, double_t *t)
 	t_v3d			light;
 	t_v3d			abc;
 
+	// a = D * D where D - ray->dir
+	// b = D * 2E where 2E - light
+	// c = E * E - 1 where 1 - s->rad 2
+
 	s = data;
 	light = vec_3sub(ray->orig, s->world_centr);
-	abc.x = vec_3magnitude(ray->dir);
-	abc.y = 2 * vec_3dot(ray->dir, light);
-	abc.z = vec_3dot(light, light) - s->rad2;
+	abc.x = vec_3magnitude(ray->dir);				// a
+	abc.y = 2 * vec_3dot(ray->dir, light);			// b
+	abc.z = vec_3dot(light, light) - s->rad2;		// c 
 
 	if (ft_solve_quadratic(&abc, &tt) == false)
 		return (false);

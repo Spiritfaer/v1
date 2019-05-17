@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #ifndef LIBFT_H
 # define LIBFT_H
 # include <stdlib.h>
@@ -26,6 +25,7 @@
 # define read _read
 # define close _close
 # define open _open
+//-------------------
 
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);
