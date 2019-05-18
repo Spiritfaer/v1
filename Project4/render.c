@@ -78,27 +78,48 @@ t_obj			*old_ft_trace(t_obj *obj, t_ray *ray, t_hit *hit)
 	return (NULL);
 }
 
+void	cast_var_init(t_hit *hit, t_rgb *color, t_ray *reflect)
+{
+	ft_memset(hit, 0, sizeof(t_hit));
+	ft_memset(color, 0, sizeof(t_rgb));
+	ft_memset(reflect, 0, sizeof(t_ray));
+}
+
+
+
 t_rgb			cast_ray(const t_sdl *sdl, t_scena *scena, t_ray *ray, int16_t depth)
 {
 	t_obj		*index_obj = scena->obj_list;
-	uint32_t	pix;
+	t_light		*index_light = scena->light_list;
 	t_hit		hit;
+	t_hit		les_hit;
 	t_rgb		color;
-	t_rgb		reflect_color;
 	t_ray		reflect;
-	float_t		reflect_cof_material = 0.25;
-	
+	t_ray		to_light;
 	if (depth++ >= MAX_DEPTH)
-		return (colort_mult_f(scena->camera_point->bg_color, 0.18));
-
+		return (scena->camera_point->bg_color);
+	cast_var_init(&hit, &color, &reflect);
+	les_hit = hit;
 	if (ft_trace(&hit, scena->obj_list, ray))
 	{
-
-		hit.color_hit.color = set_pixel_color_with_hit_color(hit.hit_obj->get_color(hit.hit_obj->data), &hit, scena->light_list, ray);
-		set_int_to_rgb(&hit.color_hit);
+		while (index_light)
+		{
+			to_light.dir = vec_3sub(index_light->cam_pos, hit.point_hit);
+			vec_3normalize(&to_light.dir);
+			to_light.orig = hit.point_hit;
+			to_light.type = shadow;
+			if (!ft_trace(&les_hit, scena->obj_list, &to_light))
+			{
+				color.color = set_pixel_color_with_hit_color(hit.hit_obj->get_color(hit.hit_obj->data), &hit, index_light, ray);
+				set_int_to_rgb(&color);
+				hit.color_hit = colort_add_colort(hit.color_hit, color);
+			}
+			index_light = index_light->next;
+		}
 
 		if (hit.hit_obj->get_reflection(hit.hit_obj->data) > 0)
 		{
+			
 			reflect.dir = vec_3dreflect(ray->dir, hit.norml_hit);
 			reflect.orig = hit.point_hit;
 			reflect.type = ReflectionAndRefraction;
@@ -106,7 +127,6 @@ t_rgb			cast_ray(const t_sdl *sdl, t_scena *scena, t_ray *ray, int16_t depth)
 			{
 				hit.color_hit = colort_mult_f(hit.color_hit, 0.18);
 			}
-			//color = colort_add_colort(cast_ray(sdl, scena, &reflect, depth + 1), hit.color_hit);
 			color = colort_add_colort(colort_mult_f(cast_ray(sdl, scena, &reflect, depth + 1), hit.hit_obj->get_reflection(hit.hit_obj->data)), hit.color_hit);
 		}
 		else
@@ -114,12 +134,7 @@ t_rgb			cast_ray(const t_sdl *sdl, t_scena *scena, t_ray *ray, int16_t depth)
 		return (color);
 	}
 	else
-	{
-		if (ray->type == primary)
-			return (scena->camera_point->bg_color);
-		else
-			return (colort_mult_f(scena->camera_point->bg_color, (0.18 / depth)));
-	}
+		return (scena->camera_point->bg_color);
 
 
 

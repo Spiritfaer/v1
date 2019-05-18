@@ -1,17 +1,31 @@
-type: cone;
-pos: 5 -3 -1;
-color: 255 117 20;
-size: 0.5;
+type: sphere;
+pos: 6 8 -1;
+color: 125 125 125;
+size: 6;
+reflection: 0;
+end;
+
+type: sphere;
+pos: -7 5 -3;
+color: 125 125 125;
+size: 6;
+reflection: 0;
 end;
 
 type: point_light;
-pos: 0 15 5;
-color: 255 255 255;
+pos: -20 5 5;
+color: 125 0 0;
+power: 10;
+end;
+
+type: point_light;
+pos: 20 5 5;
+color: 0 0 125;
 power: 10;
 end;
 
 type: camera;
-pos: 5 3 24;
+pos: 0 5 20;
 fov: 60;
-bg: 163 198 192;
+bg: 25 25 25;
 end;

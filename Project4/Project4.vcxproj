@@ -297,6 +297,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="figure_v_1.txt" />
+    <Text Include="figure_v_2.txt" />
     <Text Include="scena_0.txt" />
     <Text Include="scena_1.txt" />
     <Text Include="scena_2.txt" />

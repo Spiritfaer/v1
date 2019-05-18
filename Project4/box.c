@@ -91,14 +91,6 @@ int8_t		ft_box_intersect(t_ray *ray, const void *data, double_t *t)
 		*t = tmax.x;
 		return (false);
 	}
-/*
-	// 
-	if (*t < 0) {
-		*t = tmax.x;
-		if (*t < 0) //when you do that you get intersection when the camera located in the box
-			return false;
-	}
-*/
 	return (true);
 }
 t_v3d		ft_box_intersect_normals(const t_v3d *hit_point, const t_obj *obj_box)
@@ -110,7 +102,6 @@ t_v3d		ft_box_intersect_normals(const t_v3d *hit_point, const t_obj *obj_box)
 	centr = obj_box->get_center(obj_box->data);
 	normal = vec_1zero();
 	v = vec_3sub(*hit_point, centr);
-	//vec_3normalize(&v);
 	if (fabs(v.x) >= fabs(v.y))
 	{
 		if (fabs(v.x) >= fabs(v.z))
@@ -125,9 +116,8 @@ t_v3d		ft_box_intersect_normals(const t_v3d *hit_point, const t_obj *obj_box)
 		else
 			normal.z = (v.z > 0) ? 1 : -1;
 	}
-	v = vec_3add(v, normal);
-	vec_3normalize(&v);
-	return (v);
+	vec_3normalize(&normal);
+	return (normal);
 }
 
 //	constructor and destructor

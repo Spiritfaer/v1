@@ -29,7 +29,7 @@
 #define BLUE 0x0000FF
 #define WHITE 0xFFFFFF
 
-#define MAX_DEPTH 50
+#define MAX_DEPTH 5
 
 #include "temp.h"
 #include "struct.h"

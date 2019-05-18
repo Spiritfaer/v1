@@ -455,5 +455,6 @@
       <Filter>Файлы ресурсов</Filter>
     </Text>
     <Text Include="figure_v_1.txt" />
+    <Text Include="figure_v_2.txt" />
   </ItemGroup>
 </Project>

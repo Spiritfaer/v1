@@ -144,7 +144,7 @@ uint32_t	set_pixel_color_with_hit_color(t_rgb color, t_hit *hit, t_light *light,
 	double_t	cof = 0.18;
 
 	//----------------------- ambient lighting
-	result = colort_mult_f(color, 0.18);
+	//result = colort_mult_f(color, 0);
 	//----------------------- diffuse lighting
 	result = colort_add_colort(result, colort_mult_f(color, tone));
 	//----------------------- specular lighting

@@ -19,7 +19,9 @@ int main(int argc, char ** argv)
 	sdl = ft_new_sdl();
 	//new_scena(argv[1], &scena);
 	//new_scena(scena_file_0, &scena);
-	new_scena(scena_file_1, &scena);
+
+	if(!new_scena(scena_file_1, &scena))
+		return (-1);
 	obj_info(scena.obj_list);
 	ft_render(sdl, &scena);
 	destroy_camera(&scena.camera_point);

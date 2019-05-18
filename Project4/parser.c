@@ -115,7 +115,7 @@ int8_t		pars_file(const char *file_name, t_scena *scena)
 	char	*line;
 
 	line = NULL;
-	if ((fd = open(file_name, _O_TEXT)) < 0)
+	if ((fd = open(file_name, _O_TEXT)) == -1)
 		return (false);
 	while (get_next_line(fd, &line))
 	{

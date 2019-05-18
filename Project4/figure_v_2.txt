@@ -1,0 +1,37 @@
+type: sphere;
+pos: 0.0 7.0 -15.0;
+color: 150 150 150;
+size: 25.8;
+reflection: 0;
+end;
+
+type: plane;
+pos: 6.0 -5.0 0.0;
+color: 150 150 0;
+size: 5;
+reflection: 0.25;
+end;
+
+type: point_light;
+pos: 30 10 20;
+color: 255 100 100;
+power: 15;
+end;
+
+type: point_light;
+pos: -30 10 20;
+color: 100 100 255;
+power: 15;
+end;
+
+type: point_light;
+pos: 0 45 15;
+color: 100 255 100;
+power: 15;
+end;
+
+type: camera;
+pos: 0,555 12,924 76,447;
+fov: 60;
+bg: 0 0 0;
+end;
