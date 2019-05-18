@@ -138,17 +138,10 @@ uint32_t	set_pixel_color(t_rgb color, double_t tone)
 uint32_t	set_pixel_color_with_hit_color(t_rgb color, t_hit *hit, t_light *light, t_ray *ray)
 {
 	t_rgb		result = get_black_color();
-	t_v3d		tmp;
 	double_t	dist = vec_3magnitude(vec_3sub(light->cam_pos, hit->point_hit));
-
 	double_t	t = light->power_light / dist;
-
 	double_t	tone = vec_3dot(get_to_light_dir(hit, light), hit->norml_hit) * t;
-	double_t cof = 0.18;
-	t_v3d v1 = vec_3norm(vec_3sub(hit->point_hit, ray->orig));
-	t_v3d v2 = vec_3norm(vec_3sub(light->cam_pos, hit->point_hit));
-	t_v3d v3 = vec_3norm(vec_reflect(v2, hit->norml_hit));
-	double_t ttt = vec_3dot(v1, v3) * -tone * 2;
+	double_t	cof = 0.18;
 
 	//----------------------- ambient lighting
 	result = colort_mult_f(color, 0.18);
@@ -157,33 +150,5 @@ uint32_t	set_pixel_color_with_hit_color(t_rgb color, t_hit *hit, t_light *light,
 	//----------------------- specular lighting
 	result = colort_add_colort(result, colort_mult_f(light->color, tone));
 	//-----------------------
-
-	//result = colort_add_colort(result, colort_mult_f(light->color, ttt));
-
-	//result = colort_add_colort(colort_mult_f(light->color, tone), result);
-
-
-	//t_rgb		clr_light = colort_mult_f(light->color, t);
-
-
-	//tone = tone < 0 ? 0 : tone;
-
-	//tmp.x = (color.r * tone) > 255 ? 255 : color.r * tone;
-	//tmp.y = (color.g * tone) > 255 ? 255 : color.g * tone;
-	//tmp.z = (color.b * tone) > 255 ? 255 : color.b * tone;
-
-	//tmp.x = (tmp.x + clr_light.r * tone) > 255 ? 255 : tmp.x + clr_light.r * tone;
-	//tmp.y = (tmp.y + clr_light.g * tone) > 255 ? 255 : tmp.y + clr_light.g * tone;
-	//tmp.z = (tmp.z + clr_light.b * tone) > 255 ? 255 : tmp.z + clr_light.b * tone;
-
-
-	//tmp.x = (color.r * sun) > 255 ? 255 : color.r * sun;
-	//tmp.y = (color.g * sun) > 255 ? 255 : color.g * sun;
-	//tmp.z = (color.b * sun) > 255 ? 255 : color.b * sun;
-	
-	//tmp.y = color.g * tone;
-	//tmp.z = color.b * tone;
-
-	//result = ((uint8_t)tmp.x << 16 | (uint8_t)tmp.y << 8 | (uint8_t)tmp.z);
 	return (result.color);
 }

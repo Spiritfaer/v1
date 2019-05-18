@@ -23,6 +23,7 @@ typedef struct		s_sphere
 	double_t		radius;
 	double_t		rad2;
 	t_v3d			albedo;
+	double_t		reflection;
 }					t_sphere;
 
 typedef struct		s_plane
@@ -35,6 +36,7 @@ typedef struct		s_plane
 	t_rgb			color;
 	double_t		size;
 	double_t		s2;
+	double_t		reflection;
 }					t_plane;
 
 typedef struct		s_aabb_ray
@@ -53,6 +55,7 @@ typedef struct		s_box
 	double_t		size;
 	t_rgb			color;
 	t_v3d			albedo;
+	double_t		reflection;
 }					t_box;
 
 typedef struct		s_cone
@@ -64,7 +67,7 @@ typedef struct		s_cone
 	t_v3d			albedo;
 	t_rgb			color;
 	double_t		radius;
-
+	double_t		reflection;
 
 	double		angle;
 	double		size;
@@ -105,6 +108,7 @@ typedef struct 		s_obj
 	t_v3d(*get_center)(const void* data);
 	t_v3d(*get_albedo)(const void* data);
 	t_v3d(*get_n_hit)(const t_v3d *point_hit, const struct s_obj *obj);
+	double_t(*get_reflection)(const void* data);
 	void(*to_camera)(const t_matrix *camera, void *src);
 	uint8_t			flag;
 	struct s_obj	*next;

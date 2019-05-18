@@ -20,6 +20,7 @@ void		ft_print_plane(const void *data)
 	print_v3d(&temp->world_centr, "world_centr");
 	print_v3d(&temp->world_normal, "world_normal");
 	ft_print_color(&temp->color);
+	printf("reflect = %6.2f\n", temp->reflection);
 	printf("------------------\n");
 }
 void		ft_print_sphere(const void *data)
@@ -30,6 +31,7 @@ void		ft_print_sphere(const void *data)
 	print_v3d(&temp->world_centr, "world_centr");
 	ft_print_color(&temp->color);
 	printf("Radius = %6.2f;\n", temp->radius);
+	printf("reflect = %6.2f\n", temp->reflection);
 	printf("------------------\n");
 }
 void		ft_print_box(const void *data)
@@ -40,6 +42,7 @@ void		ft_print_box(const void *data)
 	print_v3d(&temp->min, "min");
 	print_v3d(&temp->max, "min");
 	ft_print_color(&temp->color);
+	printf("reflect = %6.2f\n", temp->reflection);
 	printf("------------------\n");
 }
 void		ft_print_cone(const void *data)

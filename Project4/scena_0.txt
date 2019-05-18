@@ -2,37 +2,43 @@ type: sphere;
 pos: 5.0 -3.0 -1.0;
 color: 255 117 20;
 size: 3.8;
+reflection: 0;
 end;
 
 
 type: sphere;
 pos: -2.0 3.0 -1.5;
-color: 33 66 30;
+color: 255 255 255;
 size: 4.0;
+reflection: 1;
 end;
 
 type: sphere;
 pos: 10.0 7.0 1.0;
 color: 83 55 122;
 size: 2.7;
+reflection: 0;
 end;
 
 type: sphere;
 pos: 7.0 7.0 -0.5;
 color: 0 0 0;
 size: 4.6;
+reflection: 0.15;
 end;
 
 type: plane;
 pos: 6.0 -5.0 0.0;
 color: 200 200 25;
 size: 5;
+reflection: 0.25;
 end;
 
 type: box;
 pos: 15.0 -1.0 0.0;
 color: 35 75 150;
 size: 5;
+reflection: 0;
 end;
 
 type: point_light;

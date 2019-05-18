@@ -13,6 +13,11 @@ t_v3d		ft_get_center_plane(const void *data)
 {
 	return(((t_plane*)data)->cam_centr);
 }
+double_t	ft_get_plane_reflection(const void *data)
+{
+	return (((t_plane*)data)->reflection);
+}
+
 void		ft_set_plane_to_cam_pos(const t_matrix *camera, void *src)
 {
 	t_plane *pl;
@@ -66,7 +71,7 @@ t_v3d		ft_plane_intersect_normals(const t_v3d *hit_point, const t_obj *obj_plane
 }
 
 //	constructor and destructor
-t_obj*	ft_new_plane(t_v3d centr, t_rgb color, double_t radius, int32_t flag)
+t_obj*	ft_new_plane(t_v3d centr, t_rgb color, double_t radius, int32_t flag, double_t reflection)
 {
 	t_obj *obj = (t_obj*)malloc(sizeof(t_obj));
 	t_plane *new_plane = (t_plane*)malloc(sizeof(t_plane));
@@ -90,11 +95,13 @@ t_obj*	ft_new_plane(t_v3d centr, t_rgb color, double_t radius, int32_t flag)
 	new_plane->world_centr = centr;
 	new_plane->world_normal = (t_v3d){ 0, -1, 0 };
 	new_plane->color = color;
+	new_plane->reflection = reflection;
 	obj->data = new_plane;
 	obj->get_n_hit = ft_plane_intersect_normals;
 	obj->get_albedo = ft_get_plane_albedo;
 	obj->get_color = ft_get_plane_color;
 	obj->get_center = ft_get_center_plane;
+	obj->get_reflection = ft_get_plane_reflection;
 
 	obj->to_camera = ft_set_plane_to_cam_pos;
 	obj->next = NULL;

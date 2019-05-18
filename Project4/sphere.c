@@ -14,6 +14,10 @@ t_rgb			ft_get_sphere_color(const void* data)
 {
 	return(((t_sphere*)data)->color);
 }
+double_t		ft_get_sphere_reflection(const void *data)
+{
+	return (((t_sphere*)data)->reflection);
+}
 void			ft_set_sphere_to_cam_pos(const t_matrix *camera, void *src)
 {
 	t_sphere	*sph;
@@ -94,7 +98,7 @@ void			ft_del_sphere(t_obj **obj)
 	free(*obj);
 	(*obj) = NULL;
 }
-t_obj*			ft_new_sphere(t_v3d centr, t_rgb color, double_t radius)
+t_obj*			ft_new_sphere(t_v3d centr, t_rgb color, double_t radius, double_t reflection)
 {
 	t_obj		*obj;
 	t_sphere	*new_sphere;
@@ -111,12 +115,14 @@ t_obj*			ft_new_sphere(t_v3d centr, t_rgb color, double_t radius)
 	new_sphere->rad2 = radius * radius;
 	new_sphere->world_centr = centr;
 	new_sphere->color = color;
+	new_sphere->reflection = reflection;
 	obj->data = new_sphere;
 
 	obj->get_center = ft_get_center_sphere;
 	obj->get_albedo = ft_get_sphere_albedo;
 	obj->get_color = ft_get_sphere_color;
 	obj->get_n_hit = ft_get_sphere_n_hit;
+	obj->get_reflection = ft_get_sphere_reflection;
 
 	obj->to_camera = ft_set_sphere_to_cam_pos;
 	obj->intersect = ft_sphere_intersect;

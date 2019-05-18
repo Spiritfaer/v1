@@ -13,6 +13,10 @@ t_rgb		ft_get_box_color(const void* data)
 {
 	return(((t_box*)data)->color);
 }
+double_t	ft_get_box_reflection(const void *data)
+{
+	return (((t_box*)data)->reflection);
+}
 void		ft_set_box_centr(t_box *box)
 {
 	box->centr.x = (box->min.x + box->max.x) / 2;
@@ -147,7 +151,7 @@ int8_t		ft_mem_box(t_obj **obj, t_box **box)
 	memset(*box, 0, sizeof(t_box));
 	return (true);
 }
-t_obj*		ft_new_box(t_v3d *max, t_v3d *min, t_rgb color, double_t size)
+t_obj*		ft_new_box(t_v3d *max, t_v3d *min, t_rgb color, double_t size, double_t reflection)
 {
 	t_obj *obj;
 	t_box *new_box;
@@ -169,6 +173,7 @@ t_obj*		ft_new_box(t_v3d *max, t_v3d *min, t_rgb color, double_t size)
 
 	new_box->color = color;
 	new_box->albedo = vec_1double(0.18);
+	new_box->reflection = reflection;
 	obj->flag = box;
 	obj->data = new_box;
 	obj->get_albedo = ft_get_box_albedo;
@@ -176,6 +181,7 @@ t_obj*		ft_new_box(t_v3d *max, t_v3d *min, t_rgb color, double_t size)
 	obj->get_center = ft_get_box_centr;
 	obj->intersect = ft_box_intersect;
 	obj->get_n_hit = ft_box_intersect_normals;
+	obj->get_reflection = ft_get_box_reflection;
 
 	obj->to_camera = ft_set_box_to_cam_pos;
 	obj->next = NULL;

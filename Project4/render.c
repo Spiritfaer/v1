@@ -19,7 +19,7 @@ int8_t			shadow_ray(t_obj *obj, t_hit *hit, t_v3d *dir_to_light)
 
 int8_t		ft_trace(t_hit *hit, t_obj *index_obj, t_ray *ray)
 {
-	double_t	bias = 1; // befor I used 1, but now I can't see diferens, hm....
+	double_t	bias = 0.25; // befor I used 1, but now I can't see diferens, hm....
 	hit->tNear = DBL_MAX;
 	while (index_obj)
 	{
@@ -86,7 +86,8 @@ t_rgb			cast_ray(const t_sdl *sdl, t_scena *scena, t_ray *ray, int16_t depth)
 	t_rgb		color;
 	t_rgb		reflect_color;
 	t_ray		reflect;
-
+	float_t		reflect_cof_material = 0.25;
+	
 	if (depth++ >= MAX_DEPTH)
 		return (colort_mult_f(scena->camera_point->bg_color, 0.18));
 
@@ -96,20 +97,20 @@ t_rgb			cast_ray(const t_sdl *sdl, t_scena *scena, t_ray *ray, int16_t depth)
 		hit.color_hit.color = set_pixel_color_with_hit_color(hit.hit_obj->get_color(hit.hit_obj->data), &hit, scena->light_list, ray);
 		set_int_to_rgb(&hit.color_hit);
 
-		if (hit.hit_obj->flag == sphere)
+		if (hit.hit_obj->get_reflection(hit.hit_obj->data) > 0)
 		{
 			reflect.dir = vec_3dreflect(ray->dir, hit.norml_hit);
 			reflect.orig = hit.point_hit;
 			reflect.type = ReflectionAndRefraction;
-
 			if (ray->type == ReflectionAndRefraction)
 			{
 				hit.color_hit = colort_mult_f(hit.color_hit, 0.18);
 			}
-			color = colort_add_colort(cast_ray(sdl, scena, &reflect, depth + 1), hit.color_hit);
+			//color = colort_add_colort(cast_ray(sdl, scena, &reflect, depth + 1), hit.color_hit);
+			color = colort_add_colort(colort_mult_f(cast_ray(sdl, scena, &reflect, depth + 1), hit.hit_obj->get_reflection(hit.hit_obj->data)), hit.color_hit);
 		}
 		else
-			color = hit.hit_obj->get_color(hit.hit_obj->data);
+			color = hit.color_hit;
 		return (color);
 	}
 	else
@@ -117,7 +118,7 @@ t_rgb			cast_ray(const t_sdl *sdl, t_scena *scena, t_ray *ray, int16_t depth)
 		if (ray->type == primary)
 			return (scena->camera_point->bg_color);
 		else
-			return (colort_mult_f(scena->camera_point->bg_color, 0.18));
+			return (colort_mult_f(scena->camera_point->bg_color, (0.18 / depth)));
 	}
 
 

@@ -29,7 +29,7 @@
 #define BLUE 0x0000FF
 #define WHITE 0xFFFFFF
 
-#define MAX_DEPTH 5
+#define MAX_DEPTH 50
 
 #include "temp.h"
 #include "struct.h"
@@ -44,7 +44,7 @@ int8_t		ft_init_sdl(t_sdl *sdl);
 SDL_Surface *new_canvas(uint32_t width, uint32_t height);
 //----------------------sphere()
 
-t_obj*		ft_new_sphere(t_v3d centr, t_rgb color, double_t radius);
+t_obj*		ft_new_sphere(t_v3d centr, t_rgb color, double_t radius, double_t reflection);
 void		ft_del_sphere(t_obj **obj);
 int8_t		ft_sphere_intersect(t_ray *ray, const void *data, double_t *t);
 
@@ -52,19 +52,19 @@ t_rgb		ft_get_sphere_color(const void* data);
 t_v3d		ft_get_center_sphere(void *data);
 t_v3d		ft_get_sphere_albedo(const void *data);
 t_v3d		ft_get_sphere_n_hit(const t_v3d *point_hit, const t_obj *obj);
-
+double_t	ft_get_sphere_reflection(const void *data);
 //----------------------plane()
 
-t_obj*		ft_new_plane(t_v3d centr, t_rgb color, double_t radius, int32_t flag);
+t_obj*		ft_new_plane(t_v3d centr, t_rgb color, double_t radius, int32_t flag, double_t reflection);
 int8_t		ft_plane_intersect(t_ray *ray, const void *data, double_t *t);
 
 t_v3d		ft_get_center_plane(const void *data);
 t_rgb		ft_get_plane_color(const void* data);
 t_v3d		ft_get_plane_albedo(const void *data);
-
+double_t	ft_get_plane_reflection(const void *data);
 //------------------------box()
 
-t_obj*		ft_new_box(t_v3d *max, t_v3d *min, t_rgb color, double_t size);
+t_obj*		ft_new_box(t_v3d *max, t_v3d *min, t_rgb color, double_t size, double_t reflection);
 void		ft_del_box(t_obj **obj);
 int8_t		ft_box_intersect(t_ray *ray, const void *data, double_t *t);
 
@@ -72,6 +72,7 @@ t_rgb		ft_get_box_color(const void* data);
 t_v3d		ft_get_box_centr(const void *data);
 t_v3d		ft_get_box_albedo(const void *data);
 t_v3d		ft_box_intersect_normals(const t_v3d *hit_point, const t_obj *obj_box);
+double_t	ft_get_box_reflection(const void *data);
 void		ft_set_box_centr(t_box *box);
 void		ft_set_box_min_max(t_box *box);
 

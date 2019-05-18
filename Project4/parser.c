@@ -47,11 +47,11 @@ int8_t		pars_size_fov_power(const char *str, double_t *src)
 	return (true);
 }
 
-int8_t		pars_info(t_list *list, t_rgb *color, t_v3d *pos, double_t *size)
+int8_t		pars_info(t_list *list, t_rgb *color, t_v3d *pos, double_t *size, double_t *reflection)
 {
 	int8_t	i;
 
-	i = 3;
+	i = 4;
 	list = list->next;
 	while (i--)
 	{
@@ -67,6 +67,8 @@ int8_t		pars_info(t_list *list, t_rgb *color, t_v3d *pos, double_t *size)
 			pars_color(list->content, color);
 		else if (ft_strnequ(list->content, "power:", 6))
 			pars_size_fov_power(list->content, size);
+		else if (ft_strnequ(list->content, "reflection:", 11))
+			pars_size_fov_power(list->content, reflection);
 		list = list->next;
 	}
 	return (true);
@@ -77,6 +79,7 @@ void		pars_type_obj(t_scena *scena)
 	t_rgb		color;
 	t_v3d		pos;
 	double_t	size;
+	double_t	reflection;
 	t_list		*tmp;
 
 	tmp = scena->head_list;
@@ -84,15 +87,15 @@ void		pars_type_obj(t_scena *scena)
 	{
 		if (ft_strnequ(tmp->content, "type:", 5))
 		{
-			pars_info(tmp, &color, &pos, &size);
+			pars_info(tmp, &color, &pos, &size, &reflection);
 			if (ft_strnequ((((unsigned char*)tmp->content) + 6), "sphere;", 7))
-				push_back_obj(ft_new_sphere(pos, color, size), &scena->obj_list);
+				push_back_obj(ft_new_sphere(pos, color, size, reflection), &scena->obj_list);
 			else if (ft_strnequ((((unsigned char*)tmp->content) + 6), "plane;", 6))
-				push_back_obj(ft_new_plane(pos, color, size, plane), &scena->obj_list);
+				push_back_obj(ft_new_plane(pos, color, size, plane, reflection), &scena->obj_list);
 			else if (ft_strnequ((((unsigned char*)tmp->content) + 6), "disk;", 6))
-				push_back_obj(ft_new_plane(pos, color, size, disk), &scena->obj_list);
+				push_back_obj(ft_new_plane(pos, color, size, disk, reflection), &scena->obj_list);
 			else if (ft_strnequ((((unsigned char*)tmp->content) + 6), "box;", 4))
-				push_back_obj(ft_new_box(&pos, NULL, color, size), &scena->obj_list);
+				push_back_obj(ft_new_box(&pos, NULL, color, size, reflection), &scena->obj_list);
 			else if (ft_strnequ((((unsigned char*)tmp->content) + 6), "cone;", 5))
 				push_back_obj(ft_new_cone(pos, color, size), &scena->obj_list);
 			else if (ft_strnequ((((unsigned char*)tmp->content) + 6), "point_light;", 12))
