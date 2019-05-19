@@ -139,16 +139,25 @@ uint32_t	set_pixel_color_with_hit_color(t_rgb color, t_hit *hit, t_light *light,
 {
 	t_rgb		result = get_black_color();
 	double_t	dist = vec_3magnitude(vec_3sub(light->cam_pos, hit->point_hit));
-	double_t	t = light->power_light / dist;
-	double_t	tone = vec_3dot(get_to_light_dir(hit, light), hit->norml_hit) * t;
+	double_t	dist_cof = light->power_light / dist;
+	double_t	lambert_cof = vec_3dot(get_to_light_dir(hit, light), hit->norml_hit) * dist_cof;
 	double_t	cof = 0.18;
 
+
+	//Li = (light intensity * light color) / (4 * Pi * (r * r))
+
+	//t_v3d light_dir = get_to_light_dir(hit, light);
+	
 	//----------------------- ambient lighting
-	//result = colort_mult_f(color, 0);
+
 	//----------------------- diffuse lighting
-	result = colort_add_colort(result, colort_mult_f(color, tone));
+	
+	color = colort_mult_f(color, 1 - hit->hit_obj->get_reflection(hit->hit_obj->data));
+	result = colort_mult_f(color, lambert_cof);
 	//----------------------- specular lighting
-	result = colort_add_colort(result, colort_mult_f(light->color, tone));
+	t_rgb light_color = colort_mult_f(light->color, (dist_cof * lambert_cof));
+	result = colort_add_colort(result, light_color);
+	//result = colort_add_colort(result, colort_mult_f(light->color, lambert_cof));
 	//-----------------------
 	return (result.color);
 }

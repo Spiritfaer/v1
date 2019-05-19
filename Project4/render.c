@@ -96,7 +96,7 @@ t_rgb			cast_ray(const t_sdl *sdl, t_scena *scena, t_ray *ray, int16_t depth)
 	t_rgb		color;
 	t_ray		reflect;
 	t_ray		to_light;
-	if (depth++ >= MAX_DEPTH)
+	if (depth >= MAX_DEPTH)
 		return (scena->camera_point->bg_color);
 	cast_var_init(&hit, &color, &reflect);
 	les_hit = hit;
@@ -116,10 +116,8 @@ t_rgb			cast_ray(const t_sdl *sdl, t_scena *scena, t_ray *ray, int16_t depth)
 			}
 			index_light = index_light->next;
 		}
-
-		if (hit.hit_obj->get_reflection(hit.hit_obj->data) > 0)
+		if (hit.hit_obj->get_reflection(hit.hit_obj->data) > 0 || (!color.color && !depth) )
 		{
-			
 			reflect.dir = vec_3dreflect(ray->dir, hit.norml_hit);
 			reflect.orig = hit.point_hit;
 			reflect.type = ReflectionAndRefraction;
@@ -127,7 +125,13 @@ t_rgb			cast_ray(const t_sdl *sdl, t_scena *scena, t_ray *ray, int16_t depth)
 			{
 				hit.color_hit = colort_mult_f(hit.color_hit, 0.18);
 			}
-			color = colort_add_colort(colort_mult_f(cast_ray(sdl, scena, &reflect, depth + 1), hit.hit_obj->get_reflection(hit.hit_obj->data)), hit.color_hit);
+
+
+			color = colort_add_colort(
+										colort_mult_f(
+														cast_ray(sdl, scena, &reflect, depth + 1),
+														hit.hit_obj->get_reflection(hit.hit_obj->data)),
+										hit.color_hit);
 		}
 		else
 			color = hit.color_hit;
@@ -177,6 +181,11 @@ void			ft_draw(const t_sdl *sdl, t_scena *scena)
 	set_var_to_draw_foo(&ray, &point, &i);
 	ray.orig = mult_vect_matrix_4_4(vec_1zero(), scena->camera_point->cam->matrix);
 	ray.type = primary;
+
+	//-------------создать 4 потока
+	//-------------с разной переменной i
+	//------------- i += 100
+
 	while (i.x < sdl->screen_size.x)
 	{
 		i.y = 0;
@@ -193,6 +202,8 @@ void			ft_draw(const t_sdl *sdl, t_scena *scena)
 		}
 		i.x++;
 	}
+
+
 	scena->camera_point->on = false;
 }
 
@@ -259,6 +270,7 @@ void			refresh_obj(const t_matrix *camera, t_obj *obj, t_light *light)
 }
 void			ft_render(t_sdl *sdl, t_scena *scena)
 {
+
 	SDL_Texture *screen = NULL;
 	t_time		time;
 
