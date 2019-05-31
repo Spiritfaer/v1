@@ -2,95 +2,17 @@
 #define STRUCT_H
 
 #include "vmth.h"
+#include "color.h"
 
 #define _INF (DBL_MAX*2)
 
-enum e_type_flag	{plane, sphere, box, cone, disk};
-
-typedef struct		s_rgb
-{
-	uint8_t			r;
-	uint8_t			g;
-	uint8_t			b;
-	uint32_t		color;
-}					t_rgb;
-
-typedef struct		s_sphere
-{
-	t_v3d			world_centr;
-	t_v3d			cam_centr;
-	t_rgb			color;
-	double_t		radius;
-	double_t		rad2;
-	t_v3d			albedo;
-	double_t		reflection;
-}					t_sphere;
-
-typedef struct		s_plane
-{
-	t_v3d			world_normal;
-	t_v3d			world_centr;
-	t_v3d			cam_normal;
-	t_v3d			cam_centr;
-	t_v3d			albedo;
-	t_rgb			color;
-	double_t		size;
-	double_t		s2;
-	double_t		reflection;
-}					t_plane;
+//enum e_type_flag	{plane, sphere, box, cone, disk};
 
 typedef struct		s_aabb_ray
 {
 	t_v3d			invdir;
 	int8_t			flag[3];
 }					t_aabb_ray;
-
-typedef struct		s_box
-{
-	t_v3d			min;
-	t_v3d			max;
-	t_v3d			cam_min;
-	t_v3d			cam_max;
-	t_v3d			centr;
-	double_t		size;
-	t_rgb			color;
-	t_v3d			albedo;
-	double_t		reflection;
-}					t_box;
-
-typedef struct		s_cone
-{
-	t_v3d			cam_centr;
-	t_v3d			cam_normal; //axe
-	t_v3d			world_centr;
-	t_v3d			world_normal; //axe
-	t_v3d			albedo;
-	t_rgb			color;
-	double_t		radius;
-	double_t		reflection;
-
-	double		angle;
-	double		size;
-	double      hauteur;
-	double		specular;
-
-}					t_cone;
-
-typedef	struct		s_light
-{
-	t_v3d			pos;
-	t_v3d			cam_pos;
-	t_rgb			color;
-	t_v3d			dir_to_hit;
-	t_rgb			light_color;
-	double_t		power_light;
-	t_v3d			intensity_light;
-	double_t		r2;
-	t_v3d			dir;
-	t_v3d			invdir;
-	t_matrix		*transform;
-	struct s_light	*next;
-}					t_light;
 
 typedef struct		s_ray
 {
@@ -103,10 +25,8 @@ typedef struct 		s_obj
 {
 	void			*data;
 	int8_t(*intersect)(t_ray *ray, const void *data, double_t *t);
-	//t_rgb(*get_color)(const void* data, const t_v3d* intersect_point);
 	t_rgb(*get_color)(const void* data);
 	t_v3d(*get_center)(const void* data);
-	t_v3d(*get_albedo)(const void* data);
 	t_v3d(*get_n_hit)(const t_v3d *point_hit, const struct s_obj *obj);
 	double_t(*get_reflection)(const void* data);
 	void(*to_camera)(const t_matrix *camera, void *src);
@@ -154,7 +74,7 @@ typedef struct		s_sdl
 	const uint8_t	*cur_key;
 	char			*win_name;
 	t_v2i			screen_size;
-	double_t		iar;	//image Aspect Ratio  
+	double_t		iar;	// image Aspect // Ratio DONT WORK!!!
 	int8_t			loop;
 }					t_sdl;
 

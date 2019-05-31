@@ -5,10 +5,6 @@ t_v3d			ft_get_center_cone(const void *data)
 {
 	return(((t_cone*)data)->cam_centr);
 }
-t_v3d			ft_get_cone_albedo(const void *data)
-{
-	return (((t_cone*)data)->albedo);
-}
 t_rgb			ft_get_cone_color(const void* data)
 {
 	return(((t_cone*)data)->color);
@@ -95,9 +91,7 @@ t_obj*			ft_new_cone(t_v3d centr, t_rgb color, double_t radius)
 	obj->flag = cone;
 
 
-	new_cone->albedo = vec_1double(0.18);
 	new_cone->radius = radius;
-	//new_cone->rad2 = radius * radius;
 	new_cone->world_centr = centr;
 	new_cone->world_normal = (t_v3d) { 0, 0, -1 };
 	new_cone->size = 0.5;
@@ -106,7 +100,6 @@ t_obj*			ft_new_cone(t_v3d centr, t_rgb color, double_t radius)
 
 	obj->data = new_cone;
 	obj->get_center = ft_get_center_cone;
-	obj->get_albedo = ft_get_cone_albedo;
 	obj->get_color = ft_get_cone_color;
 	obj->get_n_hit = ft_get_cone_n_hit;
 

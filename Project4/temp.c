@@ -80,15 +80,6 @@ void		push_back_obj(t_obj *src, t_obj **des)
 		tmp = tmp->next;
 	}
 }
-void		color_move(int *color, int up)
-{
-	if (up)
-		(*color)++;
-	if ((*color) < 0)
-		(*color) = 0;
-	if ((*color) > 255)
-		(*color) = 0;
-}
 void		fs_double_swap(double_t *s, double_t *d)
 {
 	double_t t;
@@ -97,67 +88,21 @@ void		fs_double_swap(double_t *s, double_t *d)
 	*s = *d;
 	*d = t;
 }
-uint32_t	set_pixel_color(t_rgb color, double_t tone)
-{
-	//hitColor = std::max(0.f, hitNormal.dotProduct(-dir)); // facing ratio 
-	double_t	shadow = tone < 0.0 ? 0.0 : tone;
-
-	uint32_t	result;
-	t_v3d		tmp;
-
-	tmp.x = color.r;
-	tmp.y = color.g;
-	tmp.z = color.b;
-
-
-	if (tmp.x * shadow > tmp.x)
-		tmp.x = color.r;
-	else if (tmp.x * shadow < 0)
-		tmp.x = 0.0;
-	else
-		tmp.x *= shadow;
-
-	if (tmp.y * shadow > tmp.y)
-		tmp.y = color.g;
-	else if (tmp.y * shadow < 0)
-		tmp.y = 0.0;
-	else
-		tmp.y *= shadow;
-
-	if (tmp.z * shadow > tmp.z)
-		tmp.z = color.b;
-	else if (tmp.z * shadow < 0)
-		tmp.z = 0.0;
-	else
-		tmp.z *= shadow;
-
-
-	result = ((uint8_t)tmp.x << 16 | (uint8_t)tmp.y << 8 | (uint8_t)tmp.z);
-	return (result);
-}
 uint32_t	set_pixel_color_with_hit_color(t_rgb color, t_hit *hit, t_light *light, t_ray *ray)
 {
-	t_rgb		result = get_black_color();
-	double_t	dist = vec_3magnitude(vec_3sub(light->cam_pos, hit->point_hit));
-	double_t	dist_cof = light->power_light / dist;
-	double_t	lambert_cof = vec_3dot(get_to_light_dir(hit, light), hit->norml_hit) * dist_cof;
-	double_t	cof = 0.18;
+	t_rgb		result; 
+	double_t	dist; 
+	double_t	dist_cof; 
+	double_t	lambert_cof; 
+	t_rgb		light_color;
 
-
-	//Li = (light intensity * light color) / (4 * Pi * (r * r))
-
-	//t_v3d light_dir = get_to_light_dir(hit, light);
-	
-	//----------------------- ambient lighting
-
-	//----------------------- diffuse lighting
-	
-	color = colort_mult_f(color, 1 - hit->hit_obj->get_reflection(hit->hit_obj->data));
+	result = get_black_color();
+	dist = vec_3magnitude(vec_3sub(light->cam_pos, hit->point_hit));
+	dist_cof = light->power_light / dist;
+	lambert_cof = vec_3dot(get_to_light_dir(hit, light), hit->norml_hit) * dist_cof;
 	result = colort_mult_f(color, lambert_cof);
-	//----------------------- specular lighting
-	t_rgb light_color = colort_mult_f(light->color, (dist_cof * lambert_cof));
+	light_color = colort_mult_f(light->color, (dist_cof * lambert_cof));
+	set_rgb_to_int(&light_color);
 	result = colort_add_colort(result, light_color);
-	//result = colort_add_colort(result, colort_mult_f(light->color, lambert_cof));
-	//-----------------------
 	return (result.color);
 }

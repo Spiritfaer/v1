@@ -6,10 +6,6 @@ t_v3d			ft_get_center_sphere(const void *data)
 {
 	return(((t_sphere*)data)->cam_centr);
 }
-t_v3d			ft_get_sphere_albedo(const void *data)
-{
-	return (((t_sphere*)data)->albedo);
-}
 t_rgb			ft_get_sphere_color(const void* data)
 {
 	return(((t_sphere*)data)->color);
@@ -110,7 +106,6 @@ t_obj*			ft_new_sphere(t_v3d centr, t_rgb color, double_t radius, double_t refle
 	ft_memcpy(&new_sphere->world_centr, &centr, sizeof(t_v3d));
 	ft_memcpy(&new_sphere->color, &color, sizeof(t_rgb));
 	obj->flag = sphere;
-	new_sphere->albedo = vec_1double(0.18);
 	new_sphere->radius = radius;
 	new_sphere->rad2 = radius * radius;
 	new_sphere->world_centr = centr;
@@ -119,7 +114,6 @@ t_obj*			ft_new_sphere(t_v3d centr, t_rgb color, double_t radius, double_t refle
 	obj->data = new_sphere;
 
 	obj->get_center = ft_get_center_sphere;
-	obj->get_albedo = ft_get_sphere_albedo;
 	obj->get_color = ft_get_sphere_color;
 	obj->get_n_hit = ft_get_sphere_n_hit;
 	obj->get_reflection = ft_get_sphere_reflection;

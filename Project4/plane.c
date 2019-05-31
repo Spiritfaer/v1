@@ -5,10 +5,6 @@ t_rgb		ft_get_plane_color(const void* data)
 {
 	return(((t_plane*)data)->color);
 }
-t_v3d		ft_get_plane_albedo(const void *data)
-{
-	return (((t_plane*)data)->albedo);
-}
 t_v3d		ft_get_center_plane(const void *data)
 {
 	return(((t_plane*)data)->cam_centr);
@@ -89,7 +85,6 @@ t_obj*	ft_new_plane(t_v3d centr, t_rgb color, double_t radius, int32_t flag, dou
 		obj->flag = plane;
 		obj->intersect = ft_plane_intersect;
 	}
-	new_plane->albedo = vec_1double(0.18);
 	new_plane->size = radius;
 	new_plane->s2 = radius * radius;
 	new_plane->world_centr = centr;
@@ -98,7 +93,6 @@ t_obj*	ft_new_plane(t_v3d centr, t_rgb color, double_t radius, int32_t flag, dou
 	new_plane->reflection = reflection;
 	obj->data = new_plane;
 	obj->get_n_hit = ft_plane_intersect_normals;
-	obj->get_albedo = ft_get_plane_albedo;
 	obj->get_color = ft_get_plane_color;
 	obj->get_center = ft_get_center_plane;
 	obj->get_reflection = ft_get_plane_reflection;

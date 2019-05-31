@@ -1,10 +1,6 @@
 #include "main.h"
 
 //	geters and setters
-t_v3d		ft_get_box_albedo(const void *data)
-{
-	return (((t_box*)data)->albedo);
-}
 t_v3d		ft_get_box_centr(const void *data)
 {
 	return (((t_box*)data)->centr);
@@ -63,31 +59,23 @@ int8_t		ft_box_intersect(t_ray *ray, const void *data, double_t *t)
 	ft_fill_aabb_ray(ray, &r);
 	bounds[0] = ((t_box*)data)->cam_min;
 	bounds[1] = ((t_box*)data)->cam_max;
-
-
 	tmin.x = (bounds[r.flag[0]].x - ray->orig.x) * r.invdir.x;
 	tmax.x = (bounds[1 - r.flag[0]].x - ray->orig.x) * r.invdir.x;
-
 	tmin.y = (bounds[r.flag[1]].y - ray->orig.y) * r.invdir.y;
 	tmax.y = (bounds[1 - r.flag[1]].y - ray->orig.y) * r.invdir.y;
-
 	if ((tmin.x > tmax.y) || (tmin.y > tmax.x))
 		return (false);
-
 	tmin.x = (tmin.y > tmin.x) ? tmin.y : tmin.x;
 	tmax.x = (tmax.y < tmax.x) ? tmax.y : tmax.x;
-
 	tmin.z = (bounds[r.flag[2]].z - ray->orig.z) * r.invdir.z;
 	tmax.z = (bounds[1 - r.flag[2]].z - ray->orig.z) * r.invdir.z;
-
 	if ((tmin.x > tmax.z) || (tmin.z > tmax.x))
 		return (false);
-
 	tmin.x = (tmin.z > tmin.x) ? tmin.z : tmin.x;
 	tmax.x = (tmax.z < tmax.x) ? tmax.z : tmax.x;
-
 	*t = tmin.x;
-	if (*t < 0) {
+	if (*t < 0)
+	{
 		*t = tmax.x;
 		return (false);
 	}
@@ -141,6 +129,17 @@ int8_t		ft_mem_box(t_obj **obj, t_box **box)
 	memset(*box, 0, sizeof(t_box));
 	return (true);
 }
+void		ft_init_box_functions(t_obj *obj)
+{
+	obj->flag = box;
+	obj->get_color = ft_get_box_color;
+	obj->get_center = ft_get_box_centr;
+	obj->intersect = ft_box_intersect;
+	obj->get_n_hit = ft_box_intersect_normals;
+	obj->get_reflection = ft_get_box_reflection;
+	obj->to_camera = ft_set_box_to_cam_pos;
+	obj->next = NULL;
+}
 t_obj*		ft_new_box(t_v3d *max, t_v3d *min, t_rgb color, double_t size, double_t reflection)
 {
 	t_obj *obj;
@@ -160,20 +159,9 @@ t_obj*		ft_new_box(t_v3d *max, t_v3d *min, t_rgb color, double_t size, double_t 
 		new_box->min = *min;
 		ft_set_box_centr(new_box);
 	}
-
 	new_box->color = color;
-	new_box->albedo = vec_1double(0.18);
 	new_box->reflection = reflection;
-	obj->flag = box;
 	obj->data = new_box;
-	obj->get_albedo = ft_get_box_albedo;
-	obj->get_color = ft_get_box_color;
-	obj->get_center = ft_get_box_centr;
-	obj->intersect = ft_box_intersect;
-	obj->get_n_hit = ft_box_intersect_normals;
-	obj->get_reflection = ft_get_box_reflection;
-
-	obj->to_camera = ft_set_box_to_cam_pos;
-	obj->next = NULL;
+	ft_init_box_functions(obj);
 	return (obj);
 }

@@ -13,7 +13,7 @@ int main(int argc, char ** argv)
 	int8_t		index_scena = 0;
 
 	char *scena_file_0 = "C:\\Users\\User\\source\\repos\\Project4\\Project4\\figure_v_1.txt";
-	char *scena_file_1 = "C:\\Users\\User\\source\\repos\\Project4\\Project4\\scena_1.txt";
+	char *scena_file_1 = "C:\\Users\\User\\source\\repos\\Project4\\Project4\\scena_0.txt";
 
 	ft_memset(&scena, 0, sizeof(t_scena));
 	sdl = ft_new_sdl();

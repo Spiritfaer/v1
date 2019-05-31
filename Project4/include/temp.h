@@ -21,15 +21,7 @@ void		ft_split_del(char **head);
 void		push_back_list(const char *line, t_list **des);
 void		push_back_light(t_light *src, t_light **des);
 void		push_back_obj(t_obj *src, t_obj **des);
-void		color_move(int *color, int up);
+
 void		fs_double_swap(double_t *s, double_t *d);
-
-uint32_t	set_pixel_color(t_rgb color, double_t shadow);
 uint32_t	set_pixel_color_with_hit_color(t_rgb color, t_hit *hit, t_light *light, t_ray *ray);
-
-
-
-
-
-
 #endif

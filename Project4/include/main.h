@@ -14,6 +14,7 @@
 #include "SDL.h"
 #include "vmth.h"
 #include "get_next_line.h"
+#include "obj.h"
 #define _CRTDBG_MAP_ALLOC
 
 #define CANVAS_SIZE 2
@@ -39,7 +40,6 @@ enum e_ray_type {primary, shadow, ReflectionAndRefraction};
 
 t_sdl		*ft_new_sdl(void);
 void		ft_del_sdl(t_sdl *sdl);
-
 int8_t		ft_init_sdl(t_sdl *sdl);
 SDL_Surface *new_canvas(uint32_t width, uint32_t height);
 //----------------------sphere()
@@ -96,25 +96,12 @@ void		destroy_camera(t_camera **camera);
 t_light*	new_light(t_v3d *pos, t_rgb *color, double_t intensity);
 t_v3d		get_to_light_dir(t_hit *hit, t_light *light);
 
-//------------------------rgb()
-
-t_rgb		get_black_color(void);
-t_rgb		get_red_color(void);
-t_rgb		get_green_color(void);
-t_rgb		get_blue_color(void);
-t_rgb		get_white_color(void);
-void		set_color(t_rgb *color, uint8_t r, uint8_t g, uint8_t b);
-void		set_rgb_to_int(t_rgb *src);
-void		set_int_to_rgb(t_rgb *src);
-t_rgb		colort_add_colort(t_rgb one, t_rgb two);
-t_rgb		colort_mult_f(t_rgb one, double_t f);
-int32_t		colort_int_add_colort_int(int32_t one, int32_t two);
 
 //-------------------------parser()
 
 int8_t		new_scena(const char *file_name, t_scena *scena);
 void		pars_type_obj(t_scena *scena);
-int8_t		pars_info(t_list *list, t_rgb *color, t_v3d *pos, double_t *size);
+int8_t		pars_info(t_list *list, t_rgb *color, t_v3d *pos, double_t *size, double_t *reflection);
 int8_t		pars_size_fov_power(const char *str, double_t *src);
 int8_t		pars_color(const char *str, t_rgb *color);
 int8_t		pars_pos(const char *str, t_v3d *pos);
